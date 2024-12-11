@@ -1,0 +1,142 @@
+/* 질문 받기 버튼 */
+.button_dark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 46px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: var(--font-size-body3);
+  font-weight: var(--font-weight-regular);
+  color: var(--gray-scale-10);
+  background-color: var(--brown-scale-40);
+  @media (max-width: 767px) {
+    width: 100%;
+    height: 46px;
+    padding: 8px 12px;
+  }
+}
+.button_dark:hover {
+  border: 2px solid var(--brown-scale-50);
+}
+.button_dark:active {
+  background-color: var(--brown-scale-50);
+}
+.button_dark:disabled {
+  background-color: var(--brown-scale-30);
+}
+.button_dark:disabled:hover {
+  border: none;
+}
+
+/* 답변(질문)하러 가기 버튼 */
+.button_light {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 166px;
+  height: 46px;
+  padding: 12px 24px;
+  border: 1px solid var(--brown-scale-40);
+  border-radius: 8px;
+  font-size: var(--font-size-body3);
+  color: var(--brown-scale-40);
+  background-color: var(--brown-scale-10);
+  @media (max-width: 767px) {
+    width: 130px;
+    height: 34px;
+    padding: 8px 12px;
+    font-size: var(--font-size-caption1);
+  }
+}
+.button_light:hover {
+  border: 2px solid var(--brown-scale-40);
+}
+.button_light:active {
+  border: 2px solid var(--brown-scale-40);
+  background-color: var(--brown-scale-20);
+}
+.button_light:disabled {
+  border: 1px solid var(--brown-scale-30);
+  color: var(--brown-scale-30);
+  background-color: var(--brown-scale-10);
+}
+.button_light svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--brown-scale-40);
+}
+.button_light:disabled svg {
+  fill: var(--brown-scale-30);
+}
+
+/* 질문 작성하기 플로팅 버튼 */
+.button_floating {
+  width: 208px;
+  height: 54px;
+  border-radius: 200px;
+  box-shadow: var(--shadow-2pt);
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-weight-regular);
+  color: var(--gray-scale-10);
+  background-color: var(--brown-scale-40);
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+.button_floating_mobile {
+  display: none;
+  @media (max-width: 767px) {
+    display: block;
+    width: 123px;
+    height: 54px;
+    border-radius: 200px;
+    box-shadow: var(--shadow-2pt);
+    font-size: var(--font-size-body1);
+    font-weight: var(--font-weight-regular);
+    color: var(--gray-scale-10);
+    background-color: var(--brown-scale-40);
+  }
+}
+
+/* 공유하기 링크(링크복사, 카카오톡, 페이스북) */
+.button_share {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  width: 144px;
+  height: 40px;
+}
+.button_share li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  cursor: pointer;
+}
+.button_share li svg {
+  width: 18px;
+  height: 18px;
+}
+.button_share li:first-child {
+  background: var(--brown-scale-40);
+}
+.button_share li:first-child svg {
+  fill: var(--gray-scale-10);
+}
+.button_share li:nth-child(2) {
+  background: var(--yellow);
+}
+.button_share li:nth-child(2) svg {
+  fill: var(--gray-scale-60);
+}
+.button_share li:last-child {
+  background: var(--blue);
+}
+.button_share li:last-child svg {
+  fill: var(--gray-scale-10);
+}

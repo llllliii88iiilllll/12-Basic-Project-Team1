@@ -1,0 +1,14 @@
+.toast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 167px;
+  height: 42px;
+  padding: 12px 20px;
+  font-size: var(--font-size-caption1);
+  font-weight: var(--font-weight-medium);
+  border-radius: 8px;
+  box-shadow: var(--shadow-2pt);
+  color: var(--gray-scale-10);
+  background-color: var(--gray-scale-60);
+}
