@@ -1,0 +1,27 @@
+.button_floating {
+  width: 208px;
+  height: 54px;
+  border-radius: 200px;
+  box-shadow: var(--shadow-2pt);
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-weight-regular);
+  color: var(--gray-scale-10);
+  background-color: var(--brown-scale-40);
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+.button_floating_mobile {
+  display: none;
+  @media (max-width: 767px) {
+    display: block;
+    width: 123px;
+    height: 54px;
+    border-radius: 200px;
+    box-shadow: var(--shadow-2pt);
+    font-size: var(--font-size-body1);
+    font-weight: var(--font-weight-regular);
+    color: var(--gray-scale-10);
+    background-color: var(--brown-scale-40);
+  }
+}

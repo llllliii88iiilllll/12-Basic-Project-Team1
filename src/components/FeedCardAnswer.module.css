@@ -1,0 +1,27 @@
+.feed_answer_wrap {
+  display: flex;
+  gap: 12px;
+}
+.feed_answer_profile {
+  width: 48px;
+  height: 48px;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.feed_answer_user_name {
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body2);
+  color: var(--gray-scale-60);
+}
+.feed_answer_date {
+  margin-left: 8px;
+  font-size: var(--font-size-caption1);
+  font-weight: var(--font-weight-medium);
+  color: var(--gray-scale-40);
+}
+.feed_answer_rejected {
+  font-size: var(--font-size-body3);
+  font-weight: var(--font-weight-regular);
+  color: var(--red);
+}

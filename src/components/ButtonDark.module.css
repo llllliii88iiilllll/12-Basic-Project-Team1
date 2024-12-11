@@ -1,0 +1,30 @@
+.button_dark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 46px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: var(--font-size-body3);
+  font-weight: var(--font-weight-regular);
+  color: var(--gray-scale-10);
+  background-color: var(--brown-scale-40);
+  @media (max-width: 767px) {
+    width: 100%;
+    height: 46px;
+    padding: 8px 12px;
+  }
+}
+.button_dark:hover {
+  border: 2px solid var(--brown-scale-50);
+}
+.button_dark:active {
+  background-color: var(--brown-scale-50);
+}
+.button_dark:disabled {
+  background-color: var(--brown-scale-30);
+}
+.button_dark:disabled:hover {
+  border: none;
+}

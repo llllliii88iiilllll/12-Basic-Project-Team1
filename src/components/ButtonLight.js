@@ -1,4 +1,4 @@
-import styles from "./Button.module.css";
+import styles from "./ButtonLight.module.css";
 import { ReactComponent as IcArrowLineRight } from "../assets/Icon/arrow_line_right.svg";
 
 function ButtonLight() {

@@ -1,4 +1,4 @@
-import styles from "./Button.module.css";
+import styles from "./ButtonFloating.module.css";
 
 function ButtonFloating() {
   return (

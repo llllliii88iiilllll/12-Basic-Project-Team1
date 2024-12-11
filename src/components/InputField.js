@@ -1,4 +1,4 @@
-import styles from "./Input.module.css";
+import styles from "./InputField.module.css";
 import { ReactComponent as IcPerson } from "../assets/Icon/person.svg";
 
 function InputField() {

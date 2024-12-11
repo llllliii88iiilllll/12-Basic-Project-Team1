@@ -1,4 +1,4 @@
-import styles from "./Input.module.css";
+import styles from "./InputTextArea.module.css";
 
 function InputTextArea() {
   return (

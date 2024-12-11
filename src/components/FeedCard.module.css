@@ -52,19 +52,3 @@
   height: 1px;
   background-color: var(--gray-scale-30);
 }
-
-.feed_answer_wrap {
-  display: flex;
-  gap: 12px;
-}
-.feed_answer_profile {
-  width: 48px;
-  height: 48px;
-  aspect-ratio: 1;
-  object-fit: cover;
-}
-.feed_answer_rejected {
-  font-size: var(--font-size-body3);
-  font-weight: var(--font-weight-regular);
-  color: var(--red);
-}

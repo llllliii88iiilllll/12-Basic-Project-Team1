@@ -1,4 +1,4 @@
-import styles from "./Button.module.css";
+import styles from "./ButtonDark.module.css";
 
 function ButtonDark({ disabled, children }) {
   return (

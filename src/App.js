@@ -1,3 +1,5 @@
+import FeedCard from "./components/FeedCard";
+
 function App() {
   return <></>;
 }
