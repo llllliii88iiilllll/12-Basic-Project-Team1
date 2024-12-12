@@ -1,6 +1,8 @@
 import ButtonShare from "../public_components/ButtonShare";
 import LogoImg from "../assets/Images/logo.png";
 import ProfileImg from "../assets/Images/profile.png";
+import EmptyImg from "../assets/Images/empty.png";
+import MessageImg from "../assets/Icon/messages.svg";
 import styles from "./FeedPage.module.css";
 
 function FeedPage() {
@@ -18,11 +20,19 @@ function FeedPage() {
             src={ProfileImg}
             alt="프로필 이미지"
           />
-          <p className={styles.name}>아초는고양이</p>
+          <h1 className={styles.name}>아초는고양이</h1>
           <ButtonShare />
         </div>
       </header>
-      <div className={styles.questions_box}></div>
+      <div className={styles.container}>
+        <div className={styles.questions_box}>
+          <div className={styles.questions_box__title}>
+            <img src={MessageImg} alt="메세지 이미지" />
+            <p>아직 질문이 없습니다</p>
+          </div>
+          <img className={styles.empty_img} src={EmptyImg} alt="빈페이지" />
+        </div>
+      </div>
     </div>
   );
 }

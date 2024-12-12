@@ -1,6 +1,5 @@
 .feedpage {
   background-color: var(--gray-scale-20);
-  padding-bottom: 100px;
 }
 
 header {
@@ -11,6 +10,9 @@ header {
   height: 234px;
   margin: 0;
   position: relative;
+  @media (max-width: 767px) {
+    height: 177px;
+  }
 }
 
 .header_box {
@@ -25,6 +27,10 @@ header {
 .logo_img {
   width: 170px;
   height: 67px;
+  @media (max-width: 767px) {
+    width: 124px;
+    height: 49px;
+  }
 }
 
 .profile_img {
@@ -32,6 +38,9 @@ header {
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50%;
+  @media (max-width: 767px) {
+    width: 104px;
+  }
 }
 
 .name {
@@ -39,16 +48,49 @@ header {
   font-size: 32px;
   font-weight: 400;
   line-height: 40px;
+  @media (max-width: 767px) {
+    font-size: 24px;
+    line-height: 30px;
+  }
 }
 
 /* 질문 영역 */
+.container {
+  padding: 189px 0 100px;
+  @media (max-width: 767px) {
+    padding: 176px 24px 100px;
+  }
+}
+
 .questions_box {
   background-color: var(--brown-scale-10);
   width: 100%;
   max-width: 716px;
   height: 100%;
   min-height: 330px;
-  margin: 189px auto 0;
+  margin: 0 auto;
   border: 1px solid var(--brown-scale-20);
   border-radius: 16px;
+}
+
+.questions_box__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 14px auto;
+}
+
+.questions_box__title p {
+  color: var(--brown-scale-40);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 25px;
+}
+
+.empty_img {
+  width: 150px;
+  height: 154px;
+  display: block;
+  margin: 68px auto;
 }
