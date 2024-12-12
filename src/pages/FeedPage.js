@@ -24,6 +24,8 @@ function FeedPage() {
           <ButtonShare />
         </div>
       </header>
+
+      {/* 질문영역 */}
       <div className={styles.container}>
         <div className={styles.questions_box}>
           <div className={styles.questions_box__title}>
