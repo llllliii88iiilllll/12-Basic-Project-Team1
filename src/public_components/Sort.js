@@ -36,7 +36,7 @@ function Sort({ setOrder }) {
       ref={selectRef}
     >
       <label className={styles.sort_label_active}>
-        최신순
+        {currentValue}
         <IcDown className={styles.sort_default} />
         <IcUp className={styles.sort_active} />
       </label>
