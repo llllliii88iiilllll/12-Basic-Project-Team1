@@ -52,6 +52,11 @@ figcaption {
   padding: 0;
 }
 
+/* body background-color 추가 */
+body {
+  background-color: var(--gray-scale-20);
+}
+
 /* a 링크 초기화 */
 a {
   color: inherit;

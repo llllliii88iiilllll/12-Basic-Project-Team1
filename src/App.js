@@ -1,7 +1,14 @@
-import FeedCard from "./components/FeedCard";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ListPage from "./pages/ListPage";
 
 function App() {
-  return <></>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/list" element={<ListPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

@@ -1,0 +1,24 @@
+.list_wrap {
+  max-width: 940px;
+  margin: 40px auto 90px;
+}
+.list_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.list_logo {
+  width: 146px;
+}
+.list_body_top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 54px auto 34px;
+}
+.list_body_top h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-regular);
+  color: var(--gray-scale-60);
+}
