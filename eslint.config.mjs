@@ -11,6 +11,7 @@ export default [
   {
     rules: {
       "react/react-in-jsx-scope": "off", // React import 강제 규칙 비활성화
+      "react/prop-types": "off", // PropTypes 비활성화
     },
   },
 ];

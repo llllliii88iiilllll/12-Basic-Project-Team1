@@ -1,5 +1,5 @@
 import styles from "./Sort.module.css";
-import { useRef, useState, useEffect, use } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ReactComponent as IcDown } from "../assets/Icon/arrow_down.svg";
 import { ReactComponent as IcUp } from "../assets/Icon/arrow_up.svg";
 

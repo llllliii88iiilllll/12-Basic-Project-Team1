@@ -21,7 +21,7 @@ function ListPage() {
   const [count, setCount] = useState(0);
 
   const { width } = useWindowSize();
-  const initialPageSize = width >= 868 ? 4 : width >= 480 ? 3 : 2;
+  //const initialPageSize = width >= 868 ? 4 : width >= 480 ? 3 : 2;
 
   const sortedItems = [...items.results].sort((a, b) => {
     if (order === "createdAt") {
@@ -31,8 +31,8 @@ function ListPage() {
     }
   });
 
-  const handleNewestClick = () => setOrder("createdAt");
-  const handleByNameClick = () => setOrder("name");
+  // const handleNewestClick = () => setOrder("createdAt");
+  // const handleByNameClick = () => setOrder("name");
 
   const handleLoad = async (options) => {
     setLoading(true);
@@ -60,11 +60,11 @@ function ListPage() {
     } else {
       setPageSize(2);
     }
-  }, [width]);
+  }, [width, pageSize]);
 
   useEffect(() => {
     handleLoad({ offset: 0, limit: LIMIT });
-  }, [order]);
+  }, [order, count]);
 
   // const getSubjects = async () => {
   //   // 테스트용으로 빈 데이터 반환
