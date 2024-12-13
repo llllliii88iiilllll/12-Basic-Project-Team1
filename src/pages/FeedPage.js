@@ -1,6 +1,6 @@
 import ButtonShare from "../public_components/ButtonShare";
 import ButtonFloating from "../public_components/ButtonFloating";
-import LogoImg from "../assets/Images/logo.png";
+import LogoImg from "../assets/Images/logo.svg";
 import ProfileImg from "../assets/Images/profile.png";
 import EmptyImg from "../assets/Images/empty.png";
 import MessageImg from "../assets/Icon/messages.svg";
