@@ -1,4 +1,5 @@
 import ButtonShare from "../public_components/ButtonShare";
+import ButtonFloating from "../public_components/ButtonFloating";
 import LogoImg from "../assets/Images/logo.png";
 import ProfileImg from "../assets/Images/profile.png";
 import EmptyImg from "../assets/Images/empty.png";
@@ -35,6 +36,7 @@ function FeedPage() {
           <img className={styles.empty_img} src={EmptyImg} alt="빈페이지" />
         </div>
       </div>
+      <ButtonFloating />
     </div>
   );
 }
