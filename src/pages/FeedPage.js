@@ -5,17 +5,20 @@ import ProfileImg from "../assets/Images/profile.png";
 import EmptyImg from "../assets/Images/empty.png";
 import MessageImg from "../assets/Icon/messages.svg";
 import styles from "./FeedPage.module.css";
+import { Link } from "react-router-dom";
 
 function FeedPage() {
   return (
     <div className={styles.feedpage}>
       <header>
         <div className={styles.header_box}>
-          <img
-            className={styles.logo_img}
-            src={LogoImg}
-            alt="오픈마인드 로고"
-          />
+          <Link to="/">
+            <img
+              className={styles.logo_img}
+              src={LogoImg}
+              alt="오픈마인드 로고"
+            />
+          </Link>
           <img
             className={styles.profile_img}
             src={ProfileImg}
