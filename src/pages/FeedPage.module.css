@@ -56,9 +56,9 @@ header {
 
 /* 질문 영역 */
 .container {
-  padding: 189px 0 100px;
+  padding: 189px 0 140px;
   @media (max-width: 767px) {
-    padding: 176px 24px 100px;
+    padding: 176px 24px 140px;
   }
 }
 

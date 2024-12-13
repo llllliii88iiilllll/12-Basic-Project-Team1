@@ -36,6 +36,7 @@ function FeedPage() {
           <img className={styles.empty_img} src={EmptyImg} alt="빈페이지" />
         </div>
       </div>
+      {/* 질문작성 버튼 */}
       <ButtonFloating />
     </div>
   );
