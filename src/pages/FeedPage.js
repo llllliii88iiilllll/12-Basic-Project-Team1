@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 function FeedPage() {
   return (
-    <div className={styles.feedpage}>
+    <>
       <header>
         <div className={styles.header_box}>
           <Link to="/">
@@ -41,7 +41,7 @@ function FeedPage() {
       </div>
       {/* 질문작성 버튼 */}
       <ButtonFloating />
-    </div>
+    </>
   );
 }
 
