@@ -1,5 +1,6 @@
 .user_card_wrap {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   @media (max-width: 767px) {
     gap: 12px;

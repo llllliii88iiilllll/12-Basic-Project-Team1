@@ -1,6 +1,7 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import FeedPage from "./pages/FeedPage";
+import ListPage from "./pages/ListPage";
 
 function App() {
   // 카카오톡 SDK 초기화
@@ -13,7 +14,10 @@ function App() {
 
   return (
     <BrowserRouter>
-      <FeedPage />
+      <Routes>
+        <Route path="/list" element={<ListPage />} />
+        <Route path="/post" element={<FeedPage />} />
+      </Routes>
     </BrowserRouter>
   );
 }

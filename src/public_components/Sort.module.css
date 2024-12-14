@@ -15,6 +15,7 @@
   font-weight: var(--font-weight-medium);
   text-align: left;
   color: var(--gray-scale-40);
+  background-color: var(--gray-scale-10);
 }
 .sort_label_active {
   position: relative;
@@ -28,6 +29,7 @@
   font-weight: var(--font-weight-medium);
   text-align: left;
   color: var(--gray-scale-60);
+  background-color: var(--gray-scale-10);
 }
 .sort_label .sort_default {
   position: absolute;
@@ -63,6 +65,7 @@
   border: 1px solid var(--gray-scale-30);
   border-radius: 8px;
   box-shadow: var(--shadow-1pt);
+  background-color: var(--gray-scale-10);
 }
 .sort_label_active + ul li {
   width: 100%;
