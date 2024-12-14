@@ -1,0 +1,44 @@
+.answer_page {
+    max-width: 940px;
+    margin: 40px auto;
+    padding: 20px;
+}
+  
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+  
+.delete_btn {
+    background-color: var(--red);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+.main_content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+  
+.question_section {
+    background-color: var(--gray-scale-10);
+    padding: 20px;
+    border-radius: 8px;
+}
+  
+.answer_section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+  
+.error {
+    color: var(--red);
+    margin-top: 10px;
+}
