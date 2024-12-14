@@ -1,24 +1,28 @@
 .user_card_wrap {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(186px, 220px));
   gap: 20px;
-  @media (max-width: 767px) {
-    gap: 12px;
+  @media screen and (max-width: 868px) {
+    grid-template-columns: repeat(4, minmax(186, 1fr));
+  }
+  @media screen and (max-width: 867px) and (min-width: 662px) {
+    grid-template-columns: repeat(3, minmax(186px, 220px));
+    justify-content: center;
+  }
+  @media screen and (max-width: 661px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 .user_card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 220px;
+  /* width: 220px; */
   height: 187px;
   padding: 20px;
   border: 1px solid var(--gray-scale-40);
   border-radius: 16px;
   background-color: var(--gray-scale-10);
-  @media (max-width: 767px) {
-    width: calc((100% - 16px) / 2);
-  }
 }
 .user_card_top {
   display: flex;

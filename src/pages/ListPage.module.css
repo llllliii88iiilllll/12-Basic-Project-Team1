@@ -1,11 +1,17 @@
 .list_wrap {
   max-width: 940px;
   margin: 40px auto 90px;
+  @media (max-width: 1004px) {
+    margin: 40px 32px 90px;
+  }
 }
 .list_top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 1004px) {
+    margin: 0 18px;
+  }
 }
 .list_logo {
   width: 146px;
