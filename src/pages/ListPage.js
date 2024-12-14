@@ -76,7 +76,7 @@ function ListPage() {
           <Sort setOrder={setOrder} />
         </div>
         {loading ? (
-          <p>loading...</p>
+          <p>데이터를 불러오고 있습니다.</p>
         ) : (
           <>
             <UserCard items={sortedItems} />
