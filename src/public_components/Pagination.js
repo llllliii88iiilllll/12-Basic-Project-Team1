@@ -5,7 +5,7 @@ import { ReactComponent as IcArrowLeft } from "../assets/Icon/arrow_left.svg";
 function Pagination({
   setCurrentPage,
   handleLoad,
-  LIMIT,
+  limit,
   currentPage,
   totalPages,
 }) {
@@ -19,8 +19,8 @@ function Pagination({
       const newStartPage = Math.max(1, startPage - btnRange);
       const newEndPage = newStartPage + btnRange - 1;
       setCurrentPage(newEndPage);
-      const offset = (newEndPage - 1) * LIMIT;
-      handleLoad({ offset, limit: LIMIT });
+      const offset = (newEndPage - 1) * limit;
+      handleLoad({ offset, limit: limit });
     }
   };
 
@@ -28,15 +28,15 @@ function Pagination({
     if (endPage < totalPages) {
       const newStartPage = endPage + 1;
       setCurrentPage(newStartPage);
-      const offset = (newStartPage - 1) * LIMIT;
-      handleLoad({ offset, limit: LIMIT });
+      const offset = (newStartPage - 1) * limit;
+      handleLoad({ offset, limit: limit });
     }
   };
 
   const goToPage = (pageNumber) => {
     setCurrentPage(pageNumber);
-    const offset = (pageNumber - 1) * LIMIT;
-    handleLoad({ offset, limit: LIMIT });
+    const offset = (pageNumber - 1) * limit;
+    handleLoad({ offset, limit: limit });
   };
 
   return (

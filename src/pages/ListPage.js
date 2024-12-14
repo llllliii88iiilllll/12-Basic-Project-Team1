@@ -11,17 +11,14 @@ import Pagination from "../public_components/Pagination";
 
 function ListPage() {
   const [order, setOrder] = useState("createdAt");
-  //const [pageSize, setPageSize] = useState();
 
   const [items, setItems] = useState({ results: [] });
   const [loading, setLoading] = useState(true);
-  // const LIMIT = 8;
   const [limit, setLimit] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [count, setCount] = useState(0);
   const { width } = useWindowSize();
-  //const initialPageSize = width >= 868 ? 4 : width >= 480 ? 3 : 2;
 
   const sortedItems = [...items.results].sort((a, b) => {
     if (order === "createdAt") {
@@ -30,9 +27,6 @@ function ListPage() {
       return a.name.localeCompare(b.name, "ko");
     }
   });
-
-  // const handleNewestClick = () => setOrder("createdAt");
-  // const handleByNameClick = () => setOrder("name");
 
   const handleLoad = async (options) => {
     setLoading(true);
@@ -64,14 +58,6 @@ function ListPage() {
     handleLoad({ offset: (currentPage - 1) * limit });
   }, [order, currentPage, limit]);
 
-  // const getSubjects = async () => {
-  //   // 테스트용으로 빈 데이터 반환
-  //   return { results: [] };
-  // };
-  // useEffect(() => {
-  //   getSubjects();
-  // }, []);
-
   return (
     <div className={pagestyles.list_wrap}>
       <nav className={pagestyles.list_top}>
@@ -97,7 +83,7 @@ function ListPage() {
             <Pagination
               setCurrentPage={setCurrentPage}
               handleLoad={handleLoad}
-              LIMIT={limit}
+              limit={limit}
               currentPage={currentPage}
               totalPages={totalPages}
             />
