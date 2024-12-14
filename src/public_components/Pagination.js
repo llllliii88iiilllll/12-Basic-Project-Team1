@@ -10,7 +10,8 @@ function Pagination({
   totalPages,
 }) {
   const btnRange = 5;
-  const startPage = Math.floor(((currentPage - 1) / btnRange) * btnRange + 1);
+  const currentSet = Math.ceil(totalPages / btnRange);
+  const startPage = (currentSet - 1) * btnRange + 1;
   const endPage = Math.min(totalPages, startPage + btnRange - 1);
 
   const goToPreviousSet = () => {
