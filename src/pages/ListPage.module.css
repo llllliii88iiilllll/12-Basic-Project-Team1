@@ -4,6 +4,9 @@
   @media (max-width: 1004px) {
     margin: 40px 32px 90px;
   }
+  @media (max-width: 662px) {
+    margin: 40px 24px;
+  }
 }
 .list_top {
   display: flex;
@@ -11,6 +14,11 @@
   align-items: center;
   @media (max-width: 1004px) {
     margin: 0 18px;
+  }
+  @media (max-width: 661px) {
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 auto;
   }
 }
 .list_logo {
@@ -22,9 +30,16 @@
   align-items: center;
   gap: 12px;
   margin: 54px auto 34px;
+  @media (max-width: 661px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 .list_body_top h1 {
   font-size: var(--font-size-h1);
   font-weight: var(--font-weight-regular);
   color: var(--gray-scale-60);
+  @media (max-width: 661px) {
+    font-size: var(--font-size-h3);
+  }
 }

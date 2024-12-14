@@ -2,22 +2,19 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(186px, 220px));
   gap: 20px;
-  @media screen and (max-width: 868px) {
-    grid-template-columns: repeat(4, minmax(186, 1fr));
-  }
-  @media screen and (max-width: 867px) and (min-width: 662px) {
+  justify-content: center;
+  @media (max-width: 867px) {
     grid-template-columns: repeat(3, minmax(186px, 220px));
-    justify-content: center;
   }
-  @media screen and (max-width: 661px) {
-    grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 661px) {
+    grid-template-columns: repeat(2, minmax(186px, 1fr));
+    gap: 16px;
   }
 }
 .user_card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* width: 220px; */
   height: 187px;
   padding: 20px;
   border: 1px solid var(--gray-scale-40);

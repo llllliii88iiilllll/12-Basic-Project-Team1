@@ -30,6 +30,7 @@
   text-align: left;
   color: var(--gray-scale-60);
   background-color: var(--gray-scale-10);
+  cursor: pointer;
 }
 .sort_label .sort_default {
   position: absolute;
@@ -73,4 +74,7 @@
   font-size: var(--font-size-caption1);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-h3);
+}
+.sort_label_active + ul li:hover {
+  color: var(--blue);
 }
