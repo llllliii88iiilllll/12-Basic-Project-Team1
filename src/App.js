@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
+import MainPage from "./pages/MainPage";
 import FeedPage from "./pages/FeedPage";
 import ListPage from "./pages/ListPage";
 
@@ -15,7 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element />
+        <Route path="/" element={<MainPage />} />
         <Route path="/list" element={<ListPage />} />
         <Route path="/post">
           <Route index element={<FeedPage />} />

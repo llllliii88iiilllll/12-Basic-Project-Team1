@@ -1,0 +1,37 @@
+.main_wrap {
+    max-width: 940px;
+    margin: 40px auto;
+}
+  
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+ }
+ 
+.logo {
+    width: 170px;
+    height: auto;
+}
+  
+.main_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+  
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+  
+.error {
+    color: var(--red);
+    font-size: var(--font-size-body3);
+    margin-top: 10px;
+}
