@@ -11,15 +11,15 @@ import Pagination from "../public_components/Pagination";
 
 function ListPage() {
   const [order, setOrder] = useState("createdAt");
-  const [pageSize, setPageSize] = useState();
+  //const [pageSize, setPageSize] = useState();
 
   const [items, setItems] = useState({ results: [] });
   const [loading, setLoading] = useState(true);
-  const LIMIT = 8;
+  // const LIMIT = 8;
+  const [limit, setLimit] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [count, setCount] = useState(0);
-
   const { width } = useWindowSize();
   //const initialPageSize = width >= 868 ? 4 : width >= 480 ? 3 : 2;
 
@@ -37,11 +37,11 @@ function ListPage() {
   const handleLoad = async (options) => {
     setLoading(true);
     try {
-      const response = await getSubjects({ ...options, order });
+      const response = await getSubjects({ ...options, order, limit });
       if (response && response.results) {
         setItems({ results: response.results });
         setCount(response.count);
-        setTotalPages(Math.ceil(response.count / LIMIT));
+        setTotalPages(Math.ceil(response.count / limit));
       } else {
         setItems({ results: [] });
       }
@@ -54,17 +54,15 @@ function ListPage() {
 
   useEffect(() => {
     if (width >= 868) {
-      setPageSize(4);
-    } else if (width >= 480) {
-      setPageSize(3);
+      setLimit(8);
     } else {
-      setPageSize(2);
+      setLimit(6);
     }
-  }, [width, pageSize]);
+  }, [width]);
 
   useEffect(() => {
-    handleLoad({ offset: 0, limit: LIMIT });
-  }, [order, count]);
+    handleLoad({ offset: (currentPage - 1) * limit });
+  }, [order, currentPage, limit]);
 
   // const getSubjects = async () => {
   //   // 테스트용으로 빈 데이터 반환
@@ -99,7 +97,7 @@ function ListPage() {
             <Pagination
               setCurrentPage={setCurrentPage}
               handleLoad={handleLoad}
-              LIMIT={LIMIT}
+              LIMIT={limit}
               currentPage={currentPage}
               totalPages={totalPages}
             />
