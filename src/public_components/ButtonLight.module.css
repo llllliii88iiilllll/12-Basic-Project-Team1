@@ -11,8 +11,8 @@
   font-size: var(--font-size-body3);
   color: var(--brown-scale-40);
   background-color: var(--brown-scale-10);
-  @media (max-width: 767px) {
-    width: 130px;
+  @media (max-width: 661px) {
+    width: 140px;
     height: 34px;
     padding: 8px 12px;
     font-size: var(--font-size-caption1);

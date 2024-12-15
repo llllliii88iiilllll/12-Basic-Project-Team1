@@ -7,6 +7,8 @@ function Sort({ setOrder }) {
   const selectRef = useRef(null);
   const [currentValue, setCurrentValue] = useState("최신순");
   const [showOptions, setShowOptions] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [isIcDownVisible, setIsIcDownVisible] = useState(true);
 
   const handleClickSelectValue = (e) => {
     const sortValue = e.target.getAttribute("value");
@@ -27,18 +29,27 @@ function Sort({ setOrder }) {
     };
   }, [selectRef]);
 
+  const handleLabelClick = () => {
+    setIsActive(!isActive);
+    setIsIcDownVisible((prevState) => !prevState);
+    setShowOptions(!showOptions);
+  };
+
   return (
     <div
       className={styles.sort_wrap}
-      onClick={() => {
-        setShowOptions(!showOptions);
-      }}
+      onClick={handleLabelClick}
       ref={selectRef}
     >
-      <label className={styles.sort_label_active}>
+      <label
+        className={isActive ? styles.sort_label_active : styles.sort_label}
+      >
         {currentValue}
-        <IcDown className={styles.sort_default} />
-        <IcUp className={styles.sort_active} />
+        {isIcDownVisible ? (
+          <IcDown className={styles.sort_default} />
+        ) : (
+          <IcUp className={styles.sort_active} />
+        )}
       </label>
       {showOptions && (
         <ul>
