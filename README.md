@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# fe12_2_1_project
+FE12기 파트2 1팀 프로젝트 레포지토리입니다.
+=======
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +72,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+>>>>>>> 880d9233cd037be0ca5cf08ef74c129227f76905
