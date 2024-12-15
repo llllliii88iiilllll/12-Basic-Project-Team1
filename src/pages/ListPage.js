@@ -41,7 +41,7 @@ function ListPage() {
         setItems({ results: [] });
       }
     } catch (error) {
-      console.error("Failed to load items:", error);
+      console.error("데이터를 불러오는데 실패하였습니다.", error);
     } finally {
       setLoading(false);
     }
