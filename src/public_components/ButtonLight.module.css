@@ -1,0 +1,40 @@
+.button_light {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 166px;
+  height: 46px;
+  padding: 12px 24px;
+  border: 1px solid var(--brown-scale-40);
+  border-radius: 8px;
+  font-size: var(--font-size-body3);
+  color: var(--brown-scale-40);
+  background-color: var(--brown-scale-10);
+  @media (max-width: 661px) {
+    width: 140px;
+    height: 34px;
+    padding: 8px 12px;
+    font-size: var(--font-size-caption1);
+  }
+}
+.button_light:hover {
+  border: 2px solid var(--brown-scale-40);
+}
+.button_light:active {
+  border: 2px solid var(--brown-scale-40);
+  background-color: var(--brown-scale-20);
+}
+.button_light:disabled {
+  border: 1px solid var(--brown-scale-30);
+  color: var(--brown-scale-30);
+  background-color: var(--brown-scale-10);
+}
+.button_light svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--brown-scale-40);
+}
+.button_light:disabled svg {
+  fill: var(--brown-scale-30);
+}

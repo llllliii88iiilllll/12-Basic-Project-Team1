@@ -1,0 +1,54 @@
+.button_share {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  width: 144px;
+  height: 40px;
+}
+.button_share li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  cursor: pointer;
+}
+.button_share li svg {
+  width: 18px;
+  height: 18px;
+}
+.button_share li:first-child {
+  background: var(--brown-scale-40);
+}
+.button_share li:first-child svg {
+  fill: var(--gray-scale-10);
+}
+.button_share li:nth-child(2) {
+  background: var(--yellow);
+}
+.button_share li:nth-child(2) svg {
+  fill: var(--gray-scale-60);
+}
+.button_share li:last-child {
+  background: var(--blue);
+}
+.button_share li:last-child svg {
+  fill: var(--gray-scale-10);
+}
+
+/* toast */
+.toast {
+  background-color: var(--gray-scale-60);
+  color: var(--brown-scale-10);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 12px 20px;
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
