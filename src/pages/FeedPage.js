@@ -24,7 +24,7 @@ function FeedPage() {
 
   return (
     <>
-      <header>
+      <div className={styles.header}>
         <div className={styles.header_box}>
           <Link to="/">
             <img
@@ -41,7 +41,7 @@ function FeedPage() {
           <h1 className={styles.name}>아초는고양이</h1>
           <ButtonShare />
         </div>
-      </header>
+      </div>
 
       {/* 질문영역 */}
       <div className={styles.container}>

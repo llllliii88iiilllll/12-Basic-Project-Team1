@@ -9,6 +9,12 @@
   left: 50%;
   transform: translateX(-50%);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  @media (max-width: 767px) {
+    width: 327px;
+    height: 508px;
+    padding: 24px;
+    top: 102px;
+  }
 }
 
 .modal_header {
@@ -72,10 +78,13 @@
   border: none;
   border-radius: 8px;
   overflow: scroll;
+  @media (max-width: 767px) {
+    height: 278px;
+  }
 }
 
 .modal_btn {
-  background-color: var(--brown-scale-30);
+  background-color: var(--brown-scale-40);
   color: var(--gray-scale-10);
   font-size: 16px;
   font-weight: 400;
@@ -83,4 +92,10 @@
   width: 100%;
   padding: 12px 24px;
   border-radius: 8px;
+}
+
+.modal_btn:disabled {
+  background-color: var(--brown-scale-30);
+  color: var(--gray-scale-10);
+  cursor: not-allowed;
 }

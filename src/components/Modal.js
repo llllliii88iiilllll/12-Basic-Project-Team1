@@ -2,8 +2,15 @@ import MessageImg from "../assets/Icon/messages.svg";
 import CloseImg from "../assets/Icon/close.svg";
 import styles from "./Modal.module.css";
 import Profile from "../assets/Images/profile.png";
+import { useState } from "react";
 
 const Modal = ({ onClose }) => {
+  const [question, setQuestion] = useState("");
+
+  const heandleTextareaChange = (e) => {
+    setQuestion(e.target.value);
+  };
+
   return (
     <div className={styles.modal}>
       <div className={styles.modal_header}>
@@ -28,8 +35,14 @@ const Modal = ({ onClose }) => {
       <textarea
         className={styles.modal_textarea}
         placeholder="질문을 입력해주세요"
+        value={question}
+        onChange={heandleTextareaChange}
       ></textarea>
-      <button className={styles.modal_btn} type="submit">
+      <button
+        className={styles.modal_btn}
+        type="submit"
+        disabled={!question.trim()}
+      >
         질문 보내기
       </button>
     </div>
