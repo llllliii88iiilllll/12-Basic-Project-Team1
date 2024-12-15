@@ -11,17 +11,14 @@ import Pagination from "../public_components/Pagination";
 
 function ListPage() {
   const [order, setOrder] = useState("createdAt");
-  const [pageSize, setPageSize] = useState();
 
   const [items, setItems] = useState({ results: [] });
   const [loading, setLoading] = useState(true);
-  const LIMIT = 8;
+  const [limit, setLimit] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [count, setCount] = useState(0);
-
   const { width } = useWindowSize();
-  //const initialPageSize = width >= 868 ? 4 : width >= 480 ? 3 : 2;
 
   const sortedItems = [...items.results].sort((a, b) => {
     if (order === "createdAt") {
@@ -31,17 +28,14 @@ function ListPage() {
     }
   });
 
-  // const handleNewestClick = () => setOrder("createdAt");
-  // const handleByNameClick = () => setOrder("name");
-
   const handleLoad = async (options) => {
     setLoading(true);
     try {
-      const response = await getSubjects({ ...options, order });
+      const response = await getSubjects({ ...options, order, limit });
       if (response && response.results) {
         setItems({ results: response.results });
         setCount(response.count);
-        setTotalPages(Math.ceil(response.count / LIMIT));
+        setTotalPages(Math.ceil(response.count / limit));
       } else {
         setItems({ results: [] });
       }
@@ -54,25 +48,15 @@ function ListPage() {
 
   useEffect(() => {
     if (width >= 868) {
-      setPageSize(4);
-    } else if (width >= 480) {
-      setPageSize(3);
+      setLimit(8);
     } else {
-      setPageSize(2);
+      setLimit(6);
     }
-  }, [width, pageSize]);
+  }, [width]);
 
   useEffect(() => {
-    handleLoad({ offset: 0, limit: LIMIT });
-  }, [order, count]);
-
-  // const getSubjects = async () => {
-  //   // 테스트용으로 빈 데이터 반환
-  //   return { results: [] };
-  // };
-  // useEffect(() => {
-  //   getSubjects();
-  // }, []);
+    handleLoad({ offset: (currentPage - 1) * limit });
+  }, [order, currentPage, limit]);
 
   return (
     <div className={pagestyles.list_wrap}>
@@ -92,14 +76,14 @@ function ListPage() {
           <Sort setOrder={setOrder} />
         </div>
         {loading ? (
-          <p>loading...</p>
+          <p>데이터를 불러오고 있습니다.</p>
         ) : (
           <>
             <UserCard items={sortedItems} />
             <Pagination
               setCurrentPage={setCurrentPage}
               handleLoad={handleLoad}
-              LIMIT={LIMIT}
+              limit={limit}
               currentPage={currentPage}
               totalPages={totalPages}
             />
