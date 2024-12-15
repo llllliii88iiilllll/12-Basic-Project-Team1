@@ -1,16 +1,30 @@
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import ButtonShare from "../public_components/ButtonShare";
 import ButtonFloating from "../public_components/ButtonFloating";
+import Modal from "../components/Modal";
 import LogoImg from "../assets/Images/logo.svg";
 import ProfileImg from "../assets/Images/profile.png";
 import EmptyImg from "../assets/Images/empty.png";
 import MessageImg from "../assets/Icon/messages.svg";
 import styles from "./FeedPage.module.css";
-import { Link } from "react-router-dom";
 
 function FeedPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+
+  // 모달 열기 핸들러
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // 모달 닫기 핸들러
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
-      <header>
+      <div className={styles.header}>
         <div className={styles.header_box}>
           <Link to="/">
             <img
@@ -27,7 +41,7 @@ function FeedPage() {
           <h1 className={styles.name}>아초는고양이</h1>
           <ButtonShare />
         </div>
-      </header>
+      </div>
 
       {/* 질문영역 */}
       <div className={styles.container}>
@@ -40,7 +54,8 @@ function FeedPage() {
         </div>
       </div>
       {/* 질문작성 버튼 */}
-      <ButtonFloating />
+      <ButtonFloating onClick={openModal} />
+      {isModalOpen && <Modal onClose={closeModal} />}
     </>
   );
 }

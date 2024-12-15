@@ -58,20 +58,22 @@ function ButtonShare() {
   };
 
   return (
-    <ul className={styles.button_share}>
-      <li onClick={handleLinkClick}>
-        <IcLink />
-      </li>
-      <li onClick={handleKakaoShare}>
-        <IcKakaotalk />
-      </li>
-      <li onClick={handleFacebookShare}>
-        <IcFacebook />
-      </li>
+    <>
+      <ul className={styles.button_share}>
+        <li onClick={handleLinkClick}>
+          <IcLink />
+        </li>
+        <li onClick={handleKakaoShare}>
+          <IcKakaotalk />
+        </li>
+        <li onClick={handleFacebookShare}>
+          <IcFacebook />
+        </li>
+      </ul>
       {toastVisible && (
         <div className={styles.toast}>URL이 복사되었습니다.</div>
       )}
-    </ul>
+    </>
   );
 }
 
