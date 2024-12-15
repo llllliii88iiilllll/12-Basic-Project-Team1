@@ -38,6 +38,9 @@
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body1);
   color: var(--gray-scale-60);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .user_card_bottom {
   display: flex;
