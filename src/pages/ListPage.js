@@ -14,20 +14,19 @@ import EmptyBox from "../assets/Images/empty.png";
 import IcMessage from "../assets/Icon/messages.svg";
 
 function ListPage() {
-  const [order, setOrder] = useState("createdAt");
+  const [sort, setSort] = useState("time");
 
   const [items, setItems] = useState({ results: [] });
   const [loading, setLoading] = useState(true);
   const [limit, setLimit] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [count, setCount] = useState(0);
   const { width } = useWindowSize();
 
   const sortedItems = [...items.results].sort((a, b) => {
-    if (order === "createdAt") {
-      return b[order] - a[order];
-    } else if (order === "name") {
+    if (sort === "time") {
+      return b[sort] - a[sort];
+    } else if (sort === "name") {
       return a.name.localeCompare(b.name, "ko");
     }
   });
@@ -35,10 +34,9 @@ function ListPage() {
   const handleLoad = async (options) => {
     setLoading(true);
     try {
-      const response = await getSubjects({ ...options, order, limit });
+      const response = await getSubjects({ ...options, sort, limit });
       if (response && response.results) {
         setItems({ results: response.results });
-        setCount(response.count);
         setTotalPages(Math.ceil(response.count / limit));
       } else {
         setItems({ results: [] });
@@ -60,7 +58,7 @@ function ListPage() {
 
   useEffect(() => {
     handleLoad({ offset: (currentPage - 1) * limit });
-  }, [order, currentPage, limit]);
+  }, [sort, currentPage, limit]);
 
   return (
     <div className={styles.list_wrap}>
@@ -73,7 +71,7 @@ function ListPage() {
       <section className={styles.list_body}>
         <div className={styles.list_body_top}>
           <h1>누구에게 질문할까요?</h1>
-          <Sort setOrder={setOrder} />
+          <Sort setSort={setSort} />
         </div>
         {loading ? (
           <div className={styles.loading}>
