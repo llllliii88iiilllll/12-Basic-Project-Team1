@@ -15,7 +15,9 @@ function ListPage() {
 
   const [items, setItems] = useState({ results: [] });
   const [loading, setLoading] = useState(true);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(
+    parseInt(localStorage.getItem("limit") || 8)
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const { width } = useWindowSize();
@@ -46,12 +48,12 @@ function ListPage() {
   };
 
   useEffect(() => {
-    if (width >= 868) {
-      setLimit(8);
-    } else {
-      setLimit(6);
+    const newLimit = width >= 868 ? 8 : 6;
+    if (newLimit !== limit) {
+      setLimit(newLimit);
+      localStorage.setItem("limit", newLimit);
     }
-  }, [width]);
+  }, [width, limit]);
 
   useEffect(() => {
     handleLoad({ offset: (currentPage - 1) * limit });
