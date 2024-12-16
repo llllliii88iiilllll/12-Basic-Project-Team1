@@ -1,0 +1,55 @@
+.header {
+  background-image: url("../assets/Images/key_visual.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 234px;
+  margin: 0;
+  position: relative;
+  @media (max-width: 767px) {
+    height: 177px;
+  }
+}
+
+.header_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding-top: 50px;
+  @media (max-width: 767px) {
+    padding-top: 40px;
+  }
+}
+
+.logo_img {
+  width: 170px;
+  height: 67px;
+  @media (max-width: 767px) {
+    width: 124px;
+    height: 49px;
+  }
+}
+
+.profile_img {
+  width: 136px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  @media (max-width: 767px) {
+    width: 104px;
+  }
+}
+
+.name {
+  color: #000000;
+  font-family: "Pretendard Variable", Pretendard;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+  @media (max-width: 767px) {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
