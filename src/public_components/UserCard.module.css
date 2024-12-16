@@ -21,6 +21,11 @@
   border-radius: 16px;
   background-color: var(--gray-scale-10);
 }
+.user_card:hover {
+  scale: 1.03;
+  border: 2px solid var(--brown-scale-40);
+  box-shadow: var(--shadow-1pt);
+}
 .user_card_top {
   display: flex;
   flex-direction: column;
@@ -58,4 +63,20 @@
   width: 18px;
   height: 18px;
   fill: var(--gray-scale-40);
+}
+.empty_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.empty_item {
+  font-size: var(--font-size-body1);
+  color: var(--brown-scale-40);
+  font-weight: var(--font-weight-regular);
+}
+.empty_item p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

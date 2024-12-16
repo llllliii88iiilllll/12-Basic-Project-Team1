@@ -60,6 +60,7 @@
 .sort_label_active + ul {
   display: block;
   position: absolute;
+  z-index: 2;
   top: 40px;
   width: 79px;
   padding: 6px 16px;
