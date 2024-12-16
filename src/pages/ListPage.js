@@ -8,10 +8,7 @@ import UserCard from "../public_components/UserCard";
 import ButtonLightAnswer from "../public_components/ButtonLightAnswer";
 import Sort from "../public_components/Sort";
 import Pagination from "../public_components/Pagination";
-import ButtonDark from "../public_components/ButtonDark";
 import LogoImage from "../assets/Images/logo.svg";
-import EmptyBox from "../assets/Images/empty.png";
-import IcMessage from "../assets/Icon/messages.svg";
 
 function ListPage() {
   const [sort, setSort] = useState("time");
@@ -77,15 +74,6 @@ function ListPage() {
           <div className={styles.loading}>
             <BeatLoader color="#542F1A" />
             <p>데이터를 불러오고 있습니다.</p>
-          </div>
-        ) : items.results.length === 0 ? (
-          <div className={styles.empty_item}>
-            <p>
-              <img src={IcMessage} alt="메시지 아이콘" />
-              아직 답변자가 없습니다.
-            </p>
-            <EmptyBox alt="빈박스 이미지" />
-            <ButtonDark disabled={false}>메인페이지로 이동하기</ButtonDark>
           </div>
         ) : (
           <>
