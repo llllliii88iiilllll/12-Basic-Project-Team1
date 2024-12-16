@@ -21,6 +21,11 @@
   border-radius: 16px;
   background-color: var(--gray-scale-10);
 }
+.user_card:hover {
+  scale: 1.03;
+  border: 2px solid var(--brown-scale-40);
+  box-shadow: var(--shadow-1pt);
+}
 .user_card_top {
   display: flex;
   flex-direction: column;
