@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import { ReactComponent as IcDown } from "../assets/Icon/arrow_down.svg";
 import { ReactComponent as IcUp } from "../assets/Icon/arrow_up.svg";
 
-function Sort({ setOrder }) {
+function Sort({ setSort }) {
   const selectRef = useRef(null);
   const [currentValue, setCurrentValue] = useState("최신순");
   const [showOptions, setShowOptions] = useState(false);
@@ -14,7 +14,7 @@ function Sort({ setOrder }) {
     const sortValue = e.target.getAttribute("value");
     const sortName = e.target.getAttribute("name");
     setCurrentValue(sortName);
-    setOrder(sortValue);
+    setSort(sortValue);
   };
 
   useEffect(() => {
@@ -53,7 +53,7 @@ function Sort({ setOrder }) {
       </label>
       {showOptions && (
         <ul>
-          <li value="createdAt" name="최신순" onClick={handleClickSelectValue}>
+          <li value="time" name="최신순" onClick={handleClickSelectValue}>
             최신순
           </li>
           <li value="name" name="이름순" onClick={handleClickSelectValue}>
