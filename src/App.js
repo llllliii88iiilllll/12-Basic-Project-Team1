@@ -15,15 +15,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element />
-        <Route path="/list" element={<ListPage />} />
-        <Route path="/post">
-          <Route index element={<FeedPage />} />
-          <Route path=":subjectId" element />
-        </Route>
+        <Route path="/" element={<ListPage />} />
+        <Route path="/post/:id" element={<FeedPage />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
+
+{
+  /* <BrowserRouter>
+<Routes>
+  <Route path="/" element />
+  <Route path="/list" element={<ListPage />} />
+  <Route path="/post">
+    <Route index element={<FeedPage />} />
+    <Route path=":subjectId" element />
+  </Route>
+</Routes>
+</BrowserRouter> */
+}
