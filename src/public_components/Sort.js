@@ -1,7 +1,7 @@
 import styles from "./Sort.module.css";
 import { useRef, useState, useEffect } from "react";
-import { ReactComponent as IcDown } from "../assets/Icon/arrow_down.svg";
-import { ReactComponent as IcUp } from "../assets/Icon/arrow_up.svg";
+import IcDown from "../assets/Icon/arrow_down.svg";
+import IcUp from "../assets/Icon/arrow_up.svg";
 
 function Sort({ setSort }) {
   const selectRef = useRef(null);
@@ -46,9 +46,17 @@ function Sort({ setSort }) {
       >
         {currentValue}
         {isIcDownVisible ? (
-          <IcDown className={styles.sort_default} />
+          <img
+            src={IcDown}
+            className={styles.sort_default}
+            alt="아래 화살표 아이콘"
+          />
         ) : (
-          <IcUp className={styles.sort_active} />
+          <img
+            src={IcUp}
+            className={styles.sort_active}
+            alt="위 화살표 아이콘"
+          />
         )}
       </label>
       {showOptions && (
