@@ -1,6 +1,9 @@
 import styles from "./UserCard.module.css";
 import { ReactComponent as IcMessages } from "../assets/Icon/messages.svg";
 import { Link } from "react-router-dom";
+import EmptyBox from "../assets/Images/empty.png";
+import IcMessage from "../assets/Icon/messages.svg";
+import ButtonDark from "../public_components/ButtonDark";
 
 function UserCard({ items }) {
   return (
@@ -28,7 +31,16 @@ function UserCard({ items }) {
           </Link>
         ))
       ) : (
-        <p>아무것도 없습니다. 이 부분을 꾸며야합니다</p>
+        <>
+          <div className={styles.empty_item}>
+            <p>
+              <img src={IcMessage} alt="메시지 아이콘" />
+              아직 답변자가 없습니다.
+            </p>
+            <EmptyBox alt="빈박스 이미지" />
+            <ButtonDark disabled={false}>메인페이지로 이동하기</ButtonDark>
+          </div>
+        </>
       )}
     </div>
   );
