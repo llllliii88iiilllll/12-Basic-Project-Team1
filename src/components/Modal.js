@@ -50,16 +50,3 @@ const Modal = ({ onClose }) => {
 };
 
 export default Modal;
-
-{
-  /* <div className={styles.modal_overlay}>
-      <div className={styles.modal_content}>
-        <h2>질문 작성하기</h2>
-        <textarea placeholder="질문을 입력하세요"></textarea>
-        <div className={styles.modal_buttons}>
-          <button onClick={onClose}>취소</button>
-          <button>작성</button>
-        </div>
-      </div>
-    </div> */
-}

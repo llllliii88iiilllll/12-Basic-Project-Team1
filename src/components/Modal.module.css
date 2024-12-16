@@ -67,7 +67,7 @@
 
 .modal_textarea {
   background-color: var(--gray-scale-20);
-  color: var(--gray-scale-40);
+  color: var(--gray-scale-60);
   font-size: 16px;
   font-weight: 400;
   line-height: 22px;
@@ -81,6 +81,10 @@
   @media (max-width: 767px) {
     height: 278px;
   }
+}
+
+.modal_textarea::placeholder {
+  color: var(--gray-scale-40);
 }
 
 .modal_btn {
