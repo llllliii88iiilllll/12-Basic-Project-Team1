@@ -11,7 +11,7 @@ import ThumbsDownImg from "../assets/Icon/thumbs-down.svg";
 import EmptyImg from "../assets/Images/empty.png";
 import styles from "./FeedPage.module.css";
 
-// 식산 계산 함수
+// 시간 계산 함수
 const getRelativeTime = (dateString) => {
   const now = new Date();
   const targetDate = new Date(dateString);
