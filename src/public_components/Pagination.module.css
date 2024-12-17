@@ -20,6 +20,9 @@
 .pagination li.active {
   color: var(--brown-scale-40);
 }
+.pagination li.disabled:hover {
+  cursor: inherit;
+}
 .pagination li.disabled:hover svg {
   fill: var(--gray-scale-40);
 }

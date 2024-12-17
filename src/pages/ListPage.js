@@ -11,91 +11,97 @@ import Pagination from "../public_components/Pagination";
 import LogoImage from "../assets/Images/logo.svg";
 
 function ListPage() {
-  const [sort, setSort] = useState(localStorage.getItem("sort") || "time");
-  const [items, setItems] = useState({ results: [] });
-  const [loading, setLoading] = useState(true);
-  const [limit, setLimit] = useState(
-    parseInt(localStorage.getItem("limit") || 8)
-  );
-  const [currentPage, setCurrentPage] = useState(
-    parseInt(localStorage.getItem("currentPage") || 1)
-  );
-  const [totalPages, setTotalPages] = useState(0);
   const { width } = useWindowSize();
-
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleLoad = async () => {
-    setLoading(true);
-    try {
-      const response = await getSubjects({
-        offset: (currentPage - 1) * limit,
-        sort,
-        limit,
-      });
-      if (response && response.results) {
-        const sortedResults = [...response.results].sort((a, b) =>
-          sort === "time" ? b.time - a.time : a.name.localeCompare(b.name, "ko")
-        );
-        setItems({ results: sortedResults });
-        setTotalPages(Math.ceil(response.count / limit));
-      } else {
-        setItems({ results: [] });
-      }
-    } catch (error) {
-      console.error("데이터를 불러오는데 실패하였습니다.", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [sort, setSort] = useState(localStorage.getItem("sort") || "time");
+  const [items, setItems] = useState({ results: [] });
+  const [loading, setLoading] = useState(true);
+  const [limit, setLimit] = useState(8);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isReady, setIsReady] = useState(false);
 
-  // 화면 크기에 따른 limit 업데이트
-  useEffect(() => {
-    const newLimit = width >= 868 ? 8 : 6;
-    if (newLimit !== limit) {
-      setLimit(newLimit);
-      localStorage.setItem("limit", newLimit);
-    }
-  }, [width, limit]);
-
-  // URL에서 페이지와 정렬 값 가져오기
+  // URL에서 상태 가져오기 (최초 1회)
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const pageFromUrl = parseInt(params.get("page")) || 1;
     const sortFromUrl = params.get("sort") || "time";
 
-    setSort(sortFromUrl);
     setCurrentPage(pageFromUrl);
-
-    // localStorage에 상태를 저장하기
-    localStorage.setItem("currentPage", pageFromUrl);
-    localStorage.setItem("sort", sortFromUrl);
+    setSort(sortFromUrl);
+    setIsReady(true); // URL 상태 동기화 완료
   }, [location.search]);
 
+  // 화면 크기에 따른 limit 업데이트
   useEffect(() => {
-    handleLoad();
-  }, [sort, currentPage, limit]);
+    const newLimit = width >= 868 ? 8 : 6;
+    setLimit(newLimit);
+  }, [width]);
+
+  // 데이터 fetching
+  useEffect(() => {
+    if (!isReady) return;
+
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await getSubjects({
+          offset: (currentPage - 1) * limit,
+          sort,
+          limit,
+        });
+        if (response && response.results) {
+          const sortedResults = [...response.results].sort((a, b) =>
+            sort === "time"
+              ? b.time - a.time
+              : a.name.localeCompare(b.name, "ko")
+          );
+          setItems({ results: sortedResults });
+          setTotalPages(Math.ceil(response.count / limit));
+        } else {
+          setItems({ results: [] });
+          setTotalPages(1);
+        }
+      } catch (error) {
+        console.error("데이터를 불러오는데 실패하였습니다.", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [currentPage, limit, sort, isReady]);
 
   // 페이지 변경 시 URL 업데이트
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber); // 페이지 번호 상태 즉시 업데이트
+    const params = new URLSearchParams(location.search);
+    params.set("page", pageNumber);
+    params.set("sort", sort); // 현재 sort 값을 URL에 반영
+    navigate(`?${params.toString()}`); // URL 갱신
+    setCurrentPage(pageNumber); // 상태 업데이트
   };
 
   // 정렬 변경 시 URL 업데이트
   const handleSortChange = (newSort) => {
-    setSort(newSort); // 정렬 상태 즉시 업데이트
-    setCurrentPage(currentPage);
+    const params = new URLSearchParams(location.search);
+    params.set("page", currentPage); // 현재 페이지는 유지
+    params.set("sort", newSort); // 새로운 정렬 기준을 URL에 반영
+    navigate(`?${params.toString()}`); // URL 갱신
+    setSort(newSort); // 상태 업데이트
   };
 
-  // currentPage 변경시 navigate 호출
+  // currentPage가 totalPages보다 클 경우, currentPage를 totalPages로 설정
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    params.set("page", currentPage);
-    params.set("sort", sort);
-    navigate(`?${params.toString()}`);
-    handleLoad(); // navigate 후 데이터 로드
-  }, [currentPage, sort, navigate]);
+    if (totalPages > 0 && currentPage > totalPages) {
+      // page 파라미터가 없을 경우는 page=0이 되어 음수 페이지네이션이 나옴, 그래서 > 0 조건을 달아주어야 함
+      setCurrentPage(totalPages);
+      const params = new URLSearchParams(location.search);
+      params.set("page", totalPages);
+      navigate(`?${params.toString()}`);
+    }
+  }, [totalPages, currentPage]);
 
   return (
     <div className={styles.list_wrap}>
@@ -120,8 +126,6 @@ function ListPage() {
             <UserCard items={items.results} />
             <Pagination
               setCurrentPage={handlePageChange}
-              handleLoad={handleLoad}
-              limit={limit}
               currentPage={currentPage}
               totalPages={totalPages}
             />
