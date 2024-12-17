@@ -57,7 +57,7 @@
   font-size: 14px;
   font-weight: var(--font-weight-medium);
   line-height: 18px;
-  padding: 4px 12px;
+  padding: 6px 12px 4px;
   border-radius: 8px;
 }
 .section_badge {
@@ -89,7 +89,11 @@
 .section_title__content {
   font-size: 18px;
   font-weight: 400px;
-  line-height: 18px;
+  line-height: 24px;
+  @media (max-width: 767) {
+    font-size: 16px;
+    line-height: 22px;
+  }
 }
 
 .section_reactions {

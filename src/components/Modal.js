@@ -1,10 +1,10 @@
 import MessageImg from "../assets/Icon/messages.svg";
 import CloseImg from "../assets/Icon/close.svg";
 import styles from "./Modal.module.css";
-import Profile from "../assets/Images/profile.png";
+// import Profile from "../assets/Images/profile.png";
 import { useState } from "react";
 
-const Modal = ({ onClose }) => {
+const Modal = ({ onClose, userData }) => {
   const [question, setQuestion] = useState("");
 
   const heandleTextareaChange = (e) => {
@@ -29,8 +29,8 @@ const Modal = ({ onClose }) => {
       </div>
       <div className={styles.modal_title}>
         <p>To.</p>
-        <img src={Profile} alt="프로필이미지" />
-        <h2>아초는고양이</h2>
+        <img src={userData.imageSource} alt="프로필이미지" />
+        <h2>{userData.name}</h2>
       </div>
       <textarea
         className={styles.modal_textarea}
