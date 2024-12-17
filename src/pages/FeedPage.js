@@ -33,7 +33,7 @@ const getRelativeTime = (dateString) => {
 function FeedPage() {
   const { id } = useParams();
   const [userData, setUserData] = useState({});
-  const [questions, setQuestions] = useState([]); // 질문 목록 상태 추가
+  const [questions, setQuestions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -120,7 +120,7 @@ function FeedPage() {
 
       {/* 질문작성 버튼 */}
       <ButtonFloating onClick={openModal} />
-      {isModalOpen && <Modal onClose={closeModal} />}
+      {isModalOpen && <Modal onClose={closeModal} userData={userData} />}
     </>
   );
 }

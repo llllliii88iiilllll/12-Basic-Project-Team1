@@ -31,6 +31,10 @@
 
 .modal_header .close_img {
   cursor: pointer;
+  @media (max-width: 767px) {
+    width: 22px;
+    height: 22px;
+  }
 }
 
 .modal_header h1 {
@@ -39,6 +43,10 @@
   font-weight: 400;
   line-height: 30px;
   flex-grow: 1;
+  @media (max-width: 767px) {
+    font-size: 20px;
+    line-height: 25px;
+  }
 }
 
 .modal_title {
@@ -55,6 +63,7 @@
 }
 
 .modal_title h2 {
+  font-family: "Pretendard Variable", Pretendard, -apple-system;
   font-size: 16px;
   font-weight: 400;
   line-height: 22px;
@@ -63,11 +72,13 @@
 .modal_title img {
   width: 28px;
   height: 28px;
+  border-radius: 50%;
 }
 
 .modal_textarea {
   background-color: var(--gray-scale-20);
   color: var(--gray-scale-60);
+  font-family: "Pretendard Variable", Pretendard, -apple-system;
   font-size: 16px;
   font-weight: 400;
   line-height: 22px;
@@ -90,6 +101,7 @@
 .modal_btn {
   background-color: var(--brown-scale-40);
   color: var(--gray-scale-10);
+  font-family: "Pretendard Variable", Pretendard, -apple-system;
   font-size: 16px;
   font-weight: 400;
   line-height: 22px;
