@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./MainPage.module.css";
 import InputField from "../public_components/InputField";
 import ButtonDark from "../public_components/ButtonDark";
+import ButtonLightAnswer from "../public_components/ButtonLightAnswer";
 import LogoImage from "../assets/Images/logo.svg";
 
 function MainPage() {
@@ -42,20 +43,26 @@ function MainPage() {
 
   return (
     <div className={styles.main_wrap}>
-      <header className={styles.header}>
-        <img src={LogoImage} alt="로고 이미지" className={styles.logo} />
-      </header>
-      <main className={styles.main_body}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <InputField
-            placeholder="이름을 입력하세요"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <ButtonDark disabled={!name.trim()}>질문 받기</ButtonDark>
-        </form>
-        {error && <p className={styles.error}>{error}</p>}
-      </main>
+        <div className={styles.background_image}></div>
+        <header className={styles.header}>
+            <img src={LogoImage} alt="로고 이미지" className={styles.logo} />
+        </header>
+        <div className={styles.ask_button_wrapper}>
+            <ButtonLightAnswer>질문하러 가기</ButtonLightAnswer>
+        </div>
+        <main className={styles.main_body}>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <InputField
+                    placeholder="이름을 입력하세요"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <ButtonDark disabled={!name.trim()} type="submit">
+                    질문 받기
+                </ButtonDark>
+            </form>
+            {error && <p className={styles.error}>{error}</p>}
+        </main>
     </div>
   );
 }
