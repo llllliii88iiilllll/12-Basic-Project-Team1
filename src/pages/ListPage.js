@@ -79,21 +79,23 @@ function ListPage() {
 
   // 페이지 변경 시 URL 업데이트
   const handlePageChange = (pageNumber) => {
-    const params = new URLSearchParams(location.search);
-    params.set("page", pageNumber);
-    params.set("sort", sort);
-    navigate(`?${params.toString()}`);
-    localStorage.setItem("currentPage", pageNumber);
+    setCurrentPage(pageNumber); // 페이지 번호 상태 즉시 업데이트
   };
 
   // 정렬 변경 시 URL 업데이트
   const handleSortChange = (newSort) => {
-    const params = new URLSearchParams(location.search);
-    params.set("page", 1);
-    params.set("sort", newSort);
-    navigate(`?${params.toString()}`);
-    localStorage.setItem("sort", newSort);
+    setSort(newSort); // 정렬 상태 즉시 업데이트
+    setCurrentPage(currentPage);
   };
+
+  // currentPage 변경시 navigate 호출
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    params.set("page", currentPage);
+    params.set("sort", sort);
+    navigate(`?${params.toString()}`);
+    handleLoad(); // navigate 후 데이터 로드
+  }, [currentPage, sort, navigate]);
 
   return (
     <div className={styles.list_wrap}>
