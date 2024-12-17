@@ -34,6 +34,9 @@ function MainPage() {
 
       const data = await response.json();
 
+      // 로컬 스토리지 활용 답변하러 가기 버튼 경로 지정
+      localStorage.setItem("createId", data.feedId);
+
       // 피드 id 활용하여 답변하기 페이지 이동
       navigate(`/post/${data.feedId}/answer`);
     } catch (err) {
