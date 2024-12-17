@@ -103,11 +103,11 @@ function FeedPage() {
                 <div className={styles.section_reactions}>
                   <div>
                     <img src={ThumbsUpImg} alt="좋아요 아이콘" />
-                    좋아요 {question.like}
+                    좋아요 {question.like > 999 ? "+999" : question.like}
                   </div>
                   <div>
                     <img src={ThumbsDownImg} alt="싫어요 아이콘" />
-                    싫어요 {question.dislike}
+                    싫어요 {question.like > 999 ? "+999" : question.like}
                   </div>
                 </div>
               </div>
