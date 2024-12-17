@@ -48,8 +48,10 @@ function MainPage() {
             <img src={LogoImage} alt="로고 이미지" className={styles.logo} />
         </header>
         <div className={styles.ask_button_wrapper}>
-            <ButtonLightAnswer>질문하러 가기</ButtonLightAnswer>
-        </div>
+        <ButtonLightAnswer>
+          <span className={styles.button_light_custom}>질문하러 가기</span>
+        </ButtonLightAnswer>
+      </div>
         <main className={styles.main_body}>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <InputField
