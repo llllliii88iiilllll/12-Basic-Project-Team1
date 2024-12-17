@@ -37,6 +37,18 @@
   }
 }
 
+/* 질문섹션 */
+.questions_box__section {
+  background-color: var(--gray-scale-10);
+  width: 100%;
+  min-height: 243px;
+  height: 100%;
+  padding: 32px;
+  margin-top: 18px;
+  border-radius: 16px;
+}
+/*  */
+
 .empty_img {
   width: 150px;
   height: 154px;
