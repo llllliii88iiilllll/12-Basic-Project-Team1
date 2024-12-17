@@ -38,7 +38,7 @@ const QuestionBox = ({ userData, questions }) => {
         </div>
         {userData.questionCount > 0 ? (
           questions.map((question) => (
-            <div key={question.id} className={styles.section}>
+            <div className={styles.section} key={question.id}>
               <div className={styles.section_badge}>미답변</div>
               <div className={styles.section_title}>
                 <p className={styles.section_title__date}>
