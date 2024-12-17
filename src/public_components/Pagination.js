@@ -2,25 +2,22 @@ import styles from "./Pagination.module.css";
 import { ReactComponent as IcArrowRight } from "../assets/Icon/arrow_right.svg";
 import { ReactComponent as IcArrowLeft } from "../assets/Icon/arrow_left.svg";
 
-function Pagination({
-  setCurrentPage,
-  handleLoad,
-  limit,
-  currentPage,
-  totalPages,
-}) {
+function Pagination({ setCurrentPage, currentPage, totalPages }) {
   const btnRange = 5;
-  const currentSet = Math.ceil(totalPages / btnRange);
+
+  const currentSet = Math.ceil(currentPage / btnRange);
   const startPage = (currentSet - 1) * btnRange + 1;
-  const endPage = Math.min(totalPages, startPage + btnRange - 1);
+  const endPage = Math.min(totalPages, currentSet * btnRange);
+
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const goToPreviousSet = () => {
     if (startPage > 1) {
       const newStartPage = Math.max(1, startPage - btnRange);
       const newEndPage = newStartPage + btnRange - 1;
       setCurrentPage(newEndPage);
-      const offset = (newEndPage - 1) * limit;
-      handleLoad({ offset, limit: limit });
     }
   };
 
@@ -28,15 +25,7 @@ function Pagination({
     if (endPage < totalPages) {
       const newStartPage = endPage + 1;
       setCurrentPage(newStartPage);
-      const offset = (newStartPage - 1) * limit;
-      handleLoad({ offset, limit: limit });
     }
-  };
-
-  const goToPage = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    const offset = (pageNumber - 1) * limit;
-    handleLoad({ offset, limit: limit });
   };
 
   return (
@@ -50,16 +39,18 @@ function Pagination({
         <IcArrowLeft />
       </li>
 
-      {Array.from({ length: totalPages }, (_, idx) => {
-        const pageNumber = idx + 1;
+      {Array.from({ length: endPage - startPage + 1 }, (_, idx) => {
+        const pageNumber = startPage + idx;
         return (
-          <li
-            key={pageNumber}
-            onClick={() => goToPage(pageNumber)}
-            className={currentPage === pageNumber ? styles.active : ""}
-          >
-            {pageNumber}
-          </li>
+          pageNumber <= totalPages && (
+            <li
+              key={pageNumber}
+              onClick={() => goToPage(pageNumber)}
+              className={currentPage === pageNumber ? styles.active : ""}
+            >
+              {pageNumber}
+            </li>
+          )
         );
       })}
 
