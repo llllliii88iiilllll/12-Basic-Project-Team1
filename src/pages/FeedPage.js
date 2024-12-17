@@ -54,6 +54,7 @@ function FeedPage() {
       <QuestionBox userData={userData} questions={questions} />
       {/* 질문 작성하기 버튼 */}
       <ButtonFloating onClick={openModal} />
+      {/* 모달창 오픈 */}
       {isModalOpen && <Modal onClose={closeModal} userData={userData} />}
     </>
   );
