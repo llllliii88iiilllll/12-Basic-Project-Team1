@@ -38,8 +38,12 @@ const QuestionBox = ({ userData, questions }) => {
         </div>
         {userData.questionCount > 0 ? (
           questions.map((question) => (
-            <div key={question.id} className={styles.section}>
-              <div className={styles.section_badge}>미답변</div>
+            <div className={styles.section} key={question.id}>
+              {question.answerContent ? (
+                <div className={styles.section_badge__active}>답변 완료</div>
+              ) : (
+                <div className={styles.section_badge}>미답변</div>
+              )}
               <div className={styles.section_title}>
                 <p className={styles.section_title__date}>
                   질문•{getRelativeTime(question.createdAt)}
@@ -48,6 +52,17 @@ const QuestionBox = ({ userData, questions }) => {
                   {question.content}
                 </p>
               </div>
+              {question.answerContent && (
+                <div className={styles.section_answer}>
+                  <img src={userData.imageSource} alt="프로필이미지" />
+                  <p className={styles.section_answer__title}>
+                    {userData.name}•{getRelativeTime(question.answerCreatedAt)}
+                  </p>
+                  <p className={styles.section_answer__content}>
+                    {question.answerContent}
+                  </p>
+                </div>
+              )}
               <div className={styles.section_reactions}>
                 <div>
                   <button>
@@ -59,7 +74,7 @@ const QuestionBox = ({ userData, questions }) => {
                   <button>
                     <img src={ThumbsDownImg} alt="싫어요 아이콘" />
                   </button>
-                  싫어요 {question.like > 999 ? "+999" : question.like}
+                  싫어요 {question.dislike > 999 ? "+999" : question.dislike}
                 </div>
               </div>
             </div>

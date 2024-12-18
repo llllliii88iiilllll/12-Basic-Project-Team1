@@ -52,7 +52,7 @@
   gap: 32px;
 }
 .section_badge,
-.active {
+.section_badge__active {
   font-family: "Pretendard Variable", Pretendard, -apple-system;
   font-size: 14px;
   font-weight: var(--font-weight-medium);
@@ -66,7 +66,7 @@
   background-color: var(--gray-scale-10);
   border: 1px solid var(--gray-scale-40);
 }
-.active {
+.section_badge__active {
   width: 79px;
   color: var(--brown-scale-40);
   background-color: var(--gray-scale-10);
@@ -111,6 +111,16 @@
   display: flex;
   justify-content: center;
   gap: 6px;
+}
+
+.section_answer img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  @media (max-width: 767px) {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 /* 질문없을 때, 빈페이지 */
