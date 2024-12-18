@@ -69,10 +69,8 @@ Copyright 2024 코드잇 Inc. All rights reserved.
   - 질문 작성 모달 기능
 <br><br>
 ## 🏁 팀 규칙
-- 컨벤션
-- PR 규칙
-- 데일리스크럼, KPT 규칙
-- 노션 사용 규칙
+- [규칙 상세 링크](https://github.com/llllliii88iiilllll/12-Basic-Project-Team1/wiki/%ED%8C%80-%EA%B7%9C%EC%B9%99-(-%EC%BB%A8%EB%B2%A4%EC%85%98,-PR,-%EB%8D%B0%EC%9D%BC%EB%A6%AC%EC%8A%A4%ED%81%AC%EB%9F%BC,-KPT,-%EB%85%B8%EC%85%98-%EA%B7%9C%EC%B9%99))  
+    - 컨벤션, PR, 데일리스크럼, KPT, 노션
 <br><br>
 
 ## 👀  프로젝트 미리보기
