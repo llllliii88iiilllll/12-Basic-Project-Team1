@@ -1,75 +1,108 @@
-<<<<<<< HEAD
-# fe12_2_1_project
-FE12기 파트2 1팀 프로젝트 레포지토리입니다.
-=======
-# Getting Started with Create React App
+# 🙋 OPENMIND
+익명 질문 공유 서비스 "오픈마인드"를 개발하였습니다.
+<br><br>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Codeit Sprint FE 12기 - Part2 1팀<br>
+배포 URL : https://12-basic-project-team1.netlify.app<br>
+Copyright 2024 코드잇 Inc. All rights reserved.
 
-## Available Scripts
+<br>
 
-In the project directory, you can run:
+## 🕰️ 개발기간
+**24.12.10 - 24.12.24**
+<br><br>
 
-### `npm start`
+## 💫  팀원소개
+|![title](https://avatars.githubusercontent.com/u/184628834?v=4)  | ![title](https://avatars.githubusercontent.com/u/82001503?v=4) | ![title](https://avatars.githubusercontent.com/u/184471517?v=4)  |
+| --- | --- | --- |
+| **<center>[🔗 이승환](https://github.com/mynameishwan)</center>** | **<center>[🔗 장호영](https://github.com/loin99)</center>** | **<center>[🔗 김혜선](https://github.com/llllliii88iiilllll)</center>** |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<br><br>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+##  🖥️  프론트엔드 개발 환경
 
-### `npm test`
+**⚒️  기술 스택**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white) ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+<br><br>
+**🧑‍🤝‍🧑 협업툴**
+<br><br>
+![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white) ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white) ![KakaoTalk](https://img.shields.io/badge/kakaotalk-ffcd00.svg?style=for-the-badge&logo=kakaotalk&logoColor=000000) ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white) ![Prettier](https://img.shields.io/badge/prettier-%23F7B93E.svg?style=for-the-badge&logo=prettier&logoColor=black)
+<br><br>
+**🧑‍💻 개발 툴**
 
-### `npm run build`
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white) 
+<br><br>
+**🚀 배포**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br><br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##  📍 팀원별 역할 분담
+- 페이지별로 역할을 분담하였습니다.
 
-### `npm run eject`
+### 👨‍💻 장호영
+- 페이지 : 메인페이지(/), 답변페이지(answer)
+- 공통 : 노션 스프린트 기능 설정, 발표 
+- 기능
+    - 메인페이지 : 질문 피드 생성, 로그인 기능(로컬스토리지 사용, id값 저장)
+    - 답변페이지 : 답변페이지 불러오기, 답변 생성, 수정, 삭제 기능
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 👩‍💻 김혜선
+- 페이지 : 목록(/list) 페이지
+- 공통 : GlobalStyle 설정, 공용 컴포넌트 스타일 설정, 프로젝트 노션 설정
+- 기능
+  - 질문자 목록 불러오기, 페이지네이션 기능
+  - 최신순/이름순 정렬 기능
+   - 사용자에 따른 답변 페이지 이동 기능(로컬스토리지 사용)
+  - 목록 페이지 반응형 적용
+  - 목록 새로고침, 뒤로가기 버튼시 페이지 번호, 정렬 유지
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 🧑‍💻 이승환
+- 페이지 : 개별 피드(/post/{id}) 페이지
+- 기능
+  - 질문 목록 불러오기, SNS 공유 기능
+  - 답변, 미답변, 답변 거절 상태 표시 기능
+  - 좋아요/싫어요 기능
+  - 질문 작성 모달 기능
+<br><br>
+## 🏁 팀 규칙
+- [규칙 상세 링크](https://buly.kr/15NvmwC)  
+    - 컨벤션, PR, 데일리스크럼, KPT, 노션, 소통 규칙
+<br><br>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 👀  프로젝트 미리보기
+### 1. 메인페이지
+-  **[질문받기]** 클릭시 입력한 이름으로 질문 대상이 생성되고 답변을 할 수 있는 페이지로 이동합니다.
+- **[질문하러가기]** 클릭시 이미 생성된 질문 대상 목록 페이지로 이동합니다.
+<br>
 
-## Learn More
+### 2. 질문 대상 목록 페이지
+- 현재 만들어진 질문 대상들을 최신순, 이름순으로 볼 수 있습니다. (기본값은 최신순)
+- 페이지네이션의 이전/다음 버튼은 1~5페이지를 한 세트로 이전/다음 세트로 이동합니다.
+- 질문 대상의 받은 질문 개수를 확인 할 수 있고, 질문 대상을 클릭시 질문을 할 수 있는 페이지로 이동합니다.
+- **[답변하러가기]** 클릭시 메인페이지에서 생성한 이름이 있다면 해당 이름의 답변 페이지로 이동합니다.
+<br>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 3. 질문 페이지
+- 현재 페이지를 링크 복사, 카카오톡/페이스북으로 공유할 수 있습니다.
+- 질문 생성 날짜와 답변 생성 날짜를 확인 할 수 있습니다.
+- 받은 질문의 개수를 확인할 수 있고, 답변 상태를 확인할 수 있습니다.
+- 답변에 대한 좋아요/싫어요 개수를 확인할 수 있고 누를 수 있습니다.
+- **[질문 작성하기]** 클릭시 질문을 작성할 수 있는 모달창이 띄워집니다.
+<br>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 4. 답변 페이지
+- 질문에 대한 답변을 생성, 수정, 삭제할 수 있습니다.
+- 질문에 대한 답변을 거절할 수 있습니다.
+<br><br>
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
->>>>>>> 880d9233cd037be0ca5cf08ef74c129227f76905
+## 🎉 프로젝트 후기
+### 😀 이승환
+**
+### 😃 장호영
+**
+### 😄 김혜선
+**
