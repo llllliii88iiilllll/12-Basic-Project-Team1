@@ -1,13 +1,10 @@
-import { Link } from "react-router-dom";
 import styles from "./ButtonDark.module.css";
 
-function ButtonDark({ disabled, children, to }) {
+function ButtonDark({ disabled, children }) {
   return (
-    <Link to="{to}">
-      <button className={styles.button_dark} disabled={disabled}>
-        {children}
-      </button>
-    </Link>
+    <button className={styles.button_dark} disabled={disabled}>
+      {children}
+    </button>
   );
 }
 

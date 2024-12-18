@@ -4,6 +4,7 @@ import MainPage from "./pages/MainPage";
 import FeedPage from "./pages/FeedPage";
 import ListPage from "./pages/ListPage";
 import AnswerPage from "./pages/AnswerPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   // 카카오톡 SDK 초기화
@@ -23,6 +24,7 @@ function App() {
           <Route index element={<FeedPage />} />
           <Route path=":subjectId" element={<AnswerPage />} />
         </Route>
+        <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

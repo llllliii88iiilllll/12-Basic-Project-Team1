@@ -47,27 +47,26 @@ function MainPage() {
 
   return (
     <div className={styles.main_wrap}>
-        <div className={styles.background_image}></div>
-        <header className={styles.header}>
-            <img src={LogoImage} alt="로고 이미지" className={styles.logo} />
-        </header>
-        <div className={styles.ask_button_wrapper}>
-          <Link to="/list">
-            <ButtonLightAnswer>
-              <span className={styles.button_light_custom}>질문하러 가기</span>
-            </ButtonLightAnswer>
-          </Link>
+      <div className={styles.background_image}></div>
+      <header className={styles.header}>
+        <img src={LogoImage} alt="로고 이미지" className={styles.logo} />
+      </header>
+      <div className={styles.ask_button_wrapper}>
+        <Link to="/list">
+          <ButtonLightAnswer>
+            <span className={styles.button_light_custom}>질문하러 가기</span>
+          </ButtonLightAnswer>
+        </Link>
       </div>
-        <main className={styles.main_body}>
-            <form onSubmit={handleSubmit} className={styles.form}>
-                <InputField
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <ButtonDark to={`/post/${name}/answer`}>질문 받기</ButtonDark>
-            </form>
-            {error && <p className={styles.error}>{error}</p>}
-        </main>
+      <main className={styles.main_body}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <InputField value={name} onChange={(e) => setName(e.target.value)} />
+          <Link to="/post/${name}/answer">
+            <ButtonDark>질문 받기</ButtonDark>
+          </Link>
+        </form>
+        {error && <p className={styles.error}>{error}</p>}
+      </main>
     </div>
   );
 }

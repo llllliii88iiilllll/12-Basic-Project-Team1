@@ -1,0 +1,27 @@
+.notfound_wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 600px;
+  margin: 150px auto;
+}
+.notfound_wrap img {
+  width: 60%;
+}
+.notfound_txt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.notfound_txt p:first-child {
+  font-size: var(--font-size-h1);
+}
+.notfound_txt p:nth-child(2) {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+}
+.notfound_wrap button {
+  width: 366px;
+}
