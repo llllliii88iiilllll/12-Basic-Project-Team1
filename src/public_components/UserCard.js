@@ -37,8 +37,14 @@ function UserCard({ items }) {
               <img src={IcMessage} alt="메시지 아이콘" />
               아직 답변자가 없습니다.
             </p>
-            <EmptyBox alt="빈박스 이미지" />
-            <ButtonDark disabled={false}>메인페이지로 이동하기</ButtonDark>
+            <img
+              src={EmptyBox}
+              className={styles.img_empty_box}
+              alt="빈박스 이미지"
+            />
+            <Link to="/">
+              <ButtonDark disabled={false}>메인페이지로 이동하기</ButtonDark>
+            </Link>
           </div>
         </>
       )}

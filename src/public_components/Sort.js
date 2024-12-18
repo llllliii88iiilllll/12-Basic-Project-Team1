@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import IcDown from "../assets/Icon/arrow_down.svg";
 import IcUp from "../assets/Icon/arrow_up.svg";
 
-function Sort({ setSort }) {
+function Sort({ setSort, currentSort }) {
   const selectRef = useRef(null);
   const [currentValue, setCurrentValue] = useState("최신순");
   const [showOptions, setShowOptions] = useState(false);
@@ -16,6 +16,12 @@ function Sort({ setSort }) {
     setCurrentValue(sortName);
     setSort(sortValue);
   };
+
+  useEffect(() => {
+    // URL 파라미터 값에 따라 선택된 항목 표시
+    if (currentSort === "time") setCurrentValue("최신순");
+    if (currentSort === "name") setCurrentValue("이름순");
+  }, [currentSort]);
 
   useEffect(() => {
     function handleClickOutside(event) {
