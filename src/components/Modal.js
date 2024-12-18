@@ -1,7 +1,6 @@
 import MessageImg from "../assets/Icon/messages.svg";
 import CloseImg from "../assets/Icon/close.svg";
 import styles from "./Modal.module.css";
-// import Profile from "../assets/Images/profile.png";
 import { useState } from "react";
 
 const Modal = ({ onClose, userData }) => {
