@@ -16,6 +16,7 @@ Copyright 2024 코드잇 Inc. All rights reserved.
 |![title](https://avatars.githubusercontent.com/u/184628834?v=4)  | ![title](https://avatars.githubusercontent.com/u/82001503?v=4) | ![title](https://avatars.githubusercontent.com/u/184471517?v=4)  |
 | --- | --- | --- |
 | **<center>[🔗 이승환](https://github.com/mynameishwan)</center>** | **<center>[🔗 장호영](https://github.com/loin99)</center>** | **<center>[🔗 김혜선](https://github.com/llllliii88iiilllll)</center>** |
+
 <br><br>
 
 ##  🖥️  프론트엔드 개발 환경
