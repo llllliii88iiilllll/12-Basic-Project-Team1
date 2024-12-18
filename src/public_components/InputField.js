@@ -1,7 +1,7 @@
 import styles from "./InputField.module.css";
 import { ReactComponent as IcPerson } from "../assets/Icon/person.svg";
 
-function InputField() {
+function InputField({ value, onChange, placeholder }) {
   return (
     <div className={styles.input_wrap}>
       <input
