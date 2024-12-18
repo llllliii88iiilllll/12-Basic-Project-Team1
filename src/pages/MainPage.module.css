@@ -1,98 +1,86 @@
 .main_wrap {
-    width: 100%;
-    max-width: 1200px;
-    height: 832px;
-    margin: 0 auto;
-    position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 832px;
+  margin: 0 auto;
+  position: relative;
 }
 
 /* 배경 이미지 */
 .background_image {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1200px;
-    height: 627px;
-    background: url("../assets/Images/v872batch5-nunny-04.svg") no-repeat center/cover;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1200px;
+  height: 627px;
+  background: url("../assets/Images/v872batch5-nunny-04.svg") no-repeat
+    center/cover;
 }
 
 /* PC 버전 */
 @media (min-width: 1200px) {
-    .main_wrap {
-        margin-left: auto;
-        margin-right: auto;
-    }
+  .main_wrap {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* Tablet 버전 */
 @media (max-width: 1199px) and (min-width: 768px) {
-    .main_wrap {
-        width: 768px;
-    }
+  .main_wrap {
+    width: 768px;
+  }
 }
 
 /* Mobile 버전 */
 @media (max-width: 767px) {
-    .main_wrap {
-        width: 375px;
-        height: 611px;
-    }
+  .main_wrap {
+    width: 375px;
+    height: 611px;
+  }
 }
-  
+
 .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 40px;
-    position: absolute;
-    top: 160px;
-    left: 372px;
- }
- 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  position: absolute;
+  top: 160px;
+  left: 372px;
+}
+
 .logo {
-    width: 456px;
-    height: 180px;
+  width: 456px;
+  height: 180px;
 }
-  
+
 .main_body {
-    position: absolute;
-    top: 364px;
-    left: 400px;
-    width: 400px;
-    height: 172px;
-    background-color: var(--gray-scale-10);
-    border-radius: 16px;
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-sizing: border-box;
+  position: absolute;
+  top: 364px;
+  left: 400px;
+  width: 400px;
+  height: 172px;
+  background-color: var(--gray-scale-10);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
 }
-  
+
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .ask_button_wrapper {
-    position: absolute;
-    top: 45px;
-    left: 909px;
-}
-
-.button_light_custom {
-    font-family: "Pretendard", sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 22px;
-    text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    color: #542F1A;
-    background: #F5F1EE; /* Brown/10 */
-    white-space: nowrap;
+  position: absolute;
+  top: 45px;
+  left: 909px;
 }
