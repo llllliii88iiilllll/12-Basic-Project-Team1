@@ -59,7 +59,7 @@ const QuestionBox = ({ userData, questions }) => {
                   <button>
                     <img src={ThumbsDownImg} alt="싫어요 아이콘" />
                   </button>
-                  싫어요 {question.like > 999 ? "+999" : question.like}
+                  싫어요 {question.dislike > 999 ? "+999" : question.dislike}
                 </div>
               </div>
             </div>
