@@ -73,15 +73,27 @@ function FeedPage() {
     fetchData();
   }, [id]);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+  };
 
   return (
     <>
       <Header userData={userData} />
       <QuestionBox userData={userData} questions={questions} />
       <ButtonFloating onClick={openModal} />
-      {isModalOpen && <Modal onClose={closeModal} userData={userData} />}
+      {isModalOpen && (
+        <Modal
+          onClose={closeModal}
+          userData={userData}
+          subjectId={id}
+          setQuestions={setQuestions}
+        />
+      )}
     </>
   );
 }
