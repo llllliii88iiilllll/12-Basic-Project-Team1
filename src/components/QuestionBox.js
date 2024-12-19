@@ -36,14 +36,17 @@ const QuestionBox = ({ userData, questions }) => {
               : "아직 질문이 없습니다"}
           </p>
         </div>
+        {/* uesrData.questionCount로 질문 있을때, 없을때 구분  */}
         {userData.questionCount > 0 ? (
           questions.map((question) => (
             <div className={styles.section} key={question.id}>
+              {/* badge 부분 */}
               {question.answerContent ? (
                 <div className={styles.section_badge__active}>답변 완료</div>
               ) : (
                 <div className={styles.section_badge}>미답변</div>
               )}
+              {/* question(질문) 부분 */}
               <div className={styles.section_title}>
                 <p className={styles.section_title__date}>
                   질문•{getRelativeTime(question.createdAt)}
@@ -52,17 +55,22 @@ const QuestionBox = ({ userData, questions }) => {
                   {question.content}
                 </p>
               </div>
+              {/* answer(답변) 부분 */}
               {question.answerContent && (
                 <div className={styles.section_answer}>
                   <img src={userData.imageSource} alt="프로필이미지" />
-                  <p className={styles.section_answer__title}>
-                    {userData.name}•{getRelativeTime(question.answerCreatedAt)}
-                  </p>
-                  <p className={styles.section_answer__content}>
-                    {question.answerContent}
-                  </p>
+                  <div>
+                    <p className={styles.section_answer__title}>
+                      {userData.name}
+                      <span>{getRelativeTime(question.answerCreatedAt)}</span>
+                    </p>
+                    <p className={styles.section_answer__content}>
+                      {question.answerContent}
+                    </p>
+                  </div>
                 </div>
               )}
+              {/* 좋아요/싫어요 버튼 */}
               <div className={styles.section_reactions}>
                 <div>
                   <button>
