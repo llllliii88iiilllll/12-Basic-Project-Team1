@@ -22,7 +22,6 @@ function FeedPage() {
   const [totalCount, setTotalCount] = useState(0); // 총 데이터 개수 추적
 
   const loadMoreRef = useRef(null); // IntersectionObserver의 대상이 될 ref
-  //const [showScrollToTop, setShowScrollToTop] = useState(false); // 상단으로 가는 버튼 표시 여부
 
   // 새로고침 시 최상단으로 스크롤 이동
   useEffect(() => {
@@ -157,12 +156,32 @@ function FeedPage() {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    // 모달이 열릴 때 스크롤 비활성화
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto"; // 모달이 닫히면 스크롤 활성화
+    }
+
+    // Cleanup: 컴포넌트 언마운트 시 overflow 복원
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isModalOpen]);
+
   return (
-    <div style={{ overflowY: "auto", minHeight: "100vh" }}>
+    <div
+      style={{
+        overflowY: "auto",
+        minHeight: "100vh",
+      }}
+    >
       <Header userData={userData} />
       <QuestionBox
         userData={userData}
-        questions={questions.slice(0, visibleCount)} // visibleCount에 맞는 질문만 전달
+        questions={questions.slice(0, visibleCount)}
+        updateQuestions={setQuestions}
       />
       {totalCount > visibleCount && !isLoading && (
         <div
@@ -180,6 +199,17 @@ function FeedPage() {
         />
       )}
       <ScrollToTopButton />
+      {isModalOpen && (
+        <div
+          style={{
+            backgroundColor: "rgba(0, 0, 0, 0.56)",
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            top: "0",
+          }}
+        ></div>
+      )}
     </div>
   );
 }

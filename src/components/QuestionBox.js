@@ -1,7 +1,9 @@
 import React from "react";
+import { useState } from "react";
+import { postReaction } from "../apis/PostReaction";
 import MessageImg from "../assets/Icon/messages.svg";
-import ThumbsUpImg from "../assets/Icon/thumbs-up.svg";
-import ThumbsDownImg from "../assets/Icon/thumbs-down.svg";
+import { ReactComponent as ThumbsUpImg } from "../assets/Icon/thumbs-up.svg";
+import { ReactComponent as ThumbsDownImg } from "../assets/Icon/thumbs-down.svg";
 import EmptyImg from "../assets/Images/empty.png";
 import styles from "./QuestionBox.module.css";
 
@@ -24,7 +26,38 @@ const getRelativeTime = (dateString) => {
   return `${weeks}주 전`;
 };
 
-const QuestionBox = ({ userData, questions }) => {
+const QuestionBox = ({ userData, questions, updateQuestions }) => {
+  const [activeReactions, setActiveReactions] = useState({});
+
+  const handleReaction = async (questionId, reactionType) => {
+    try {
+      const updatedQuestion = await postReaction(questionId, reactionType); // API 함수 호출
+      // API 호출이 성공하면 questions 상태를 업데이트
+      updateQuestions((prevQuestions) =>
+        prevQuestions.map((question) =>
+          question.id === updatedQuestion.id
+            ? {
+                ...question,
+                like: updatedQuestion.like,
+                dislike: updatedQuestion.dislike,
+              }
+            : question
+        )
+      );
+
+      // 활성화된 반응 상태 업데이트
+      setActiveReactions((prev) => ({
+        ...prev,
+        [questionId]: {
+          like: reactionType === "like" ? !prev[questionId]?.like : false,
+          dislike:
+            reactionType === "dislike" ? !prev[questionId]?.dislike : false,
+        },
+      }));
+    } catch (error) {
+      console.error("좋아요,싫어요 반영 실패", error);
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={styles.questions_box}>
@@ -73,20 +106,31 @@ const QuestionBox = ({ userData, questions }) => {
                   </div>
                 </div>
               )}
-              {/* 좋아요/싫어요 버튼 */}
+              {/* 좋아요,싫어요 버튼 */}
               <div className={styles.section_reactions}>
-                <div>
-                  <button>
-                    <img src={ThumbsUpImg} alt="좋아요 아이콘" />
-                  </button>
+                <button
+                  onClick={() => handleReaction(question.id, "like")}
+                  className={
+                    activeReactions[question.id]?.like || question.like > 0 // like가 0보다 크면 active
+                      ? styles.active
+                      : ""
+                  }
+                >
+                  <ThumbsUpImg alt="좋아요 아이콘" />
                   좋아요 {question.like > 999 ? "+999" : question.like}
-                </div>
-                <div>
-                  <button>
-                    <img src={ThumbsDownImg} alt="싫어요 아이콘" />
-                  </button>
+                </button>
+                <button
+                  onClick={() => handleReaction(question.id, "dislike")}
+                  className={
+                    activeReactions[question.id]?.dislike ||
+                    question.dislike > 0 // dislike가 0보다 크면 active
+                      ? styles.active
+                      : ""
+                  }
+                >
+                  <ThumbsDownImg alt="싫어요 아이콘" />
                   싫어요 {question.dislike > 999 ? "+999" : question.dislike}
-                </div>
+                </button>
               </div>
             </div>
           ))

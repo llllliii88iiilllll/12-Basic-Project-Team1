@@ -189,3 +189,26 @@
 .question-item {
   animation: fadeInSlideUp 0.5s ease-out forwards;
 }
+
+/* active 클래스 추가 */
+.active {
+  color: red;
+}
+
+.active svg {
+  fill: red;
+}
+
+.section_reactions button {
+  transition: filter 0.3s ease; /* 버튼 클릭 시 부드럽게 변화 */
+}
+
+.section_reactions:hover svg {
+  fill: blue;
+}
+.section_reactions:hover {
+  color: blue;
+}
+.section_reactions button:hover {
+  filter: brightness(1.1); /* hover 시 밝기 약간 증가 */
+}
