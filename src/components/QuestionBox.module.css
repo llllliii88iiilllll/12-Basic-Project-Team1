@@ -212,3 +212,23 @@
 .section_reactions button:hover {
   filter: brightness(1.1); /* hover 시 밝기 약간 증가 */
 }
+
+/* QuestionBox.module.css */
+.counter {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  display: inline-block;
+  display: flex;
+}
+
+.counter span {
+  display: block;
+  //opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.counter span.visible {
+  opacity: 1;
+}

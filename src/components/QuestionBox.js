@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { postReaction } from "../apis/PostReaction";
 import MessageImg from "../assets/Icon/messages.svg";
 import { ReactComponent as ThumbsUpImg } from "../assets/Icon/thumbs-up.svg";
@@ -27,7 +27,30 @@ const getRelativeTime = (dateString) => {
 };
 
 const QuestionBox = ({ userData, questions, updateQuestions }) => {
+  const [displayedCount, setDisplayedCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
   const [activeReactions, setActiveReactions] = useState({});
+
+  useEffect(() => {
+    if (userData.questionCount > 0) {
+      let start = 0;
+      const end = userData.questionCount;
+      const duration = 2000; // 2 seconds
+      const increment = Math.ceil(end / (duration / 50));
+
+      const counter = setInterval(() => {
+        start += increment;
+        if (start >= end) {
+          clearInterval(counter);
+          start = end;
+        }
+        setDisplayedCount(start);
+      }, 50);
+
+      setIsVisible(true);
+    }
+  }, [userData.questionCount]);
 
   const handleReaction = async (questionId, reactionType) => {
     try {
@@ -58,15 +81,23 @@ const QuestionBox = ({ userData, questions, updateQuestions }) => {
       console.error("좋아요,싫어요 반영 실패", error);
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.questions_box}>
         <div className={styles.questions_box__title}>
           <img src={MessageImg} alt="메세지 이미지" />
           <p>
-            {userData.questionCount > 0
-              ? `${userData.questionCount}개의 질문이 있습니다.`
-              : "아직 질문이 없습니다"}
+            {userData.questionCount > 0 ? (
+              <div className={styles.counter}>
+                <span className={isVisible ? "visible" : ""}>
+                  {displayedCount}
+                </span>
+                개의 질문이 있습니다.
+              </div>
+            ) : (
+              "아직 질문이 없습니다"
+            )}
           </p>
         </div>
         {/* uesrData.questionCount로 질문 있을때, 없을때 구분  */}
