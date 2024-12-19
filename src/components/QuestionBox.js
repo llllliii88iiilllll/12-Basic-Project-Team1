@@ -39,7 +39,10 @@ const QuestionBox = ({ userData, questions }) => {
         {/* uesrData.questionCount로 질문 있을때, 없을때 구분  */}
         {userData.questionCount > 0 ? (
           questions.map((question) => (
-            <div className={styles.section} key={question.id}>
+            <div
+              className={`${styles.section} ${styles["question-item"]}`}
+              key={question.id}
+            >
               {/* badge 부분 */}
               {question.answerContent ? (
                 <div className={styles.section_badge__active}>답변 완료</div>
