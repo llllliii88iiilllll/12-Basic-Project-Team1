@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getUserById } from "../apis/GetUserById";
 import { getQuestionsBySubjectId } from "../apis/GetQuestions";
 import { getAnswerById } from "../apis/GetAnswerById";
+import ScrollToTopButton from "../public_components/ScrollToTopButton";
 import Header from "../components/Header";
 import ButtonFloating from "../public_components/ButtonFloating";
 import Modal from "../components/Modal";
@@ -21,34 +22,12 @@ function FeedPage() {
   const [totalCount, setTotalCount] = useState(0); // 총 데이터 개수 추적
 
   const loadMoreRef = useRef(null); // IntersectionObserver의 대상이 될 ref
-  const [showScrollToTop, setShowScrollToTop] = useState(false); // 상단으로 가는 버튼 표시 여부
+  //const [showScrollToTop, setShowScrollToTop] = useState(false); // 상단으로 가는 버튼 표시 여부
 
   // 새로고침 시 최상단으로 스크롤 이동
   useEffect(() => {
     window.scrollTo(0, 0); // 페이지 로드 시 최상단으로 이동
   }, [id]); // id가 변경될 때마다 실행
-
-  // 스크롤 위치 감지하여 버튼 표시 여부 설정
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        // 300px 이상 스크롤 내리면 버튼을 보이도록
-        setShowScrollToTop(true);
-      } else {
-        setShowScrollToTop(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" }); // 상단으로 부드럽게 스크롤 이동
-  };
 
   // fetchAnswers 함수 정의
   const fetchAnswers = async (questions) => {
@@ -200,26 +179,7 @@ function FeedPage() {
           setQuestions={setQuestions}
         />
       )}
-      {/* 상단으로 가는 버튼 */}
-      {showScrollToTop && (
-        <button
-          onClick={scrollToTop}
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            right: "20px",
-            padding: "10px",
-            backgroundColor: "#007bff",
-            color: "white",
-            borderRadius: "50%",
-            fontSize: "20px",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          ↑
-        </button>
-      )}
+      <ScrollToTopButton />
     </div>
   );
 }
