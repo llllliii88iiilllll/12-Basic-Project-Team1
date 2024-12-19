@@ -61,9 +61,6 @@ function FeedPage() {
         return;
       }
 
-      console.log("API 응답:", questionsResponse); // 응답 확인
-      console.log("count 값:", questionsResponse.count); // 총 데이터 개수 확인
-
       setTotalCount(questionsResponse.count); // 전체 데이터 개수 추적
 
       // like와 dislike의 초기값을 설정
@@ -92,23 +89,12 @@ function FeedPage() {
     }
   };
 
-  // visibleCount와 totalCount에 따른 데이터 로드
-  useEffect(() => {
-    console.log(`visibleCount: ${visibleCount}, totalCount: ${totalCount}`);
-    if (visibleCount >= totalCount) {
-      console.log(
-        "모든 데이터가 로드되었으므로 더 이상 불러올 데이터가 없습니다."
-      );
-    }
-  }, [visibleCount, totalCount]);
-
   // IntersectionObserver로 스크롤 감지
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && nextUrlRef.current && !isLoading) {
-            console.log("스크롤 감지됨 - 더 불러오기!");
             fetchData(nextUrlRef.current); // nextUrl을 사용하여 추가 데이터 불러오기
             setVisibleCount((prev) => prev + 1); // visibleCount 증가
           }
@@ -156,20 +142,12 @@ function FeedPage() {
     nextUrlRef.current = nextUrl;
   }, [nextUrl]);
 
-  // visibleCount에 맞는 질문들만 필터링
-  useEffect(() => {
-    console.log(
-      "현재 visibleCount에 맞는 질문들:",
-      questions.slice(0, visibleCount)
-    );
-  }, [visibleCount, questions]);
-
   const openModal = () => {
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // 모달 닫기
+    setIsModalOpen(false);
   };
 
   return (
