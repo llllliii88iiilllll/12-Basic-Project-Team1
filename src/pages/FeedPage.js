@@ -175,6 +175,7 @@ function FeedPage() {
       style={{
         overflowY: "auto",
         minHeight: "100vh",
+        overflowY: "auto",
       }}
     >
       <Header userData={userData} />
@@ -204,9 +205,10 @@ function FeedPage() {
           style={{
             backgroundColor: "rgba(0, 0, 0, 0.56)",
             width: "100%",
-            height: "100%",
-            position: "absolute",
+            height: "100vh",
+            position: "fixed",
             top: "0",
+            left: "0",
           }}
         ></div>
       )}
