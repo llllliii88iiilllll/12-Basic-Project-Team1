@@ -47,9 +47,16 @@ function FeedPage() {
           console.error("질문 데이터를 불러오는 데 실패했습니다.");
           return;
         }
-        const questionsWithAnswers = await fetchAnswers(
-          questionsResponse.results
+        // like와 dislike의 초기값을 설정
+        const questionsWithDefaults = questionsResponse.results.map(
+          (question) => ({
+            ...question,
+            like: question.like ?? 0,
+            dislike: question.dislike ?? 0,
+          })
         );
+
+        const questionsWithAnswers = await fetchAnswers(questionsWithDefaults);
         setQuestions(questionsWithAnswers);
 
         const userResponse = await getUserById(id);
