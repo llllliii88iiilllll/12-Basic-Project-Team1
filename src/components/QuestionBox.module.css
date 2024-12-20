@@ -173,11 +173,10 @@
   margin-top: 4px;
 }
 
-/* 애니메이션을 위한 keyframes */
 @keyframes fadeInSlideUp {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* 아래에서 위로 올라오는 효과 */
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
@@ -185,50 +184,6 @@
   }
 }
 
-/* 애니메이션 클래스 추가 */
 .question-item {
   animation: fadeInSlideUp 0.5s ease-out forwards;
-}
-
-/* active 클래스 추가 */
-.active {
-  color: red;
-}
-
-.active svg {
-  fill: red;
-}
-
-.section_reactions button {
-  transition: filter 0.3s ease; /* 버튼 클릭 시 부드럽게 변화 */
-}
-
-.section_reactions:hover svg {
-  fill: blue;
-}
-.section_reactions:hover {
-  color: blue;
-}
-.section_reactions button:hover {
-  filter: brightness(1.1); /* hover 시 밝기 약간 증가 */
-}
-
-/* QuestionBox.module.css */
-.counter {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  position: relative;
-  display: inline-block;
-  display: flex;
-}
-
-.counter span {
-  display: block;
-  //opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.counter span.visible {
-  opacity: 1;
 }

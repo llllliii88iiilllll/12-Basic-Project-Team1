@@ -1,9 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { postReaction } from "../apis/PostReaction";
+import Counter from "../components/Counter";
+import ReactionButtons from "../components/ReactionButton.js";
 import MessageImg from "../assets/Icon/messages.svg";
-import { ReactComponent as ThumbsUpImg } from "../assets/Icon/thumbs-up.svg";
-import { ReactComponent as ThumbsDownImg } from "../assets/Icon/thumbs-down.svg";
 import EmptyImg from "../assets/Images/empty.png";
 import styles from "./QuestionBox.module.css";
 
@@ -27,35 +27,11 @@ const getRelativeTime = (dateString) => {
 };
 
 const QuestionBox = ({ userData, questions, updateQuestions }) => {
-  const [displayedCount, setDisplayedCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-
   const [activeReactions, setActiveReactions] = useState({});
-
-  useEffect(() => {
-    if (userData.questionCount > 0) {
-      let start = 0;
-      const end = userData.questionCount;
-      const duration = 2000; // 2 seconds
-      const increment = Math.ceil(end / (duration / 50));
-
-      const counter = setInterval(() => {
-        start += increment;
-        if (start >= end) {
-          clearInterval(counter);
-          start = end;
-        }
-        setDisplayedCount(start);
-      }, 50);
-
-      setIsVisible(true);
-    }
-  }, [userData.questionCount]);
 
   const handleReaction = async (questionId, reactionType) => {
     try {
-      const updatedQuestion = await postReaction(questionId, reactionType); // API 함수 호출
-      // API 호출이 성공하면 questions 상태를 업데이트
+      const updatedQuestion = await postReaction(questionId, reactionType);
       updateQuestions((prevQuestions) =>
         prevQuestions.map((question) =>
           question.id === updatedQuestion.id
@@ -89,18 +65,12 @@ const QuestionBox = ({ userData, questions, updateQuestions }) => {
           <img src={MessageImg} alt="메세지 이미지" />
           <p>
             {userData.questionCount > 0 ? (
-              <div className={styles.counter}>
-                <span className={isVisible ? "visible" : ""}>
-                  {displayedCount}
-                </span>
-                개의 질문이 있습니다.
-              </div>
+              <Counter count={userData.questionCount} />
             ) : (
               "아직 질문이 없습니다"
             )}
           </p>
         </div>
-        {/* uesrData.questionCount로 질문 있을때, 없을때 구분  */}
         {userData.questionCount > 0 ? (
           questions.map((question) => (
             <div
@@ -138,31 +108,11 @@ const QuestionBox = ({ userData, questions, updateQuestions }) => {
                 </div>
               )}
               {/* 좋아요,싫어요 버튼 */}
-              <div className={styles.section_reactions}>
-                <button
-                  onClick={() => handleReaction(question.id, "like")}
-                  className={
-                    activeReactions[question.id]?.like || question.like > 0 // like가 0보다 크면 active
-                      ? styles.active
-                      : ""
-                  }
-                >
-                  <ThumbsUpImg alt="좋아요 아이콘" />
-                  좋아요 {question.like > 999 ? "+999" : question.like}
-                </button>
-                <button
-                  onClick={() => handleReaction(question.id, "dislike")}
-                  className={
-                    activeReactions[question.id]?.dislike ||
-                    question.dislike > 0 // dislike가 0보다 크면 active
-                      ? styles.active
-                      : ""
-                  }
-                >
-                  <ThumbsDownImg alt="싫어요 아이콘" />
-                  싫어요 {question.dislike > 999 ? "+999" : question.dislike}
-                </button>
-              </div>
+              <ReactionButtons
+                question={question}
+                activeReactions={activeReactions}
+                onReact={handleReaction}
+              />
             </div>
           ))
         ) : (
