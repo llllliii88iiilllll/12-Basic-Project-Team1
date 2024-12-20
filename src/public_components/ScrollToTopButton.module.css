@@ -10,6 +10,9 @@
   border-radius: 50%;
   border: none;
   cursor: pointer;
+  @media (max-width: 767px) {
+    right: 165px;
+  }
 }
 .button_scroll_top svg {
   transform: rotate(-90deg);
