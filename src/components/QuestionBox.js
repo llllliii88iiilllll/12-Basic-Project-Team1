@@ -71,7 +71,7 @@ const QuestionBox = ({ userData, questions, updateQuestions }) => {
             )}
           </div>
         </div>
-        {userData.questionCount > 0 ? (
+        {questions.length > 0 ? (
           questions.map((question) => (
             <div
               className={`${styles.section} ${styles["question-item"]}`}
