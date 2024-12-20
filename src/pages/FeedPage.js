@@ -81,8 +81,11 @@ function FeedPage() {
         ...questionsWithAnswers,
       ]);
 
+      // next 값이 null일 경우 visibleCount를 totalCount로 설정
       if (questionsResponse.next) {
         setNextUrl(questionsResponse.next);
+      } else {
+        setVisibleCount(questionsResponse.count); // 데이터를 모두 보여줌
       }
     } catch (error) {
       console.error("데이터 로드 중 오류 발생:", error);
@@ -96,9 +99,12 @@ function FeedPage() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && nextUrlRef.current && !isLoading) {
-            fetchData(nextUrlRef.current); // nextUrl을 사용하여 추가 데이터 불러오기
-            setVisibleCount((prev) => prev + 1); // visibleCount 증가
+          if (entry.isIntersecting && !isLoading) {
+            if (nextUrlRef.current) {
+              // nextUrl이 있으면 데이터를 추가로 불러옴
+              fetchData(nextUrlRef.current);
+              setVisibleCount((prev) => prev + 1);
+            }
           }
         });
       },
@@ -118,7 +124,7 @@ function FeedPage() {
         observer.unobserve(loadMoreRef.current); // 언마운트 시 옵저버 해제
       }
     };
-  }, [isLoading]); // isLoading이 변경될 때마다 실행
+  }, [isLoading, questions.length, totalCount]);
 
   // 데이터 초기 로딩
   useEffect(() => {

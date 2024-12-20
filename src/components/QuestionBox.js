@@ -63,13 +63,13 @@ const QuestionBox = ({ userData, questions, updateQuestions }) => {
       <div className={styles.questions_box}>
         <div className={styles.questions_box__title}>
           <MessageImg alt="메세지 이미지" fill="var(--brown-scale-40" />
-          <p>
+          <div>
             {userData.questionCount > 0 ? (
               <Counter count={userData.questionCount} />
             ) : (
               "아직 질문이 없습니다"
             )}
-          </p>
+          </div>
         </div>
         {userData.questionCount > 0 ? (
           questions.map((question) => (
