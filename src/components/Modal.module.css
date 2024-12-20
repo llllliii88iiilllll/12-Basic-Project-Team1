@@ -11,7 +11,7 @@
   box-shadow: var(--shadow-4pt);
   z-index: 2;
   @media (max-width: 767px) {
-    width: 327px;
+    width: calc(100% - 48px);
     height: 508px;
     padding: 24px;
     top: 102px;
