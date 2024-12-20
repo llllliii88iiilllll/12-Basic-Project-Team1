@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getUserById } from "../apis/GetUserById";
 import { getQuestionsBySubjectId } from "../apis/GetQuestions";
 import { getAnswerById } from "../apis/GetAnswerById";
+import styles from "./FeedPage.module.css";
 import useScrollToTop from "../hooks/UseScrollToTop";
 import ScrollToTopButton from "../public_components/ScrollToTopButton";
 import Header from "../components/Header";
@@ -166,13 +167,7 @@ function FeedPage() {
   useScrollToTop(id);
 
   return (
-    <div
-      style={{
-        overflowY: "auto",
-        minHeight: "100vh",
-        overflowY: "auto",
-      }}
-    >
+    <div className={styles.wrap}>
       <Header userData={userData} />
       <QuestionBox
         userData={userData}
@@ -180,10 +175,7 @@ function FeedPage() {
         updateQuestions={setQuestions}
       />
       {totalCount > visibleCount && !isLoading && (
-        <div
-          ref={loadMoreRef}
-          style={{ height: "1px", background: "transparent" }}
-        ></div>
+        <div ref={loadMoreRef} className={styles.observe_div}></div>
       )}
       <ButtonFloating onClick={openModal} />
       {isModalOpen && (
@@ -195,18 +187,7 @@ function FeedPage() {
         />
       )}
       <ScrollToTopButton />
-      {isModalOpen && (
-        <div
-          style={{
-            backgroundColor: "rgba(0, 0, 0, 0.56)",
-            width: "100%",
-            height: "100vh",
-            position: "fixed",
-            top: "0",
-            left: "0",
-          }}
-        ></div>
-      )}
+      {isModalOpen && <div className={styles.dimmed}></div>}
     </div>
   );
 }
