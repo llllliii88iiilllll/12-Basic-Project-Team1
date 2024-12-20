@@ -29,16 +29,14 @@
     height: 22px;
   }
 }
-@media (max-width: 767px) {
-}
 .questions_box__title p {
   color: var(--brown-scale-40);
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 25px;
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body1);
   @media (max-width: 767px) {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: var(--font-size-body2);
+    line-height: var(--line-height-body2);
   }
 }
 
@@ -56,16 +54,15 @@
   flex-direction: column;
   gap: 32px;
   @media (max-width: 767px) {
-    font-size: 24px;
+    font-size: var(--font-size-h3);
     gap: 24px;
   }
 }
 .section_badge,
 .section_badge__active {
-  font-family: "Pretendard Variable", Pretendard, -apple-system;
-  font-size: 14px;
+  font-size: var(--font-size-caption1);
   font-weight: var(--font-weight-medium);
-  line-height: 18px;
+  line-height: var(--line-height-caption1);
   padding: 6px 12px 4px;
   border-radius: 8px;
 }
@@ -88,18 +85,17 @@
 }
 .section_title__date {
   color: var(--gray-scale-40);
-  font-family: "Pretendard Variable", Pretendard, -apple-system;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
+  font-size: var(--font-size-caption1);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-caption1);
 }
 .section_title__content {
-  font-size: 18px;
-  font-weight: 400px;
-  line-height: 24px;
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body2);
   @media (max-width: 767) {
-    font-size: 16px;
-    line-height: 22px;
+    font-size: var(--font-size-body3);
+    line-height: var(--line-height-body3);
   }
 }
 .section_reactions {
@@ -110,10 +106,9 @@
 }
 .section_reactions div {
   color: var(--gray-scale-40);
-  font-family: "Pretendard Variable", Pretendard, -apple-system;
-  font-size: 14px;
+  font-size: var(--font-size-caption1);
   font-weight: var(--font-weight-medium);
-  line-height: 18px;
+  line-height: var(--line-height-caption1);
   display: flex;
   justify-content: center;
   gap: 6px;
@@ -133,7 +128,6 @@
 
 /* answer(답변) 부분 */
 .section_answer {
-  font-family: "Pretendard Variable", Pretendard, -apple-system;
   display: flex;
   gap: 12px;
 }

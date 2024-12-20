@@ -1,5 +1,5 @@
 .header {
-  background-image: url("../assets/Images/key_visual.png");
+  background-image: url("../assets/Images/key_visual.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -43,13 +43,12 @@
 }
 
 .name {
-  color: #000000;
-  font-family: "Pretendard Variable", Pretendard;
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 40px;
+  color: var(--gray-scale-60);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-h2);
   @media (max-width: 767px) {
-    font-size: 24px;
-    line-height: 30px;
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-h3);
   }
 }
