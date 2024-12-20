@@ -107,6 +107,7 @@ const QuestionBox = ({ userData, questions, updateQuestions }) => {
                   </div>
                 </div>
               )}
+              <hr className={styles.hr}></hr>
               {/* 좋아요,싫어요 버튼 */}
               <ReactionButtons
                 question={question}
