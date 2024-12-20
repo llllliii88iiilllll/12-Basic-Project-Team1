@@ -3,7 +3,7 @@ import { useState } from "react";
 import { postReaction } from "../apis/PostReaction";
 import Counter from "../components/Counter";
 import ReactionButtons from "../components/ReactionButton.js";
-import MessageImg from "../assets/Icon/messages.svg";
+import { ReactComponent as MessageImg } from "../assets/Icon/messages.svg";
 import EmptyImg from "../assets/Images/empty.png";
 import styles from "./QuestionBox.module.css";
 
@@ -62,7 +62,7 @@ const QuestionBox = ({ userData, questions, updateQuestions }) => {
     <div className={styles.container}>
       <div className={styles.questions_box}>
         <div className={styles.questions_box__title}>
-          <img src={MessageImg} alt="메세지 이미지" />
+          <MessageImg alt="메세지 이미지" fill="var(--brown-scale-40" />
           <p>
             {userData.questionCount > 0 ? (
               <Counter count={userData.questionCount} />
