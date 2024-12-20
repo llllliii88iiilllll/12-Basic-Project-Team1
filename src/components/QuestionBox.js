@@ -26,7 +26,7 @@ const getRelativeTime = (dateString) => {
   return `${weeks}주 전`;
 };
 
-const QuestionBox = ({ userData, questions, updateQuestions }) => {
+const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
   const [activeReactions, setActiveReactions] = useState({});
 
   const handleReaction = async (questionId, reactionType) => {
@@ -65,7 +65,7 @@ const QuestionBox = ({ userData, questions, updateQuestions }) => {
           <MessageImg alt="메세지 이미지" fill="var(--brown-scale-40" />
           <div>
             {questions.length > 0 ? (
-              <Counter count={questions.length} />
+              <Counter count={totalCount} />
             ) : (
               "아직 질문이 없습니다"
             )}
