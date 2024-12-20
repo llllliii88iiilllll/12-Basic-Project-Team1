@@ -27,10 +27,15 @@ const ScrollToTopButton = () => {
     window.scrollTo({ top: 0, behavior: "smooth" }); // 상단으로 부드럽게 스크롤 이동
   };
 
-  if (!showScrollToTop) return null; // 버튼을 보이지 않게 설정할 경우
+  // if (!showScrollToTop) return null; // 버튼을 보이지 않게 설정할 경우
 
   return (
-    <button onClick={scrollToTop} className={styles.button_scroll_top}>
+    <button
+      onClick={scrollToTop}
+      className={`${styles.button_scroll_top} ${
+        showScrollToTop ? styles.show : ""
+      }`}
+    >
       <IconArrowRight fill="#ffffff" />
     </button>
   );

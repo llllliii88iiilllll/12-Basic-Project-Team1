@@ -15,6 +15,9 @@
   ::placeholder {
     color: var(--gray-scale-40);
   }
+  @media (max-width: 661px) {
+    width: 100%;
+  }
 }
 .input_field:active,
 .input_field:focus {

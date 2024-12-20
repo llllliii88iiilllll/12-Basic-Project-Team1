@@ -1,6 +1,7 @@
 .wrap {
   overflow-y: auto;
-  min-height: 100vh;
+  width: 100%;
+  /* height: 100%; */
 }
 .observe_div {
   height: 1px;

@@ -7,6 +7,7 @@ import InputField from "../public_components/InputField";
 import ButtonDark from "../public_components/ButtonDark";
 import ButtonLight from "../public_components/ButtonLight";
 import LogoImage from "../assets/Images/logo.svg";
+import MainVisual from "../assets/Images/main_visual.png";
 
 function MainPage() {
   const [name, setName] = useState("");
@@ -33,15 +34,14 @@ function MainPage() {
 
   return (
     <div className={styles.main_wrap}>
-      <div className={styles.background_image}></div>
-      <header className={styles.header}>
-        <img src={LogoImage} alt="로고 이미지" className={styles.logo} />
-      </header>
       <div className={styles.ask_button_wrapper}>
         <Link to="/list">
           <ButtonLight>질문하러 가기</ButtonLight>
         </Link>
       </div>
+      <header className={styles.header}>
+        <img src={LogoImage} alt="로고 이미지" className={styles.logo} />
+      </header>
       <main className={styles.main_body}>
         <form onSubmit={handleSubmit} className={styles.form}>
           <InputField value={name} onChange={(e) => setName(e.target.value)} />
@@ -51,6 +51,9 @@ function MainPage() {
         </form>
         {error && <p className={styles.error}>{error}</p>}
       </main>
+      <div className={styles.background_image}>
+        <img src={MainVisual} alt="메인 배경이미지" />
+      </div>
     </div>
   );
 }

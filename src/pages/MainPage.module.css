@@ -1,65 +1,56 @@
 .main_wrap {
+  display: grid;
+  grid-template-areas:
+    "b"
+    "h"
+    "m"
+    "i";
   width: 100%;
   max-width: 1200px;
-  height: 832px;
-  margin: 0 auto;
-  position: relative;
+  height: 100vh;
+  padding: 60px 50px 0;
+  @media (max-width: 767px) {
+    grid-template-areas:
+      "h"
+      "b"
+      "m"
+      "i";
+    grid-template-rows: 98px 86px 172px auto;
+    grid-template-columns: 100%;
+    padding: 200px 0 0;
+    margin: 0 auto;
+  }
 }
 
 /* 배경 이미지 */
 .background_image {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1200px;
-  height: 627px;
-  background: url("../assets/Images/v872batch5-nunny-04.svg") no-repeat
-    center/cover;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  width: 100%;
+  grid-area: i;
 }
-
-/* PC 버전 */
-@media (min-width: 1200px) {
-  .main_wrap {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-/* Tablet 버전 */
-@media (max-width: 1199px) and (min-width: 768px) {
-  .main_wrap {
-    width: 768px;
-  }
-}
-
-/* Mobile 버전 */
-@media (max-width: 767px) {
-  .main_wrap {
-    width: 375px;
-    height: 611px;
-  }
+.background_image img {
+  width: 100%;
 }
 
 .header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 40px;
-  position: absolute;
-  top: 160px;
-  left: 372px;
+  grid-area: h;
 }
 
 .logo {
   width: 456px;
   height: 180px;
+  @media (max-width: 767px) {
+    width: 248px;
+    height: 98px;
+  }
 }
 
 .main_body {
-  position: absolute;
-  top: 364px;
-  left: 400px;
   width: 400px;
   height: 172px;
   background-color: var(--gray-scale-10);
@@ -69,6 +60,11 @@
   flex-direction: column;
   gap: 10px;
   box-sizing: border-box;
+  margin: 0 auto;
+  grid-area: m;
+  @media (max-width: 534px) {
+    width: calc(100% - 72px);
+  }
 }
 
 .form {
@@ -80,7 +76,11 @@
 }
 
 .ask_button_wrapper {
-  position: absolute;
-  top: 45px;
-  left: 909px;
+  display: flex;
+  justify-content: flex-end;
+  grid-area: b;
+  @media (max-width: 767px) {
+    justify-content: center;
+    align-items: center;
+  }
 }
