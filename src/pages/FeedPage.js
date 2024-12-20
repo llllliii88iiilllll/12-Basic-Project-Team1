@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getUserById } from "../apis/GetUserById";
 import { getQuestionsBySubjectId } from "../apis/GetQuestions";
 import { getAnswerById } from "../apis/GetAnswerById";
+import useScrollToTop from "../hooks/UseScrollToTop";
 import ScrollToTopButton from "../public_components/ScrollToTopButton";
 import Header from "../components/Header";
 import ButtonFloating from "../public_components/ButtonFloating";
@@ -15,18 +16,13 @@ function FeedPage() {
   const [questions, setQuestions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [visibleCount, setVisibleCount] = useState(2); // 초기 visibleCount는 2개
-  const [nextUrl, setNextUrl] = useState(null); // 다음 페이지 URL
-  const nextUrlRef = useRef(nextUrl); // nextUrl을 관리하기 위한 useRef
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추적
-  const [totalCount, setTotalCount] = useState(0); // 총 데이터 개수 추적
+  const [isLoading, setIsLoading] = useState(false);
+  const [nextUrl, setNextUrl] = useState(null);
+  const nextUrlRef = useRef(nextUrl);
+  const [visibleCount, setVisibleCount] = useState(2);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const loadMoreRef = useRef(null); // IntersectionObserver의 대상이 될 ref
-
-  // 새로고침 시 최상단으로 스크롤 이동
-  useEffect(() => {
-    window.scrollTo(0, 0); // 페이지 로드 시 최상단으로 이동
-  }, [id]); // id가 변경될 때마다 실행
+  const loadMoreRef = useRef(null);
 
   // fetchAnswers 함수 정의
   const fetchAnswers = async (questions) => {
@@ -54,22 +50,21 @@ function FeedPage() {
   };
 
   const fetchData = async (url = null) => {
-    if (isLoading) return; // 로딩 중이면 중복 요청 방지
+    if (isLoading) return;
     setIsLoading(true);
 
     try {
       const questionsResponse = url
-        ? await fetch(url).then((res) => res.json()) // nextUrl을 사용하여 다음 데이터를 호출
-        : await getQuestionsBySubjectId(id); // 첫 번째 호출 시 기본 API 호출
+        ? await fetch(url).then((res) => res.json())
+        : await getQuestionsBySubjectId(id);
 
       if (!questionsResponse || !questionsResponse.results) {
         console.error("질문 데이터를 불러오는 데 실패했습니다.");
         return;
       }
 
-      setTotalCount(questionsResponse.count); // 전체 데이터 개수 추적
+      setTotalCount(questionsResponse.count);
 
-      // like와 dislike의 초기값을 설정
       const questionsWithDefaults = questionsResponse.results.map(
         (question) => ({
           ...question,
@@ -86,7 +81,7 @@ function FeedPage() {
       ]);
 
       if (questionsResponse.next) {
-        setNextUrl(questionsResponse.next); // 다음 페이지 URL을 설정
+        setNextUrl(questionsResponse.next);
       }
     } catch (error) {
       console.error("데이터 로드 중 오류 발생:", error);
@@ -130,9 +125,8 @@ function FeedPage() {
       try {
         const userResponse = await getUserById(id);
         if (userResponse) {
-          setUserData(userResponse); // 사용자 데이터 갱신
+          setUserData(userResponse);
         }
-
         // 처음 데이터 불러오기
         fetchData();
       } catch (error) {
@@ -143,7 +137,6 @@ function FeedPage() {
     fetchInitialData();
   }, [id]);
 
-  // nextUrl이 변경될 때마다 nextUrlRef를 업데이트
   useEffect(() => {
     nextUrlRef.current = nextUrl;
   }, [nextUrl]);
@@ -169,6 +162,8 @@ function FeedPage() {
       document.body.style.overflow = "auto";
     };
   }, [isModalOpen]);
+
+  useScrollToTop(id);
 
   return (
     <div
