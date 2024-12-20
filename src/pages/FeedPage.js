@@ -177,7 +177,7 @@ function FeedPage() {
       <Header userData={userData} />
       <QuestionBox
         userData={userData}
-        questions={questions.slice(0, visibleCount)}
+        questions={questions}
         updateQuestions={setQuestions}
       />
       {totalCount > visibleCount && !isLoading && (
