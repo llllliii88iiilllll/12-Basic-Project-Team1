@@ -64,8 +64,8 @@ const QuestionBox = ({ userData, questions, updateQuestions }) => {
         <div className={styles.questions_box__title}>
           <MessageImg alt="메세지 이미지" fill="var(--brown-scale-40" />
           <div>
-            {userData.questionCount > 0 ? (
-              <Counter count={userData.questionCount} />
+            {questions.length > 0 ? (
+              <Counter count={questions.length} />
             ) : (
               "아직 질문이 없습니다"
             )}
