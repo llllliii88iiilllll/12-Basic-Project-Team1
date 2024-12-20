@@ -1,0 +1,51 @@
+.section_reactions {
+  display: flex;
+  gap: 32px;
+}
+.section_reactions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-caption1);
+  font-weight: var(--font-weight-medium);
+  color: var(--gray-scale-40);
+}
+.section_reactions button svg {
+  fill: var(--gray-scale-40);
+}
+.section_reactions button:hover {
+  color: var(--gray-scale-60);
+}
+.section_reactions button.active:hover,
+.section_reactions button.active {
+  color: var(--blue);
+}
+.section_reactions button.active:hover {
+  font-weight: (--font-weight-bold);
+}
+.section_reactions button:hover svg {
+  fill: var(--gray-scale-60);
+  animation: shake 0.5s ease-in-out;
+}
+.section_reactions button.active svg,
+.section_reactions button.active:hover svg {
+  fill: var(--blue);
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(15deg); /* 시계 방향 회전 */
+  }
+  50% {
+    transform: rotate(-15deg); /* 반시계 방향 회전 */
+  }
+  75% {
+    transform: rotate(10deg); /* 약간의 시계 방향 회전 */
+  }
+  100% {
+    transform: rotate(0deg); /* 원래 위치 */
+  }
+}

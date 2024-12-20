@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import ButtonShare from "../public_components/ButtonShare";
 import LogoImg from "../assets/Images/logo.svg";
+import DefaultProfileImg from "../assets/Images/blank_profile.jpg";
 import styles from "./Header.module.css";
 
 function Header({ userData }) {
@@ -16,7 +17,7 @@ function Header({ userData }) {
         </Link>
         <img
           className={styles.profile_img}
-          src={userData.imageSource}
+          src={userData.imageSource || DefaultProfileImg}
           alt="프로필 이미지"
         />
         <h1 className={styles.name}>{userData.name}</h1>

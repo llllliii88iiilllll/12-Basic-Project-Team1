@@ -1,0 +1,19 @@
+.button_scroll_top {
+  position: fixed;
+  bottom: 24px;
+  right: 250px;
+  width: 54px;
+  height: 54px;
+  /* box-shadow: var(--shadow-2pt); */
+  background-color: var(--brown-scale-50);
+  color: white;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  @media (max-width: 767px) {
+    right: 165px;
+  }
+}
+.button_scroll_top svg {
+  transform: rotate(-90deg);
+}

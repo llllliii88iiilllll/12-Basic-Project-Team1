@@ -1,0 +1,11 @@
+.counter {
+  position: relative;
+  display: flex;
+}
+.counter span {
+  display: block;
+  transition: opacity 0.3s ease-in-out;
+}
+.counter span.visible {
+  opacity: 1;
+}

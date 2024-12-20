@@ -1,7 +1,9 @@
 import React from "react";
-import MessageImg from "../assets/Icon/messages.svg";
-import ThumbsUpImg from "../assets/Icon/thumbs-up.svg";
-import ThumbsDownImg from "../assets/Icon/thumbs-down.svg";
+import { useState } from "react";
+import { postReaction } from "../apis/PostReaction";
+import Counter from "../components/Counter";
+import ReactionButtons from "../components/ReactionButton.js";
+import { ReactComponent as MessageImg } from "../assets/Icon/messages.svg";
 import EmptyImg from "../assets/Images/empty.png";
 import styles from "./QuestionBox.module.css";
 
@@ -24,22 +26,57 @@ const getRelativeTime = (dateString) => {
   return `${weeks}주 전`;
 };
 
-const QuestionBox = ({ userData, questions }) => {
+const QuestionBox = ({ userData, questions, updateQuestions }) => {
+  const [activeReactions, setActiveReactions] = useState({});
+
+  const handleReaction = async (questionId, reactionType) => {
+    try {
+      const updatedQuestion = await postReaction(questionId, reactionType);
+      updateQuestions((prevQuestions) =>
+        prevQuestions.map((question) =>
+          question.id === updatedQuestion.id
+            ? {
+                ...question,
+                like: updatedQuestion.like,
+                dislike: updatedQuestion.dislike,
+              }
+            : question
+        )
+      );
+
+      // 활성화된 반응 상태 업데이트
+      setActiveReactions((prev) => ({
+        ...prev,
+        [questionId]: {
+          like: reactionType === "like" ? !prev[questionId]?.like : false,
+          dislike:
+            reactionType === "dislike" ? !prev[questionId]?.dislike : false,
+        },
+      }));
+    } catch (error) {
+      console.error("좋아요,싫어요 반영 실패", error);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.questions_box}>
         <div className={styles.questions_box__title}>
-          <img src={MessageImg} alt="메세지 이미지" />
-          <p>
-            {userData.questionCount > 0
-              ? `${userData.questionCount}개의 질문이 있습니다.`
-              : "아직 질문이 없습니다"}
-          </p>
+          <MessageImg alt="메세지 이미지" fill="var(--brown-scale-40" />
+          <div>
+            {questions.length > 0 ? (
+              <Counter count={questions.length} />
+            ) : (
+              "아직 질문이 없습니다"
+            )}
+          </div>
         </div>
-        {/* uesrData.questionCount로 질문 있을때, 없을때 구분  */}
-        {userData.questionCount > 0 ? (
+        {questions.length > 0 ? (
           questions.map((question) => (
-            <div className={styles.section} key={question.id}>
+            <div
+              className={`${styles.section} ${styles["question-item"]}`}
+              key={question.id}
+            >
               {/* badge 부분 */}
               {question.answerContent ? (
                 <div className={styles.section_badge__active}>답변 완료</div>
@@ -70,21 +107,13 @@ const QuestionBox = ({ userData, questions }) => {
                   </div>
                 </div>
               )}
-              {/* 좋아요/싫어요 버튼 */}
-              <div className={styles.section_reactions}>
-                <div>
-                  <button>
-                    <img src={ThumbsUpImg} alt="좋아요 아이콘" />
-                  </button>
-                  좋아요 {question.like > 999 ? "+999" : question.like}
-                </div>
-                <div>
-                  <button>
-                    <img src={ThumbsDownImg} alt="싫어요 아이콘" />
-                  </button>
-                  싫어요 {question.dislike > 999 ? "+999" : question.dislike}
-                </div>
-              </div>
+              <hr className={styles.hr}></hr>
+              {/* 좋아요,싫어요 버튼 */}
+              <ReactionButtons
+                question={question}
+                activeReactions={activeReactions}
+                onReact={handleReaction}
+              />
             </div>
           ))
         ) : (
