@@ -16,7 +16,8 @@
       "m"
       "i";
     grid-template-rows: 98px 86px 172px auto;
-    padding-top: 200px;
+    grid-template-columns: 100%;
+    padding: 200px 0 0;
     margin: 0 auto;
   }
 }
@@ -61,6 +62,9 @@
   box-sizing: border-box;
   margin: 0 auto;
   grid-area: m;
+  @media (max-width: 534px) {
+    width: calc(100% - 72px);
+  }
 }
 
 .form {
