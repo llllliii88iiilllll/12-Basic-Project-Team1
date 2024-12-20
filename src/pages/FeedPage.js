@@ -179,6 +179,7 @@ function FeedPage() {
         userData={userData}
         questions={questions}
         updateQuestions={setQuestions}
+        totalCount={totalCount}
       />
       {totalCount > visibleCount && !isLoading && (
         <div ref={loadMoreRef} className={styles.observe_div}></div>
