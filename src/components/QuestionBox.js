@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { updateAnswer } from "../apis/UpdateAnswer.js";
 import { postAnswer } from "../apis/PostAnswer";
@@ -43,6 +43,8 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
   const [editingQuestionId, setEditingQuestionId] = useState(null); // 수정 중인 질문 ID 상태
 
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+
+  const menuRef = useRef(null); // 메뉴 참조 추가
 
   useEffect(() => {
     // '/answer' 경로가 포함된 경우에만 답변 폼을 보여줌
@@ -250,6 +252,20 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
     }
   };
 
+  // 외부 클릭 이벤트 핸들러
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setActiveQuestionId(null); // 메뉴 닫기
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.questions_box}>
@@ -278,28 +294,30 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
                 <div className={styles.section_badge}>미답변</div>
               )}
               {/* 케밥 버튼 */}
-              <div className={styles.kebabMenu}>
-                <MoreIcon
-                  onClick={() => setActiveQuestionId(question.id)}
-                  className={`${styles.kebabIcon} ${
-                    !question.answerContent ? styles.disabled : ""
-                  }`}
-                  style={{
-                    pointerEvents: !question.answerContent ? "none" : "auto",
-                    opacity: !question.answerContent ? 0.5 : 1,
-                  }}
-                />
-                {activeQuestionId === question.id && (
-                  <div className={styles.menu}>
-                    <button onClick={() => handleUpdateAnswer(question.id)}>
-                      수정
-                    </button>
-                    <button onClick={() => handleDeleteAnswer(question.id)}>
-                      삭제
-                    </button>
-                  </div>
-                )}
-              </div>
+              {isAnswerPage && (
+                <div className={styles.kebabMenu} ref={menuRef}>
+                  <MoreIcon
+                    onClick={() => setActiveQuestionId(question.id)}
+                    className={`${styles.kebabIcon} ${
+                      !question.answerContent ? styles.disabled : ""
+                    }`}
+                    style={{
+                      pointerEvents: !question.answerContent ? "none" : "auto",
+                      opacity: !question.answerContent ? 0.5 : 1,
+                    }}
+                  />
+                  {activeQuestionId === question.id && (
+                    <div className={styles.menu}>
+                      <button onClick={() => handleUpdateAnswer(question.id)}>
+                        수정
+                      </button>
+                      <button onClick={() => handleDeleteAnswer(question.id)}>
+                        삭제
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
               {/* question(질문) 부분 */}
               <div className={styles.section_title}>
                 <p className={styles.section_title__date}>
