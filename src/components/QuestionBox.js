@@ -102,28 +102,38 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
   };
 
   const submitAnswer = async (questionId) => {
+    const { content, isRejected } = answerData[questionId] || {
+      content: "",
+      isRejected: false,
+    };
+
+    // 확인을 위한 로그 추가
+    console.log("Submitting answer", { content, isRejected });
+
+    if (content.trim() === "") {
+      alert("답변을 입력해주세요.");
+      return;
+    }
+    const finalIsRejected = isRejected === true ? true : false;
+
     try {
-      const { content, isRejected } = answerData[questionId] || {
-        content: "답변 거절",
-        isRejected: false,
-      }; // 기본값 설정
-      const response = await postAnswer(questionId, content, isRejected);
+      const response = await postAnswer(questionId, content, finalIsRejected);
       updateQuestions((prevQuestions) =>
         prevQuestions.map((question) =>
           question.id === questionId
             ? {
                 ...question,
                 answerContent: content,
-                isRejected,
-                answerIsRejected: isRejected,
+                isRejected: finalIsRejected,
+                answerIsRejected: finalIsRejected,
               }
             : question
         )
       );
       setAnswerData((prevData) => ({
         ...prevData,
-        [questionId]: { content: "", isRejected: false },
-      })); // 폼 초기화
+        [questionId]: { content: "", isRejected: false }, // 폼 초기화
+      }));
     } catch (error) {
       console.error("답변 제출 실패:", error);
     }

@@ -105,6 +105,38 @@ function AnswerPage() {
     }
   };
 
+  // IntersectionObserver로 스크롤 감지
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isLoading) {
+            if (nextUrl) {
+              // nextUrl이 있으면 데이터를 추가로 불러옴
+              fetchData(nextUrl);
+              setVisibleCount((prev) => prev + 1);
+            }
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px 180px 0px", // 하단에 여유를 두어 미리 데이터를 불러오게 함
+        threshold: 0.8, // 80%가 보일 때 트리거
+      }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current); // loadMoreRef를 관찰 대상으로 설정
+    }
+
+    return () => {
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current); // 언마운트 시 옵저버 해제
+      }
+    };
+  }, [isLoading, questions.length, nextUrl]);
+
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -112,7 +144,7 @@ function AnswerPage() {
         if (userResponse) {
           setUserData(userResponse);
         }
-        fetchData();
+        fetchData(); // 처음 데이터 불러오기
       } catch (error) {
         console.error("초기 데이터 불러오는 데 실패했습니다.", error);
       }
