@@ -1,7 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
+import { postAnswer } from "../apis/PostAnswer";
 import { postReaction } from "../apis/PostReaction";
-import { getAnswerById } from "../apis/GetAnswerById.js";
 import Counter from "../components/Counter";
 import ReactionButtons from "../components/ReactionButton.js";
 import { ReactComponent as MessageImg } from "../assets/Icon/messages.svg";
@@ -28,7 +29,48 @@ const getRelativeTime = (dateString) => {
 };
 
 const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
+  const { id } = useParams(); // URL에서 questionId 가져오기
+  const [answerContent, setAnswerContent] = useState("");
   const [activeReactions, setActiveReactions] = useState({});
+  const [isRejected, setIsRejected] = useState(false);
+
+  const location = useLocation(); // 현재 경로 가져오기
+  const [isAnswerPage, setIsAnswerPage] = useState(false);
+
+  useEffect(() => {
+    // '/answer' 경로가 포함된 경우에만 답변 폼을 보여줌
+    setIsAnswerPage(location.pathname.includes("/answer"));
+  }, [location]);
+
+  // 각 질문에 대한 답변 내용과 거절 여부 상태 초기화
+  const [answerData, setAnswerData] = useState(() =>
+    questions.reduce((acc, question) => {
+      acc[question.id] = { content: "", isRejected: false }; // 각 질문에 대해 기본값 설정
+      return acc;
+    }, {})
+  );
+
+  // 답변 내용 변경
+  const handleAnswerChange = (questionId, value) => {
+    console.log(`Answer change for question ${questionId}:`, value); // 디버깅
+    setAnswerData((prevData) => ({
+      ...prevData,
+      [questionId]: { ...prevData[questionId], content: value },
+    }));
+  };
+
+  // 답변 거절 상태 변경
+  const handleRejectedChange = (questionId) => {
+    const currentIsRejected = answerData[questionId]?.isRejected || false; // 기본값 false
+    setAnswerData((prevData) => ({
+      ...prevData,
+      [questionId]: {
+        ...prevData[questionId],
+        isRejected: !currentIsRejected, // 상태 변경
+        content: !currentIsRejected ? "답변 거절" : "", // 거절 시 자동으로 답변 거절로 설정
+      },
+    }));
+  };
 
   const handleReaction = async (questionId, reactionType) => {
     try {
@@ -59,6 +101,45 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
     }
   };
 
+  const submitAnswer = async (questionId) => {
+    try {
+      const { content, isRejected } = answerData[questionId] || {
+        content: "답변 거절",
+        isRejected: false,
+      }; // 기본값 설정
+      const response = await postAnswer(questionId, content, isRejected);
+      updateQuestions((prevQuestions) =>
+        prevQuestions.map((question) =>
+          question.id === questionId
+            ? {
+                ...question,
+                answerContent: content,
+                isRejected,
+                answerIsRejected: isRejected,
+              }
+            : question
+        )
+      );
+      setAnswerData((prevData) => ({
+        ...prevData,
+        [questionId]: { content: "", isRejected: false },
+      })); // 폼 초기화
+    } catch (error) {
+      console.error("답변 제출 실패:", error);
+    }
+  };
+
+  useEffect(() => {
+    // answerIsRejected 상태 변경시 UI 갱신
+    updateQuestions((prevQuestions) =>
+      prevQuestions.map((question) =>
+        question.id === id
+          ? { ...question, answerIsRejected: answerData[id]?.isRejected }
+          : question
+      )
+    );
+  }, [answerData]);
+
   return (
     <div className={styles.container}>
       <div className={styles.questions_box}>
@@ -76,7 +157,7 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
           questions.map((question) => (
             <div
               className={`${styles.section} ${styles["question-item"]}`}
-              key={question.id}
+              key={`${question.id}-${question.answerIsRejected}`}
             >
               {/* badge 부분 */}
               {question.answerContent ? (
@@ -102,9 +183,11 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
                       {userData.name}
                       <span>{getRelativeTime(question.answerCreatedAt)}</span>
                     </p>
-                    <p className={styles.section_answer__content}>
-                      {question.answerContent}
-                    </p>
+                    {!question.answerIsRejected && (
+                      <p className={styles.section_answer__content}>
+                        {question.answerContent}
+                      </p>
+                    )}
                     {/* isRejected 상태 표시 */}
                     {question.answerIsRejected && (
                       <p className={styles.section_answer__rejected}>
@@ -112,6 +195,37 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
                       </p>
                     )}
                   </div>
+                </div>
+              )}
+              {/* 답변 폼: 현재 경로가 /answers/일 때만 보여짐 */}
+              {isAnswerPage && !question.answerContent && (
+                <div className={styles.answer_form}>
+                  <textarea
+                    value={answerData[question.id]?.content || ""}
+                    onChange={(e) =>
+                      handleAnswerChange(question.id, e.target.value)
+                    }
+                    placeholder="답변을 입력하세요"
+                    disabled={answerData[question.id]?.isRejected || false}
+                  />
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={answerData[question.id]?.isRejected || false}
+                        onChange={() => handleRejectedChange(question.id)} // 거절 상태 토글
+                      />
+                      답변 거절 여부
+                    </label>
+                  </div>
+                  <button
+                    onClick={() => {
+                      console.log(`Submit clicked for question ${question.id}`); // 디버깅
+                      submitAnswer(question.id);
+                    }}
+                  >
+                    답변 제출
+                  </button>
                 </div>
               )}
               <hr className={styles.hr}></hr>
