@@ -42,9 +42,18 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
 
   const [editingQuestionId, setEditingQuestionId] = useState(null); // 수정 중인 질문 ID 상태
 
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+
   useEffect(() => {
     // '/answer' 경로가 포함된 경우에만 답변 폼을 보여줌
     setIsAnswerPage(location.pathname.includes("/answer"));
+    // 데이터를 불러오는 시뮬레이션 (예: API 요청 대기)
+    const fetchData = async () => {
+      setIsLoading(true); // 로딩 상태 활성화
+      await new Promise((resolve) => setTimeout(resolve, 500)); // 임의 대기
+      setIsLoading(false); // 로딩 상태 비활성화
+    };
+    fetchData();
   }, [location]);
 
   // 각 질문에 대한 답변 내용과 거절 여부 상태 초기화
@@ -247,7 +256,9 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
         <div className={styles.questions_box__title}>
           <MessageImg alt="메세지 이미지" fill="var(--brown-scale-40" />
           <div>
-            {questions.length > 0 ? (
+            {isLoading ? (
+              "불러오고 있습니다..."
+            ) : questions.length > 0 ? (
               <Counter count={totalCount} />
             ) : (
               "아직 질문이 없습니다"
