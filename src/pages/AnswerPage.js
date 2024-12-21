@@ -3,18 +3,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getUserById } from "../apis/GetUserById";
 import { getQuestionsBySubjectId } from "../apis/GetQuestions";
 import { getAnswerById } from "../apis/GetAnswerById";
-import { deleteQuestion } from "../apis/DeleteQuestion"; // 질문 삭제 API 함수
-import { postAnswer } from "../apis/PostAnswer"; // 새로 작성할 답변 API
-import { deleteSubject } from "../apis/DeleteSubject"; // 질문 대상 삭제 API 함수
-import styles from "./FeedPage.module.css";
+import { deleteQuestion } from "../apis/DeleteQuestion";
+import { postAnswer } from "../apis/PostAnswer";
+import { deleteSubject } from "../apis/DeleteSubject";
+import styles from "./AnswerPage.module.css";
 import useScrollToTop from "../hooks/UseScrollToTop";
 import ScrollToTopButton from "../public_components/ScrollToTopButton";
 import Header from "../components/Header";
 import QuestionBox from "../components/QuestionBox";
+import ButtonDelete from "../components/ButtonDelete";
 
 function AnswerPage() {
-  const { id } = useParams(); // subject ID
-  const navigate = useNavigate(); // 페이지 리다이렉션을 위한 hook
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState({});
   const [questions, setQuestions] = useState([]);
@@ -24,25 +25,24 @@ function AnswerPage() {
   const [totalCount, setTotalCount] = useState(0);
   const loadMoreRef = useRef(null);
 
-  // 일괄 삭제와 질문 대상 삭제를 함께 처리하는 함수
   const handleDeleteAll = async () => {
     try {
       // 1. 모든 질문 삭제 요청
       for (const question of questions) {
         await deleteQuestion(question.id);
       }
-
-      // 2. 질문 대상 삭제 요청
+      // 2. 질문 대상(=피드) 삭제 요청
       await deleteSubject(id);
 
       // 삭제 후 상태 업데이트
       setQuestions([]);
       alert("모든 질문과 질문 대상이 삭제되었습니다.");
-      navigate("/list"); // 홈 페이지로 리다이렉트하거나 다른 적절한 페이지로 이동
+      navigate("/list");
     } catch (error) {
       console.error("삭제 작업 실패:", error);
     }
   };
+
   // 답변 폼 제출 함수
   const submitAnswer = async (questionId, answerContent) => {
     try {
@@ -181,22 +181,19 @@ function AnswerPage() {
   return (
     <div className={styles.wrap}>
       <Header userData={userData} />
-      {/* 일괄 삭제 버튼 */}
-      <button onClick={handleDeleteAll} style={{ position: "absolute" }}>
-        모든 질문 삭제
-      </button>
       <QuestionBox
         userData={userData}
         questions={questions}
         updateQuestions={setQuestions}
         totalCount={totalCount}
         submitAnswer={submitAnswer} // 답변 제출 함수 전달
+        handleDeleteAll={handleDeleteAll}
       />
       {totalCount > visibleCount && !isLoading && (
         <div ref={loadMoreRef} className={styles.observe_div}></div>
       )}
 
-      <ScrollToTopButton />
+      <ScrollToTopButton className={styles.button_scroll_top} />
     </div>
   );
 }

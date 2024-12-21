@@ -7,7 +7,6 @@
     transform: translateY(-10px); /* 살짝 위로 이동 */
   }
 }
-
 .button_scroll_top {
   position: fixed;
   bottom: 24px;
@@ -24,6 +23,9 @@
   transition: opacity 0.3s ease;
   @media (max-width: 767px) {
     right: 165px;
+  }
+  @media screen and (max-width: 661px) {
+    display: none;
   }
 }
 .button_scroll_top.show {

@@ -1,13 +1,4 @@
-.wrap {
-  overflow-y: auto;
-  width: 100%;
-}
-.observe_div {
-  height: 1px;
-  background: transparent;
-}
 .button_delete {
-  position: absolute;
   width: 100px;
   height: 35px;
   font-size: var(--font-size-body3);

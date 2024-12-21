@@ -11,6 +11,7 @@ import { ReactComponent as MessageImg } from "../assets/Icon/messages.svg";
 import EmptyImg from "../assets/Images/empty.png";
 import styles from "./QuestionBox.module.css";
 import { ReactComponent as MoreIcon } from "../assets/Icon/more.svg";
+import ButtonDelete from "./ButtonDelete.js";
 
 // 시간 계산 함수
 const getRelativeTime = (dateString) => {
@@ -31,7 +32,13 @@ const getRelativeTime = (dateString) => {
   return `${weeks}주 전`;
 };
 
-const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
+const QuestionBox = ({
+  userData,
+  questions,
+  updateQuestions,
+  totalCount,
+  handleDeleteAll,
+}) => {
   const { id } = useParams(); // URL에서 questionId 가져오기
   const [activeReactions, setActiveReactions] = useState({});
 
@@ -52,7 +59,7 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
     // 데이터를 불러오는 시뮬레이션 (예: API 요청 대기)
     const fetchData = async () => {
       setIsLoading(true); // 로딩 상태 활성화
-      await new Promise((resolve) => setTimeout(resolve, 500)); // 임의 대기
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // 임의 대기
       setIsLoading(false); // 로딩 상태 비활성화
     };
     fetchData();
@@ -268,6 +275,11 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
 
   return (
     <div className={styles.container}>
+      {isAnswerPage && (
+        <div className={styles.button_wrap}>
+          <ButtonDelete handleDeleteAll={handleDeleteAll} />
+        </div>
+      )}
       <div className={styles.questions_box}>
         <div className={styles.questions_box__title}>
           <MessageImg alt="메세지 이미지" fill="var(--brown-scale-40" />
@@ -287,37 +299,39 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
               className={`${styles.section} ${styles["question-item"]}`}
               key={`${question.id}-${question.answerIsRejected}`}
             >
-              {/* badge 부분 */}
-              {question.answerContent ? (
-                <div className={styles.section_badge__active}>답변 완료</div>
-              ) : (
-                <div className={styles.section_badge}>미답변</div>
-              )}
-              {/* 케밥 버튼 */}
-              {isAnswerPage && (
-                <div className={styles.kebabMenu} ref={menuRef}>
-                  <MoreIcon
-                    onClick={() => setActiveQuestionId(question.id)}
-                    className={`${styles.kebabIcon} ${
-                      !question.answerContent ? styles.disabled : ""
-                    }`}
-                    style={{
-                      pointerEvents: !question.answerContent ? "none" : "auto",
-                      opacity: !question.answerContent ? 0.5 : 1,
-                    }}
-                  />
-                  {activeQuestionId === question.id && (
-                    <div className={styles.menu}>
-                      <button onClick={() => handleUpdateAnswer(question.id)}>
-                        수정
-                      </button>
-                      <button onClick={() => handleDeleteAnswer(question.id)}>
-                        삭제
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
+              <div className={styles.section_top_wrap}>
+                {question.answerContent ? (
+                  <div className={styles.section_badge__active}>답변 완료</div>
+                ) : (
+                  <div className={styles.section_badge}>미답변</div>
+                )}
+                {isAnswerPage && (
+                  <div className={styles.kebabMenu} ref={menuRef}>
+                    <MoreIcon
+                      onClick={() => setActiveQuestionId(question.id)}
+                      className={`${styles.kebabIcon} ${
+                        !question.answerContent ? styles.disabled : ""
+                      }`}
+                      style={{
+                        pointerEvents: !question.answerContent
+                          ? "none"
+                          : "auto",
+                        opacity: !question.answerContent ? 0.5 : 1,
+                      }}
+                    />
+                    {activeQuestionId === question.id && (
+                      <div className={styles.menu}>
+                        <button onClick={() => handleUpdateAnswer(question.id)}>
+                          수정
+                        </button>
+                        <button onClick={() => handleDeleteAnswer(question.id)}>
+                          삭제
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
               {/* question(질문) 부분 */}
               <div className={styles.section_title}>
                 <p className={styles.section_title__date}>
