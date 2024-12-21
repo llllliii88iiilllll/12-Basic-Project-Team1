@@ -104,6 +104,12 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
       console.error("좋아요,싫어요 반영 실패", error);
     }
   };
+  // 수정 완료 버튼 활성화 여부를 판단하는 함수 추가
+  const isAnswerChanged = (questionId) => {
+    const question = questions.find((q) => q.id === questionId);
+    const currentAnswer = answerData[questionId]?.content || "";
+    return currentAnswer.trim() !== question?.answerContent?.trim();
+  };
 
   // 답변 제출 후 상태 업데이트 부분
   const submitAnswer = async (questionId) => {
@@ -319,6 +325,7 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
                       onClick={() => {
                         submitAnswer(question.id); // 답변 제출
                       }}
+                      disabled={!isAnswerChanged(question.id)} // 수정된 내용이 없으면 비활성화
                     >
                       수정 완료
                     </button>
@@ -373,6 +380,7 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
                       console.log(`Submit clicked for question ${question.id}`); // 디버깅
                       submitAnswer(question.id);
                     }}
+                    disabled={answerData[question.id]?.content.trim() === ""}
                   >
                     답변 제출
                   </button>
