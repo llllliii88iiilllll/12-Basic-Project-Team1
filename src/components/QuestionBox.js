@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
+import { updateAnswer } from "../apis/UpdateAnswer.js";
 import { postAnswer } from "../apis/PostAnswer";
 import { postReaction } from "../apis/PostReaction";
 import { deleteAnswer } from "../apis/DeleteAnswer.js";
@@ -37,9 +38,9 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
   const location = useLocation(); // 현재 경로 가져오기
   const [isAnswerPage, setIsAnswerPage] = useState(false);
 
-  const [answerContent, setAnswerContent] = useState("");
-  const [isRejected, setIsRejected] = useState(false);
   const [activeQuestionId, setActiveQuestionId] = useState(null); // 활성화된 질문 ID
+
+  const [editingQuestionId, setEditingQuestionId] = useState(null); // 수정 중인 질문 ID 상태
 
   useEffect(() => {
     // '/answer' 경로가 포함된 경우에만 답변 폼을 보여줌
@@ -56,7 +57,6 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
 
   // 답변 내용 변경
   const handleAnswerChange = (questionId, value) => {
-    console.log(`Answer change for question ${questionId}:`, value); // 디버깅
     setAnswerData((prevData) => ({
       ...prevData,
       [questionId]: { ...prevData[questionId], content: value },
@@ -105,53 +105,91 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
     }
   };
 
+  // 답변 제출 후 상태 업데이트 부분
   const submitAnswer = async (questionId) => {
     const { content, isRejected } = answerData[questionId] || {
       content: "",
       isRejected: false,
     };
 
-    // 확인을 위한 로그 추가
-    console.log("Submitting answer", { content, isRejected });
-
     if (content.trim() === "") {
       alert("답변을 입력해주세요.");
       return;
     }
-    const finalIsRejected = isRejected === true ? true : false;
+
+    const finalIsRejected = isRejected === true;
 
     try {
-      const response = await postAnswer(questionId, content, finalIsRejected);
-      updateQuestions((prevQuestions) =>
-        prevQuestions.map((question) =>
-          question.id === questionId
-            ? {
-                ...question,
-                answerContent: content,
-                isRejected: finalIsRejected,
-                answerIsRejected: finalIsRejected,
-              }
-            : question
-        )
-      );
+      const question = questions.find((q) => q.id === questionId);
+      const answerId = question?.answer?.id; // 기존 답변 ID 확인
+
+      if (answerId) {
+        // 기존 답변 수정 (PUT 요청)
+        const response = await updateAnswer(answerId, content, finalIsRejected);
+        console.log("PUT 응답:", response);
+
+        updateQuestions((prevQuestions) =>
+          prevQuestions.map((q) =>
+            q.id === questionId
+              ? {
+                  ...q,
+                  answerContent: content,
+                  isRejected: finalIsRejected,
+                  answerIsRejected: finalIsRejected,
+                }
+              : q
+          )
+        );
+      } else {
+        // 새 답변 추가 (POST 요청)
+        const response = await postAnswer(questionId, content, finalIsRejected);
+        console.log("POST 응답:", response);
+
+        if (response && response.id) {
+          // POST 성공 후 상태 업데이트
+          await new Promise((resolve) => {
+            updateQuestions((prevQuestions) => {
+              const updatedQuestions = prevQuestions.map((q) =>
+                q.id === questionId
+                  ? {
+                      ...q,
+                      answerContent: content,
+                      isRejected: finalIsRejected,
+                      answerIsRejected: finalIsRejected,
+                      answer: { id: response.id }, // 새로 생성된 답변 ID 반영
+                    }
+                  : q
+              );
+              resolve(updatedQuestions); // 상태 업데이트 완료 보장
+              return updatedQuestions;
+            });
+          });
+          console.log("새 상태가 업데이트되었습니다.");
+        } else {
+          throw new Error("POST 응답에서 ID를 받지 못했습니다.");
+        }
+      }
+
+      // 수정 모드 종료 및 입력 필드 초기화
       setAnswerData((prevData) => ({
         ...prevData,
-        [questionId]: { content: "", isRejected: false }, // 폼 초기화
+        [questionId]: { content: "", isRejected: false },
       }));
+      setEditingQuestionId(null);
     } catch (error) {
       console.error("답변 제출 실패:", error);
     }
   };
 
-  // 답변 수정 처리
+  // 수정 버튼 클릭 시 처리
   const handleUpdateAnswer = (questionId) => {
-    // 수정할 답변 내용과 상태 가져오기
+    setEditingQuestionId(questionId); // 수정 중인 질문 ID 설정
     const currentAnswer =
       questions.find((q) => q.id === questionId)?.answerContent || "";
     const currentRejected =
       questions.find((q) => q.id === questionId)?.answerIsRejected || false;
 
-    // 기존 답변을 폼에 반영
+    // 해당 질문의 답변 내용을 폼에 반영
     setAnswerData((prevData) => ({
       ...prevData,
       [questionId]: {
@@ -159,33 +197,43 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
         isRejected: currentRejected,
       },
     }));
-
-    // 답변 수정 버튼 클릭 후, 케밥 메뉴 닫기
-    setActiveQuestionId(questionId);
   };
 
   // 답변 삭제 처리
   const handleDeleteAnswer = async (questionId) => {
     try {
-      await deleteAnswer(questionId); // 서버에서 답변 삭제
+      const question = questions.find((q) => q.id === questionId);
+
+      if (!question?.answer?.id) {
+        alert("삭제할 답변이 없습니다.");
+        return;
+      }
+
+      // deleteAnswer 함수로 삭제 요청
+      await deleteAnswer(question.answer.id); // 서버에서 답변 삭제 요청
+      console.log(`답변 삭제 완료: ${questionId}`);
+
+      // 질문 리스트에서 해당 질문의 답변 데이터 초기화
       updateQuestions((prevQuestions) =>
-        prevQuestions.filter((question) => question.id !== questionId)
+        prevQuestions.map((q) =>
+          q.id === questionId
+            ? { ...q, answerContent: "", answerIsRejected: false, answer: null }
+            : q
+        )
       );
+
+      // 입력 필드 초기화
+      setAnswerData((prevData) => ({
+        ...prevData,
+        [questionId]: { content: "", isRejected: false },
+      }));
+
+      setEditingQuestionId(null); // 수정 모드 종료
     } catch (error) {
       console.error("답변 삭제 실패:", error);
+      alert("답변 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
-
-  useEffect(() => {
-    // answerIsRejected 상태 변경시 UI 갱신
-    updateQuestions((prevQuestions) =>
-      prevQuestions.map((question) =>
-        question.id === id
-          ? { ...question, answerIsRejected: answerData[id]?.isRejected }
-          : question
-      )
-    );
-  }, [answerData]);
 
   return (
     <div className={styles.container}>
@@ -244,8 +292,40 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
                   {question.content}
                 </p>
               </div>
-              {/* answer(답변) 부분 */}
-              {question.answerContent && (
+              {/* 답변 내용 표시 */}
+              {editingQuestionId === question.id ? (
+                <div className={styles.section_answer}>
+                  <img src={userData.imageSource} alt="프로필이미지" />
+                  <div>
+                    <textarea
+                      value={answerData[question.id]?.content || ""}
+                      onChange={(e) =>
+                        handleAnswerChange(question.id, e.target.value)
+                      }
+                      placeholder="답변을 입력하세요"
+                      disabled={answerData[question.id]?.isRejected || false}
+                    />
+                    <div>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={answerData[question.id]?.isRejected || false}
+                          onChange={() => handleRejectedChange(question.id)} // 거절 상태 토글
+                        />
+                        답변 거절 여부
+                      </label>
+                    </div>
+                    <button
+                      onClick={() => {
+                        submitAnswer(question.id); // 답변 제출
+                      }}
+                    >
+                      수정 완료
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                // 기존 답변 표시
                 <div className={styles.section_answer}>
                   <img src={userData.imageSource} alt="프로필이미지" />
                   <div>
@@ -258,7 +338,6 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
                         {question.answerContent}
                       </p>
                     )}
-                    {/* isRejected 상태 표시 */}
                     {question.answerIsRejected && (
                       <p className={styles.section_answer__rejected}>
                         답변 거절
@@ -267,6 +346,7 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
                   </div>
                 </div>
               )}
+
               {/* 답변 폼: 현재 경로가 /answers/일 때만 보여짐 */}
               {isAnswerPage && !question.answerContent && (
                 <div className={styles.answer_form}>
