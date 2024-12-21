@@ -36,6 +36,7 @@ function FeedPage() {
               ...question,
               answerContent: answerResponse.content,
               answerCreatedAt: answerResponse.createdAt,
+              answerIsRejected: answerResponse.isRejected,
             };
           } catch (error) {
             console.error(

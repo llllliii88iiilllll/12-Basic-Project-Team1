@@ -165,9 +165,14 @@
   line-height: var(--line-height-body3);
   margin-top: 4px;
 }
+.section_answer__rejected {
+  font-size: var(--font-size-body3);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body3);
+  color: var(--red);
+}
 
 /* 질문 영역 로드될 시 애니메이션 */
-
 @keyframes fadeInSlideUp {
   0% {
     opacity: 0;
@@ -183,7 +188,6 @@
 }
 
 /* 수평선 스타일 */
-
 .hr {
   width: 100%;
   height: 1px;
