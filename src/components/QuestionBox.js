@@ -1,6 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { postReaction } from "../apis/PostReaction";
+import { getAnswerById } from "../apis/GetAnswerById.js";
 import Counter from "../components/Counter";
 import ReactionButtons from "../components/ReactionButton.js";
 import { ReactComponent as MessageImg } from "../assets/Icon/messages.svg";
@@ -104,6 +105,12 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
                     <p className={styles.section_answer__content}>
                       {question.answerContent}
                     </p>
+                    {/* isRejected 상태 표시 */}
+                    {question.answerIsRejected && (
+                      <p className={styles.section_answer__rejected}>
+                        답변 거절
+                      </p>
+                    )}
                   </div>
                 </div>
               )}
