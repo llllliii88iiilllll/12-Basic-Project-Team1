@@ -194,3 +194,7 @@
   border: none;
   background-color: var(--gray-scale-30);
 }
+
+.disabled {
+  cursor: not-allowed;
+}

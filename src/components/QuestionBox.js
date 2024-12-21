@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { postAnswer } from "../apis/PostAnswer";
 import { postReaction } from "../apis/PostReaction";
+import { deleteAnswer } from "../apis/DeleteAnswer.js";
 import Counter from "../components/Counter";
 import ReactionButtons from "../components/ReactionButton.js";
 import { ReactComponent as MessageImg } from "../assets/Icon/messages.svg";
 import EmptyImg from "../assets/Images/empty.png";
 import styles from "./QuestionBox.module.css";
+import { ReactComponent as MoreIcon } from "../assets/Icon/more.svg";
 
 // 시간 계산 함수
 const getRelativeTime = (dateString) => {
@@ -30,12 +32,14 @@ const getRelativeTime = (dateString) => {
 
 const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
   const { id } = useParams(); // URL에서 questionId 가져오기
-  const [answerContent, setAnswerContent] = useState("");
   const [activeReactions, setActiveReactions] = useState({});
-  const [isRejected, setIsRejected] = useState(false);
 
   const location = useLocation(); // 현재 경로 가져오기
   const [isAnswerPage, setIsAnswerPage] = useState(false);
+
+  const [answerContent, setAnswerContent] = useState("");
+  const [isRejected, setIsRejected] = useState(false);
+  const [activeQuestionId, setActiveQuestionId] = useState(null); // 활성화된 질문 ID
 
   useEffect(() => {
     // '/answer' 경로가 포함된 경우에만 답변 폼을 보여줌
@@ -139,6 +143,39 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
     }
   };
 
+  // 답변 수정 처리
+  const handleUpdateAnswer = (questionId) => {
+    // 수정할 답변 내용과 상태 가져오기
+    const currentAnswer =
+      questions.find((q) => q.id === questionId)?.answerContent || "";
+    const currentRejected =
+      questions.find((q) => q.id === questionId)?.answerIsRejected || false;
+
+    // 기존 답변을 폼에 반영
+    setAnswerData((prevData) => ({
+      ...prevData,
+      [questionId]: {
+        content: currentAnswer,
+        isRejected: currentRejected,
+      },
+    }));
+
+    // 답변 수정 버튼 클릭 후, 케밥 메뉴 닫기
+    setActiveQuestionId(questionId);
+  };
+
+  // 답변 삭제 처리
+  const handleDeleteAnswer = async (questionId) => {
+    try {
+      await deleteAnswer(questionId); // 서버에서 답변 삭제
+      updateQuestions((prevQuestions) =>
+        prevQuestions.filter((question) => question.id !== questionId)
+      );
+    } catch (error) {
+      console.error("답변 삭제 실패:", error);
+    }
+  };
+
   useEffect(() => {
     // answerIsRejected 상태 변경시 UI 갱신
     updateQuestions((prevQuestions) =>
@@ -175,6 +212,29 @@ const QuestionBox = ({ userData, questions, updateQuestions, totalCount }) => {
               ) : (
                 <div className={styles.section_badge}>미답변</div>
               )}
+              {/* 케밥 버튼 */}
+              <div className={styles.kebabMenu}>
+                <MoreIcon
+                  onClick={() => setActiveQuestionId(question.id)}
+                  className={`${styles.kebabIcon} ${
+                    !question.answerContent ? styles.disabled : ""
+                  }`}
+                  style={{
+                    pointerEvents: !question.answerContent ? "none" : "auto",
+                    opacity: !question.answerContent ? 0.5 : 1,
+                  }}
+                />
+                {activeQuestionId === question.id && (
+                  <div className={styles.menu}>
+                    <button onClick={() => handleUpdateAnswer(question.id)}>
+                      수정
+                    </button>
+                    <button onClick={() => handleDeleteAnswer(question.id)}>
+                      삭제
+                    </button>
+                  </div>
+                )}
+              </div>
               {/* question(질문) 부분 */}
               <div className={styles.section_title}>
                 <p className={styles.section_title__date}>
