@@ -14,9 +14,6 @@
   max-width: 716px;
   margin: 0 auto;
 }
-.button_wrap button {
-  float: right;
-}
 .questions_box {
   background-color: var(--brown-scale-10);
   width: 100%;
@@ -299,7 +296,19 @@
 .button_submit_edit:disabled {
   background-color: var(--brown-scale-30);
 }
-
+.button_move_list {
+  display: flex;
+  align-items: center;
+  float: left;
+  padding: 0 20px;
+  height: 35px;
+  font-size: var(--font-size-body3);
+  font-weight: var(--font-weight-regular);
+  background-color: var(--brown-scale-40);
+  color: var(--gray-scale-10);
+  border-radius: 200px;
+  box-shadow: var(--shadow-2pt);
+}
 /* 질문 영역 로드될 시 애니메이션 */
 @keyframes fadeInSlideUp {
   0% {

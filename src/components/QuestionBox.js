@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { updateAnswer } from "../apis/UpdateAnswer.js";
 import { postAnswer } from "../apis/PostAnswer";
 import { postReaction } from "../apis/PostReaction";
@@ -273,11 +273,12 @@ const QuestionBox = ({
 
   return (
     <div className={styles.container}>
-      {isAnswerPage && (
-        <div className={styles.button_wrap}>
-          <ButtonDelete handleDeleteAll={handleDeleteAll} />
-        </div>
-      )}
+      <div className={styles.button_wrap}>
+        <Link to="/list">
+          <button className={styles.button_move_list}>목록으로가기</button>
+        </Link>
+        {isAnswerPage && <ButtonDelete handleDeleteAll={handleDeleteAll} />}
+      </div>
       <div className={styles.questions_box}>
         <div className={styles.questions_box__title}>
           <MessageImg alt="메세지 이미지" fill="var(--brown-scale-40" />
