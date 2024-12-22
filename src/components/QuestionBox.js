@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { updateAnswer } from "../apis/UpdateAnswer.js";
 import { postAnswer } from "../apis/PostAnswer";
 import { postReaction } from "../apis/PostReaction";
@@ -51,6 +51,7 @@ const QuestionBox = ({
   const [isLoading, setIsLoading] = useState(true);
 
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // '/answer' 경로가 포함된 경우에만 답변 폼을 보여줌
@@ -271,12 +272,18 @@ const QuestionBox = ({
     };
   }, []);
 
+  // 뒤로 가기 (이전 페이지로 이동)
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.button_wrap}>
-        <Link to="/list">
-          <button className={styles.button_move_list}>목록으로가기</button>
-        </Link>
+        <button onClick={handleGoBack} className={styles.button_move_list}>
+          목록으로가기
+        </button>
+
         {isAnswerPage && <ButtonDelete handleDeleteAll={handleDeleteAll} />}
       </div>
       <div className={styles.questions_box}>
