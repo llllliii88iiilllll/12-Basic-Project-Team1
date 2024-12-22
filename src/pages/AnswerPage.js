@@ -8,10 +8,9 @@ import { postAnswer } from "../apis/PostAnswer";
 import { deleteSubject } from "../apis/DeleteSubject";
 import styles from "./AnswerPage.module.css";
 import useScrollToTop from "../hooks/UseScrollToTop";
-import ScrollToTopButton from "../public_components/ScrollToTopButton";
+import ScrollToTopAnswer from "../public_components/ScrollToTopAnswer";
 import Header from "../components/Header";
 import QuestionBox from "../components/QuestionBox";
-import ButtonDelete from "../components/ButtonDelete";
 
 function AnswerPage() {
   const { id } = useParams();
@@ -193,7 +192,7 @@ function AnswerPage() {
         <div ref={loadMoreRef} className={styles.observe_div}></div>
       )}
 
-      <ScrollToTopButton className={styles.button_scroll_top} />
+      <ScrollToTopAnswer />
     </div>
   );
 }

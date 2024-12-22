@@ -17,3 +17,6 @@
   box-sizing: var(--shadow-2pt);
   border-radius: 200px;
 }
+.button_scroll_top_only {
+  right: 24;
+}

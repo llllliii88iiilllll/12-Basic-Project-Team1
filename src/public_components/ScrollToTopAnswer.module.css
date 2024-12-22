@@ -1,0 +1,35 @@
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0); /* 원래 위치 */
+  }
+  50% {
+    transform: translateY(-10px); /* 살짝 위로 이동 */
+  }
+}
+.button_scroll_top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 54px;
+  height: 54px;
+  background-color: var(--brown-scale-50);
+  color: var(--gray-scale-10);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(0px);
+  transition: opacity 0.3s ease;
+  @media screen and (max-width: 661px) {
+    display: none;
+  }
+}
+.button_scroll_top.show {
+  opacity: 1;
+  transform: translateY(0);
+  animation: bounce 0.5s ease;
+}
+.button_scroll_top svg {
+  transform: rotate(-90deg);
+}
