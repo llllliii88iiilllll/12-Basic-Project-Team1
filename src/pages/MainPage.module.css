@@ -33,14 +33,12 @@
 .background_image img {
   width: 100%;
 }
-
 .header {
   display: flex;
   justify-content: center;
   align-items: center;
   grid-area: h;
 }
-
 .logo {
   width: 456px;
   height: 180px;
@@ -49,7 +47,6 @@
     height: 98px;
   }
 }
-
 .main_body {
   width: 400px;
   height: 172px;
@@ -66,7 +63,6 @@
     width: calc(100% - 72px);
   }
 }
-
 .form {
   display: flex;
   flex-direction: column;
@@ -74,7 +70,6 @@
   width: 100%;
   max-width: 400px;
 }
-
 .ask_button_wrapper {
   display: flex;
   justify-content: flex-end;
