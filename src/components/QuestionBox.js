@@ -376,25 +376,27 @@ const QuestionBox = ({
                 </div>
               ) : (
                 // 기존 답변 표시
-                <div className={styles.section_answer}>
-                  <img src={userData.imageSource} alt="프로필이미지" />
-                  <div>
-                    <p className={styles.section_answer__title}>
-                      {userData.name}
-                      <span>{getRelativeTime(question.answerCreatedAt)}</span>
-                    </p>
-                    {!question.answerIsRejected && (
-                      <p className={styles.section_answer__content}>
-                        {question.answerContent}
+                question.answerContent && (
+                  <div className={styles.section_answer}>
+                    <img src={userData.imageSource} alt="프로필이미지" />
+                    <div>
+                      <p className={styles.section_answer__title}>
+                        {userData.name}
+                        <span>{getRelativeTime(question.answerCreatedAt)}</span>
                       </p>
-                    )}
-                    {question.answerIsRejected && (
-                      <p className={styles.section_answer__rejected}>
-                        답변 거절
-                      </p>
-                    )}
+                      {!question.answerIsRejected && (
+                        <p className={styles.section_answer__content}>
+                          {question.answerContent}
+                        </p>
+                      )}
+                      {question.answerIsRejected && (
+                        <p className={styles.section_answer__rejected}>
+                          답변 거절
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
+                )
               )}
 
               {/* 답변 폼: 현재 경로가 /answers/일 때만 보여짐 */}
