@@ -185,13 +185,12 @@ function AnswerPage() {
         questions={questions}
         updateQuestions={setQuestions}
         totalCount={totalCount}
-        submitAnswer={submitAnswer} // 답변 제출 함수 전달
+        submitAnswer={submitAnswer}
         handleDeleteAll={handleDeleteAll}
       />
       {totalCount > visibleCount && !isLoading && (
         <div ref={loadMoreRef} className={styles.observe_div}></div>
       )}
-
       <ScrollToTopAnswer />
     </div>
   );

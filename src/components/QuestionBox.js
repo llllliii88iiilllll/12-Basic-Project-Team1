@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { updateAnswer } from "../apis/UpdateAnswer.js";
 import { postAnswer } from "../apis/PostAnswer";
 import { postReaction } from "../apis/PostReaction";
@@ -43,28 +43,23 @@ const QuestionBox = ({
   totalCount,
   handleDeleteAll,
 }) => {
-  const { id } = useParams(); // URL에서 questionId 가져오기
   const [activeReactions, setActiveReactions] = useState({});
-
   const location = useLocation(); // 현재 경로 가져오기
   const [isAnswerPage, setIsAnswerPage] = useState(false);
+  const [activeQuestionId, setActiveQuestionId] = useState(null);
+  const [editingQuestionId, setEditingQuestionId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [activeQuestionId, setActiveQuestionId] = useState(null); // 활성화된 질문 ID
-
-  const [editingQuestionId, setEditingQuestionId] = useState(null); // 수정 중인 질문 ID 상태
-
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
-
-  const menuRef = useRef(null); // 메뉴 참조 추가
+  const menuRef = useRef(null);
 
   useEffect(() => {
     // '/answer' 경로가 포함된 경우에만 답변 폼을 보여줌
     setIsAnswerPage(location.pathname.includes("/answer"));
-    // 데이터를 불러오는 시뮬레이션 (예: API 요청 대기)
+
     const fetchData = async () => {
-      setIsLoading(true); // 로딩 상태 활성화
+      setIsLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 1000)); // 임의 대기
-      setIsLoading(false); // 로딩 상태 비활성화
+      setIsLoading(false);
     };
     fetchData();
   }, [location]);
@@ -113,7 +108,6 @@ const QuestionBox = ({
         )
       );
 
-      // 활성화된 반응 상태 업데이트
       setActiveReactions((prev) => ({
         ...prev,
         [questionId]: {
@@ -126,14 +120,13 @@ const QuestionBox = ({
       console.error("좋아요,싫어요 반영 실패", error);
     }
   };
-  // 수정 완료 버튼 활성화 여부를 판단하는 함수 추가
+
   const isAnswerChanged = (questionId) => {
     const question = questions.find((q) => q.id === questionId);
     const currentAnswer = answerData[questionId]?.content || "";
     return currentAnswer.trim() !== question?.answerContent?.trim();
   };
 
-  // 답변 제출 후 상태 업데이트 부분
   const submitAnswer = async (questionId) => {
     const { content, isRejected } = answerData[questionId] || {
       content: "",
@@ -155,7 +148,6 @@ const QuestionBox = ({
       if (answerId) {
         // 기존 답변 수정 (PUT 요청)
         const response = await updateAnswer(answerId, content, finalIsRejected);
-        console.log("PUT 응답:", response);
 
         updateQuestions((prevQuestions) =>
           prevQuestions.map((q) =>
@@ -173,7 +165,6 @@ const QuestionBox = ({
       } else {
         // 새 답변 추가 (POST 요청)
         const response = await postAnswer(questionId, content, finalIsRejected);
-        console.log("POST 응답:", response);
 
         if (response && response.id) {
           // POST 성공 후 상태 업데이트
@@ -221,7 +212,6 @@ const QuestionBox = ({
     const currentRejected =
       questions.find((q) => q.id === questionId)?.answerIsRejected || false;
 
-    // 해당 질문의 답변 내용을 폼에 반영
     setAnswerData((prevData) => ({
       ...prevData,
       [questionId]: {
@@ -230,7 +220,7 @@ const QuestionBox = ({
       },
     }));
 
-    setActiveQuestionId(null); // 메뉴 닫기
+    setActiveQuestionId(null);
   };
 
   // 답변 삭제 처리
@@ -245,9 +235,7 @@ const QuestionBox = ({
 
       // deleteAnswer 함수로 삭제 요청
       await deleteAnswer(question.answer.id); // 서버에서 답변 삭제 요청
-      console.log(`답변 삭제 완료: ${questionId}`);
 
-      // 질문 리스트에서 해당 질문의 답변 데이터 초기화
       updateQuestions((prevQuestions) =>
         prevQuestions.map((q) =>
           q.id === questionId
@@ -256,18 +244,17 @@ const QuestionBox = ({
         )
       );
 
-      // 입력 필드 초기화
       setAnswerData((prevData) => ({
         ...prevData,
         [questionId]: { content: "", isRejected: false },
       }));
 
-      setEditingQuestionId(null); // 수정 모드 종료
+      setEditingQuestionId(null);
     } catch (error) {
       console.error("답변 삭제 실패:", error);
       alert("답변 삭제에 실패했습니다. 다시 시도해주세요.");
     }
-    setActiveQuestionId(null); // 메뉴 닫기
+    setActiveQuestionId(null);
   };
 
   // 외부 클릭 이벤트 핸들러
@@ -357,7 +344,7 @@ const QuestionBox = ({
               {/* 답변 내용 표시 */}
               {editingQuestionId === question.id ? (
                 <div className={styles.section_answer}>
-                  <img src={userData.imageSource} alt="프로필이미지" />
+                  <img src={userData.imageSource} alt="프로필 이미지" />
                   <div className={styles.answer_textarea_wrap}>
                     <p className={styles.section_answer__title}>
                       {userData.name}
@@ -377,16 +364,16 @@ const QuestionBox = ({
                         <input
                           type="checkbox"
                           checked={answerData[question.id]?.isRejected || false}
-                          onChange={() => handleRejectedChange(question.id)} // 거절 상태 토글
+                          onChange={() => handleRejectedChange(question.id)}
                         />
                         답변 거절
                       </label>
                     </div>
                     <button
                       onClick={() => {
-                        submitAnswer(question.id); // 답변 제출
+                        submitAnswer(question.id);
                       }}
-                      disabled={!isAnswerChanged(question.id)} // 수정된 내용이 없으면 비활성화
+                      disabled={!isAnswerChanged(question.id)}
                       className={styles.button_submit_edit}
                     >
                       수정 완료
@@ -440,16 +427,13 @@ const QuestionBox = ({
                         <input
                           type="checkbox"
                           checked={answerData[question.id]?.isRejected || false}
-                          onChange={() => handleRejectedChange(question.id)} // 거절 상태 토글
+                          onChange={() => handleRejectedChange(question.id)}
                         />
                         답변 거절
                       </label>
                     </div>
                     <button
                       onClick={() => {
-                        console.log(
-                          `Submit clicked for question ${question.id}`
-                        ); // 디버깅
                         submitAnswer(question.id);
                       }}
                       disabled={
