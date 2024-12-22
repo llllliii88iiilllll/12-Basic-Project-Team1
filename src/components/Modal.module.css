@@ -8,7 +8,7 @@
   top: 142px;
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: var(--shadow-4pt);
+  box-shadow: var(--shadow-2pt);
   z-index: 2;
   @media (max-width: 767px) {
     width: calc(100% - 48px);

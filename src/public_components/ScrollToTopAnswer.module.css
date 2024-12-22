@@ -10,7 +10,7 @@
 .button_scroll_top {
   position: fixed;
   bottom: 24px;
-  right: 250px;
+  right: 24px;
   width: 54px;
   height: 54px;
   background-color: var(--brown-scale-50);
@@ -21,9 +21,6 @@
   opacity: 0;
   transform: translateY(0px);
   transition: opacity 0.3s ease;
-  @media (max-width: 767px) {
-    right: 165px;
-  }
   @media screen and (max-width: 661px) {
     display: none;
   }

@@ -22,7 +22,7 @@ function App() {
         <Route path="/list" element={<ListPage />} />
         <Route path="/post/:id">
           <Route index element={<FeedPage />} />
-          <Route path=":subjectId" element={<AnswerPage />} />
+          <Route path="answer" element={<AnswerPage />} />
         </Route>
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>

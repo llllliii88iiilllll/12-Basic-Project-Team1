@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { createSubject } from "../apis/CreateSubjects";
+import { loadSubjects, checkDuplicateNameLocally } from "../apis/GetSubjects";
 import styles from "./MainPage.module.css";
 import InputField from "../public_components/InputField";
 import ButtonDark from "../public_components/ButtonDark";
@@ -11,16 +12,35 @@ import MainVisual from "../assets/Images/main_visual.png";
 
 function MainPage() {
   const [name, setName] = useState("");
-  const [error, setError] = useState(null);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
   const navigate = useNavigate();
+
+  // 컴포넌트가 처음 렌더링될 때 데이터 로드
+  useEffect(() => {
+    const loadData = async () => {
+      await loadSubjects();
+      setIsDataLoaded(true);
+    };
+    loadData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
 
     if (!name.trim()) {
-      setError("이름을 입력해주세요.");
+      alert("이름을 입력해주세요.");
+      setName("");
       return;
+    }
+
+    // 데이터 로딩이 완료되고 중복 체크가 가능할 때만 실행
+    if (isDataLoaded) {
+      if (checkDuplicateNameLocally(name)) {
+        alert("이미 존재하는 이름입니다. 다른 이름을 입력해주세요.");
+        setName("");
+        return;
+      }
     }
 
     try {
@@ -28,7 +48,8 @@ function MainPage() {
       navigate(`/post/${data.id}/answer`);
       localStorage.setItem("createdId", data.id);
     } catch (err) {
-      setError(err.message);
+      console.log(err.message);
+      setName("");
     }
   };
 
@@ -49,7 +70,6 @@ function MainPage() {
             질문 받기
           </ButtonDark>
         </form>
-        {error && <p className={styles.error}>{error}</p>}
       </main>
       <div className={styles.background_image}>
         <img src={MainVisual} alt="메인 배경이미지" />

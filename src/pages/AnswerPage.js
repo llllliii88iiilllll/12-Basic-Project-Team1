@@ -1,90 +1,197 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { getUserById } from "../apis/GetUserById";
+import { getQuestionsBySubjectId } from "../apis/GetQuestions";
+import { getAnswerById } from "../apis/GetAnswerById";
+import { deleteQuestion } from "../apis/DeleteQuestion";
+import { postAnswer } from "../apis/PostAnswer";
+import { deleteSubject } from "../apis/DeleteSubject";
 import styles from "./AnswerPage.module.css";
-import ButtonDark from "../public_components/ButtonDark";
-import InputTextArea from "../public_components/InputTextArea";
+import useScrollToTop from "../hooks/UseScrollToTop";
+import ScrollToTopAnswer from "../public_components/ScrollToTopAnswer";
+import Header from "../components/Header";
+import QuestionBox from "../components/QuestionBox";
 
 function AnswerPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [isAnswered, setIsAnswered] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [error, setError] = useState(null);
+  const [userData, setUserData] = useState({});
+  const [questions, setQuestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [nextUrl, setNextUrl] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(2);
+  const [totalCount, setTotalCount] = useState(0);
+  const loadMoreRef = useRef(null);
+
+  const handleDeleteAll = async () => {
+    try {
+      // 1. 모든 질문 삭제 요청
+      for (const question of questions) {
+        await deleteQuestion(question.id);
+      }
+      // 2. 질문 대상(=피드) 삭제 요청
+      await deleteSubject(id);
+
+      // 삭제 후 상태 업데이트
+      setQuestions([]);
+      alert("모든 질문과 질문 대상이 삭제되었습니다.");
+      navigate("/list");
+    } catch (error) {
+      console.error("삭제 작업 실패:", error);
+    }
+  };
+
+  // 답변 폼 제출 함수
+  const submitAnswer = async (questionId, answerContent) => {
+    try {
+      const response = await postAnswer(questionId, answerContent);
+      setQuestions((prevQuestions) =>
+        prevQuestions.map((question) =>
+          question.id === questionId
+            ? { ...question, answerContent, answerId: response.id } // 새로 작성된 답변 업데이트
+            : question
+        )
+      );
+    } catch (error) {
+      console.error("답변 제출 실패:", error);
+    }
+  };
+
+  // fetchAnswers 함수 정의 (기존 답변 불러오기)
+  const fetchAnswers = async (questions) => {
+    const updatedQuestions = await Promise.all(
+      questions.map(async (question) => {
+        if (question.answer) {
+          try {
+            const answerResponse = await getAnswerById(question.answer.id);
+            return {
+              ...question,
+              answerContent: answerResponse.content,
+              answerCreatedAt: answerResponse.createdAt,
+              answerIsRejected: answerResponse.isRejected,
+            };
+          } catch (error) {
+            console.error(
+              `Answer ID ${question.answer.id} 데이터를 불러오지 못했습니다.`,
+              error
+            );
+          }
+        }
+        return question;
+      })
+    );
+    return updatedQuestions;
+  };
+
+  const fetchData = async (url = null) => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    try {
+      const questionsResponse = url
+        ? await fetch(url).then((res) => res.json())
+        : await getQuestionsBySubjectId(id);
+
+      if (!questionsResponse || !questionsResponse.results) {
+        console.error("질문 데이터를 불러오는 데 실패했습니다.");
+        return;
+      }
+
+      setTotalCount(questionsResponse.count);
+
+      const questionsWithDefaults = questionsResponse.results.map(
+        (question) => ({
+          ...question,
+          like: question.like ?? 0,
+          dislike: question.dislike ?? 0,
+        })
+      );
+
+      const questionsWithAnswers = await fetchAnswers(questionsWithDefaults);
+
+      setQuestions((prevQuestions) => [
+        ...prevQuestions,
+        ...questionsWithAnswers,
+      ]);
+
+      if (questionsResponse.next) {
+        setNextUrl(questionsResponse.next);
+      } else {
+        setVisibleCount(questionsResponse.count);
+      }
+    } catch (error) {
+      console.error("데이터 로드 중 오류 발생:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // IntersectionObserver로 스크롤 감지
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isLoading) {
+            if (nextUrl) {
+              // nextUrl이 있으면 데이터를 추가로 불러옴
+              fetchData(nextUrl);
+              setVisibleCount((prev) => prev + 1);
+            }
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px 180px 0px", // 하단에 여유를 두어 미리 데이터를 불러오게 함
+        threshold: 0.8, // 80%가 보일 때 트리거
+      }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current); // loadMoreRef를 관찰 대상으로 설정
+    }
+
+    return () => {
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current); // 언마운트 시 옵저버 해제
+      }
+    };
+  }, [isLoading, questions.length, nextUrl]);
 
   useEffect(() => {
-    async function fetchQuestion() {
+    const fetchInitialData = async () => {
       try {
-        const response = await fetch(`/api/questions/${id}`);
-        const data = await response.json();
-        setQuestion(data.question || "Sample Question");
-      } catch (err) {
-        setError("질문을 가져오는 데 실패했습니다.");
+        const userResponse = await getUserById(id);
+        if (userResponse) {
+          setUserData(userResponse);
+        }
+        fetchData(); // 처음 데이터 불러오기
+      } catch (error) {
+        console.error("초기 데이터 불러오는 데 실패했습니다.", error);
       }
-    }
-    fetchQuestion();
+    };
+
+    fetchInitialData();
   }, [id]);
 
-  const handleAnswerSubmit = async () => {
-    try {
-      const response = await fetch(`/api/questions/${id}/answer`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answer }),
-      });
-      if (!response.ok) throw new Error("답변 제출 실패");
-      setIsAnswered(true);
-      alert("답변이 성공적으로 제출되었습니다.");
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleEditToggle = () => {
-    setIsEditing(!isEditing);
-    if (isEditing) setAnswer("");
-  };
-
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(`/api/questions/${id}`, { method: "DELETE" });
-      if (!response.ok) throw new Error("삭제 실패");
-      navigate("/list");
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  useScrollToTop(id);
 
   return (
-    <div className={styles.answer_page}>
-      <header className={styles.header}>
-        <h1>Answer Page</h1>
-        <button className={styles.delete_btn} onClick={handleDelete}>
-          삭제하기
-        </button>
-      </header>
-      <main className={styles.main_content}>
-        <section className={styles.question_section}>
-          <h2>{question}</h2>
-        </section>
-        <section className={styles.answer_section}>
-          <InputTextArea
-            placeholder="답변을 입력해주세요"
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-            disabled={isAnswered && !isEditing}
-          />
-          <ButtonDark
-            onClick={isEditing ? handleEditToggle : handleAnswerSubmit}
-            disabled={!answer.trim()}
-          >
-            {isEditing ? "수정 완료" : "답변 완료"}
-          </ButtonDark>
-        </section>
-        {error && <p className={styles.error}>{error}</p>}
-      </main>
+    <div className={styles.wrap}>
+      <Header userData={userData} />
+      <QuestionBox
+        userData={userData}
+        questions={questions}
+        updateQuestions={setQuestions}
+        totalCount={totalCount}
+        submitAnswer={submitAnswer}
+        handleDeleteAll={handleDeleteAll}
+      />
+      {totalCount > visibleCount && !isLoading && (
+        <div ref={loadMoreRef} className={styles.observe_div}></div>
+      )}
+      <ScrollToTopAnswer />
     </div>
   );
 }
