@@ -104,7 +104,46 @@
   cursor: pointer;
 }
 .menu {
+  display: flex;
+  flex-direction: column;
   position: absolute;
+  right: 0;
+  width: 103px;
+  height: 68px;
+  padding: 4px 0;
+  border: 1px solid var(--gray-scale-30);
+  border-radius: 8px;
+  box-shadow: var(--shadow-1pt);
+  background-color: var(--gray-scale-10);
+}
+.menu button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  font-size: var(--font-size-caption1);
+  font-weight: var(--font-weight-medium);
+  color: var(--gray-scale-50);
+}
+.menu button:hover {
+  color: var(--gray-scale-60);
+  background-color: var(--gray-scale-20);
+}
+.menu button:active {
+  color: var(--blue);
+  background-color: var(--gray-scale-10);
+}
+.menu svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--gray-scale-50);
+}
+.menu button:hover svg {
+  fill: var(--gray-scale-60);
+}
+.menu button:active svg {
+  fill: var(--blue);
 }
 .section_title {
   display: flex;
@@ -195,6 +234,68 @@
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body3);
   color: var(--red);
+}
+.answer_textarea_wrap,
+.answer_form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.answer_textarea {
+  width: 100%;
+  height: 186px;
+  border: none;
+  border-radius: 8px;
+  padding: 18px 16px;
+  font-size: var(--font-size-body3);
+  color: var(--gray-scale-60);
+  background-color: var(--gray-scale-20);
+}
+.answer_textarea::placeholder {
+  color: var(--gray-scale-40);
+}
+.answer_textarea:disabled {
+  color: var(--gray-scale-40);
+}
+.answer_textarea:focus {
+  border: 1px solid var(--brown-scale-40);
+}
+.button_submit {
+  width: 100%;
+  height: 46px;
+  border-radius: 8px;
+  font-size: var(--font-size-body3);
+  font-weight: var(--font-weight-regular);
+  background-color: var(--brown-scale-40);
+  color: var(--gray-scale-10);
+}
+.button_submit:disabled {
+  background-color: var(--brown-scale-30);
+  pointer-events: none;
+}
+.button_submit:hover {
+  border: 2px solid var(--brown-scale-50);
+}
+.button_submit:active,
+.button_submit_edit:active {
+  background-color: var(--brown-scale-50);
+}
+.reject_checkbox {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.button_submit_edit {
+  height: 46px;
+  font-size: var(--font-size-body3);
+  font-weight: var(--font-weight-regular);
+  border-radius: 8px;
+  background-color: var(--brown-scale-40);
+  color: var(--gray-scale-10);
+}
+.button_submit_edit:disabled {
+  background-color: var(--brown-scale-30);
 }
 
 /* 질문 영역 로드될 시 애니메이션 */

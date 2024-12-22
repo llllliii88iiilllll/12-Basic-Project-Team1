@@ -11,13 +11,16 @@ import { ReactComponent as MessageImg } from "../assets/Icon/messages.svg";
 import EmptyImg from "../assets/Images/empty.png";
 import styles from "./QuestionBox.module.css";
 import { ReactComponent as MoreIcon } from "../assets/Icon/more.svg";
+import { ReactComponent as EditIcon } from "../assets/Icon/edit.svg";
+import { ReactComponent as DeleteIcon } from "../assets/Icon/close.svg";
 import ButtonDelete from "./ButtonDelete.js";
 
 // 시간 계산 함수
 const getRelativeTime = (dateString) => {
   const now = new Date();
   const targetDate = new Date(dateString);
-  const diff = now - targetDate; // 차이를 밀리초로 계산
+  // UTC 시간 차이 보정
+  const diff = now.getTime() - targetDate.getTime(); // 밀리초 단위 차이 계산
 
   const seconds = Math.floor(diff / 1000);
   const minutes = Math.floor(seconds / 60);
@@ -25,6 +28,7 @@ const getRelativeTime = (dateString) => {
   const days = Math.floor(hours / 24);
   const weeks = Math.floor(days / 7);
 
+  if (seconds < 0) return `방금 전`; // 음수일 경우 처리
   if (seconds < 60) return `${seconds}초 전`;
   if (minutes < 60) return `${minutes}분 전`;
   if (hours < 24) return `${hours}시간 전`;
@@ -146,6 +150,7 @@ const QuestionBox = ({
     try {
       const question = questions.find((q) => q.id === questionId);
       const answerId = question?.answer?.id; // 기존 답변 ID 확인
+      const tempTime = new Date(); // 답변 제출 시점 기록
 
       if (answerId) {
         // 기존 답변 수정 (PUT 요청)
@@ -160,6 +165,7 @@ const QuestionBox = ({
                   answerContent: content,
                   isRejected: finalIsRejected,
                   answerIsRejected: finalIsRejected,
+                  answerCreatedAt: response.createdAt || tempTime.toISOString(),
                 }
               : q
           )
@@ -181,6 +187,8 @@ const QuestionBox = ({
                       isRejected: finalIsRejected,
                       answerIsRejected: finalIsRejected,
                       answer: { id: response.id }, // 새로 생성된 답변 ID 반영
+                      answerCreatedAt:
+                        response.createdAt || tempTime.toISOString(),
                     }
                   : q
               );
@@ -221,6 +229,8 @@ const QuestionBox = ({
         isRejected: currentRejected,
       },
     }));
+
+    setActiveQuestionId(null); // 메뉴 닫기
   };
 
   // 답변 삭제 처리
@@ -257,6 +267,7 @@ const QuestionBox = ({
       console.error("답변 삭제 실패:", error);
       alert("답변 삭제에 실패했습니다. 다시 시도해주세요.");
     }
+    setActiveQuestionId(null); // 메뉴 닫기
   };
 
   // 외부 클릭 이벤트 핸들러
@@ -286,10 +297,10 @@ const QuestionBox = ({
           <div>
             {isLoading ? (
               "불러오고 있습니다..."
-            ) : questions.length > 0 ? (
-              <Counter count={totalCount} />
-            ) : (
+            ) : questions.length === 0 ? (
               "아직 질문이 없습니다"
+            ) : (
+              <Counter count={totalCount} />
             )}
           </div>
         </div>
@@ -306,7 +317,7 @@ const QuestionBox = ({
                   <div className={styles.section_badge}>미답변</div>
                 )}
                 {isAnswerPage && (
-                  <div className={styles.kebabMenu} ref={menuRef}>
+                  <div className={styles.kebabMenu}>
                     <MoreIcon
                       onClick={() => setActiveQuestionId(question.id)}
                       className={`${styles.kebabIcon} ${
@@ -320,12 +331,14 @@ const QuestionBox = ({
                       }}
                     />
                     {activeQuestionId === question.id && (
-                      <div className={styles.menu}>
+                      <div className={styles.menu} ref={menuRef}>
                         <button onClick={() => handleUpdateAnswer(question.id)}>
-                          수정
+                          <EditIcon alt="수정 아이콘" />
+                          수정하기
                         </button>
                         <button onClick={() => handleDeleteAnswer(question.id)}>
-                          삭제
+                          <DeleteIcon alt="삭제 아이콘" />
+                          삭제하기
                         </button>
                       </div>
                     )}
@@ -345,7 +358,11 @@ const QuestionBox = ({
               {editingQuestionId === question.id ? (
                 <div className={styles.section_answer}>
                   <img src={userData.imageSource} alt="프로필이미지" />
-                  <div>
+                  <div className={styles.answer_textarea_wrap}>
+                    <p className={styles.section_answer__title}>
+                      {userData.name}
+                      <span>{getRelativeTime(question.answerCreatedAt)}</span>
+                    </p>
                     <textarea
                       value={answerData[question.id]?.content || ""}
                       onChange={(e) =>
@@ -353,15 +370,16 @@ const QuestionBox = ({
                       }
                       placeholder="답변을 입력하세요"
                       disabled={answerData[question.id]?.isRejected || false}
+                      className={styles.answer_textarea}
                     />
                     <div>
-                      <label>
+                      <label className={styles.reject_checkbox}>
                         <input
                           type="checkbox"
                           checked={answerData[question.id]?.isRejected || false}
                           onChange={() => handleRejectedChange(question.id)} // 거절 상태 토글
                         />
-                        답변 거절 여부
+                        답변 거절
                       </label>
                     </div>
                     <button
@@ -369,6 +387,7 @@ const QuestionBox = ({
                         submitAnswer(question.id); // 답변 제출
                       }}
                       disabled={!isAnswerChanged(question.id)} // 수정된 내용이 없으면 비활성화
+                      className={styles.button_submit_edit}
                     >
                       수정 완료
                     </button>
@@ -401,34 +420,47 @@ const QuestionBox = ({
 
               {/* 답변 폼: 현재 경로가 /answers/일 때만 보여짐 */}
               {isAnswerPage && !question.answerContent && (
-                <div className={styles.answer_form}>
-                  <textarea
-                    value={answerData[question.id]?.content || ""}
-                    onChange={(e) =>
-                      handleAnswerChange(question.id, e.target.value)
-                    }
-                    placeholder="답변을 입력하세요"
-                    disabled={answerData[question.id]?.isRejected || false}
-                  />
-                  <div>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={answerData[question.id]?.isRejected || false}
-                        onChange={() => handleRejectedChange(question.id)} // 거절 상태 토글
-                      />
-                      답변 거절 여부
-                    </label>
+                <div className={styles.section_answer}>
+                  <img src={userData.imageSource} alt="프로필이미지" />
+                  <div className={styles.answer_form}>
+                    <p className={styles.section_answer__title}>
+                      {userData.name}
+                    </p>
+                    <textarea
+                      value={answerData[question.id]?.content || ""}
+                      onChange={(e) =>
+                        handleAnswerChange(question.id, e.target.value)
+                      }
+                      placeholder="답변을 입력하세요"
+                      disabled={answerData[question.id]?.isRejected || false}
+                      className={styles.answer_textarea}
+                    />
+                    <div>
+                      <label className={styles.reject_checkbox}>
+                        <input
+                          type="checkbox"
+                          checked={answerData[question.id]?.isRejected || false}
+                          onChange={() => handleRejectedChange(question.id)} // 거절 상태 토글
+                        />
+                        답변 거절
+                      </label>
+                    </div>
+                    <button
+                      onClick={() => {
+                        console.log(
+                          `Submit clicked for question ${question.id}`
+                        ); // 디버깅
+                        submitAnswer(question.id);
+                      }}
+                      disabled={
+                        !answerData[question.id]?.content ||
+                        answerData[question.id]?.content.trim() === ""
+                      }
+                      className={styles.button_submit}
+                    >
+                      답변 제출
+                    </button>
                   </div>
-                  <button
-                    onClick={() => {
-                      console.log(`Submit clicked for question ${question.id}`); // 디버깅
-                      submitAnswer(question.id);
-                    }}
-                    disabled={answerData[question.id]?.content.trim() === ""}
-                  >
-                    답변 제출
-                  </button>
                 </div>
               )}
               <hr className={styles.hr}></hr>

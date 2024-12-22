@@ -5,6 +5,6 @@
   font-weight: var(--font-weight-regular);
   color: var(--gray-scale-10);
   background-color: var(--brown-scale-40);
-  box-sizing: var(--shadow-2pt);
+  box-shadow: var(--shadow-2pt);
   border-radius: 200px;
 }
