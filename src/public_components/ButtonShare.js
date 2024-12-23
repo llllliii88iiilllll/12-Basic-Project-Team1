@@ -30,16 +30,20 @@ function ButtonShare() {
           description: "이 질문에 답변해주세요!",
           imageUrl: "../assets/Images/key_visual.png",
           link: {
-            mobileWebUrl: "https://example.com",
-            webUrl: "https://example.com",
+            mobileWebUrl:
+              "https://deploy-preview-28--12-basic-project-team1.netlify.app/",
+            webUrl:
+              "https://deploy-preview-28--12-basic-project-team1.netlify.app/",
           },
         },
         buttons: [
           {
             title: "자세히 보기",
             link: {
-              mobileWebUrl: "https://example.com",
-              webUrl: "https://example.com",
+              mobileWebUrl:
+                "https://deploy-preview-28--12-basic-project-team1.netlify.app/",
+              webUrl:
+                "https://deploy-preview-28--12-basic-project-team1.netlify.app/",
             },
           },
         ],
