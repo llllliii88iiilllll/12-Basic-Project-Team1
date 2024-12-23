@@ -99,7 +99,6 @@
   margin-bottom: 8px;
   border: none;
   border-radius: 8px;
-  overflow: scroll;
   @media (max-width: 767px) {
     height: 278px;
   }
