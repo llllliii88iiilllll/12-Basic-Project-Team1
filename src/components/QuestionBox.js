@@ -110,11 +110,17 @@ const QuestionBox = ({
     const originalAnswer = question?.answerContent || "";
     const originalRejected = !!question?.answerIsRejected;
 
+    // 답변 내용이 비어있고, 거절 상태가 해제되었을 때는 버튼 비활성화
+    if (currentAnswer.trim() === "" && !currentRejected) {
+      return false; // 버튼 비활성화
+    }
+
     // 거절 상태가 체크 해제된 경우: 입력값이 비어있지 않으면 활성화
     if (!currentRejected && originalRejected) {
       return currentAnswer.trim() !== ""; // 입력값이 비어있지 않으면 버튼 활성화
     }
 
+    // 답변 내용이나 거절 상태가 원래와 다를 때 버튼을 활성화
     return (
       currentAnswer.trim() !== originalAnswer.trim() ||
       currentRejected !== originalRejected
