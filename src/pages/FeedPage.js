@@ -173,6 +173,13 @@ function FeedPage() {
 
   useScrollToTop(id);
 
+  // 새로운 질문 생성 시 totalCount 갱신하는 부분 예시
+  const addNewQuestion = (newQuestion) => {
+    setQuestions((prevQuestions) => [newQuestion, ...prevQuestions]);
+    // 새로운 질문이 추가되었으므로 totalCount도 갱신
+    setTotalCount((prevCount) => prevCount + 1);
+  };
+
   return (
     <div className={styles.wrap}>
       <Header userData={userData} />
@@ -192,6 +199,7 @@ function FeedPage() {
           userData={userData}
           subjectId={id}
           setQuestions={setQuestions}
+          setTotalCount={addNewQuestion} // addNewQuestion을 모달에 전달
         />
       )}
       <ScrollToTopButton />

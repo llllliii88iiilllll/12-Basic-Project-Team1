@@ -4,7 +4,13 @@ import MessageImg from "../assets/Icon/messages.svg";
 import CloseImg from "../assets/Icon/close.svg";
 import styles from "./Modal.module.css";
 
-const Modal = ({ onClose, userData, subjectId, setQuestions }) => {
+const Modal = ({
+  onClose,
+  userData,
+  subjectId,
+  setQuestions,
+  setTotalCount,
+}) => {
   const [question, setQuestion] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const modalRef = useRef(null); // 모달 영역 참조
@@ -40,6 +46,8 @@ const Modal = ({ onClose, userData, subjectId, setQuestions }) => {
         },
         ...prevQuestions,
       ]);
+
+      setTotalCount((prevCount) => prevCount + 1);
     } catch (error) {
       console.error("질문 전송 중 오류 발생:", error);
     } finally {
