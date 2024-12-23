@@ -1,9 +1,10 @@
 .button_delete {
   float: right;
   width: 100px;
-  height: 35px;
+  height: 40px;
   font-size: var(--font-size-body3);
   font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-h2);
   color: var(--gray-scale-10);
   background-color: var(--brown-scale-40);
   box-shadow: var(--shadow-2pt);
