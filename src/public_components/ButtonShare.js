@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import styles from "./ButtonShare.module.css";
 import { ReactComponent as IcLink } from "../assets/Icon/link.svg";
 import { ReactComponent as IcKakaotalk } from "../assets/Icon/kakaotalk.svg";
 import { ReactComponent as IcFacebook } from "../assets/Icon/facebook.svg";
 
 function ButtonShare() {
+  const { id } = useParams();
   const [toastVisible, setToastVisible] = useState(false);
 
   // URL 클립보드에 복사 핸들러
@@ -28,22 +30,19 @@ function ButtonShare() {
         content: {
           title: "오픈마인드 개별피드",
           description: "이 질문에 답변해주세요!",
-          imageUrl: "../assets/Images/key_visual.png",
+          imageUrl:
+            "https://deploy-preview-26--12-basic-project-team1.netlify.app/src/assets/Images/og_image.jpg",
           link: {
-            mobileWebUrl:
-              "https://deploy-preview-28--12-basic-project-team1.netlify.app/",
-            webUrl:
-              "https://deploy-preview-28--12-basic-project-team1.netlify.app/",
+            mobileWebUrl: `https://deploy-preview-26--12-basic-project-team1.netlify.app/post/${id}`,
+            webUrl: `https://deploy-preview-26--12-basic-project-team1.netlify.app/post/${id}`,
           },
         },
         buttons: [
           {
             title: "자세히 보기",
             link: {
-              mobileWebUrl:
-                "https://deploy-preview-28--12-basic-project-team1.netlify.app/",
-              webUrl:
-                "https://deploy-preview-28--12-basic-project-team1.netlify.app/",
+              mobileWebUrl: `https://deploy-preview-26--12-basic-project-team1.netlify.app/post/${id}`,
+              webUrl: `https://deploy-preview-26--12-basic-project-team1.netlify.app/post/${id}`,
             },
           },
         ],
