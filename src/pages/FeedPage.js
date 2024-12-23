@@ -195,7 +195,6 @@ function FeedPage() {
         />
       )}
       <ScrollToTopButton />
-      {isModalOpen && <div className={styles.dimmed}></div>}
     </div>
   );
 }
