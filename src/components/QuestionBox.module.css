@@ -79,11 +79,15 @@
   font-size: var(--font-size-caption1);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-caption1);
-  padding: 6px 12px 4px;
   border-radius: 8px;
 }
-.section_badge {
+.section_badge,
+.section_badge__active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 63px;
+  height: 27px;
   color: var(--gray-scale-40);
   background-color: var(--gray-scale-10);
   border: 1px solid var(--gray-scale-40);
@@ -302,9 +306,10 @@
   align-items: center;
   float: left;
   padding: 0 20px;
-  height: 35px;
+  height: 40px;
   font-size: var(--font-size-body3);
   font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-h2);
   background-color: var(--brown-scale-40);
   color: var(--gray-scale-10);
   border-radius: 200px;

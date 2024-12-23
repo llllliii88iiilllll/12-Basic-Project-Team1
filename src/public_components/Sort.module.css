@@ -4,6 +4,7 @@
   cursor: pointer;
 }
 .sort_label {
+  display: flex;
   position: relative;
   width: 79px;
   height: 34px;

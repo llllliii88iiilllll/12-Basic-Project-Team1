@@ -5,6 +5,7 @@
   box-shadow: var(--shadow-2pt);
   font-size: var(--font-size-body2);
   font-weight: var(--font-weight-regular);
+  line-height: 54px;
   color: var(--gray-scale-10);
   background-color: var(--brown-scale-40);
   position: fixed;
@@ -24,6 +25,7 @@
     box-shadow: var(--shadow-2pt);
     font-size: var(--font-size-body2);
     font-weight: var(--font-weight-regular);
+    line-height: 54px;
     color: var(--gray-scale-10);
     background-color: var(--brown-scale-40);
     position: fixed;
