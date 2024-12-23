@@ -19,6 +19,8 @@
   background-color: var(--gray-scale-10);
 }
 .sort_label_active {
+  display: flex;
+  align-items: center;
   position: relative;
   width: 79px;
   height: 34px;
