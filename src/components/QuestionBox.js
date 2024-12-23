@@ -450,7 +450,7 @@ const QuestionBox = ({
                       }
                       className={styles.button_submit}
                     >
-                      답변 제출
+                      답변 완료
                     </button>
                   </div>
                 </div>
