@@ -105,7 +105,20 @@ const QuestionBox = ({
   const isAnswerChanged = (questionId) => {
     const question = questions.find((q) => q.id === questionId);
     const currentAnswer = answerData[questionId]?.content || "";
-    return currentAnswer.trim() !== question?.answerContent?.trim();
+    const currentRejected = answerData[questionId]?.isRejected || false;
+
+    const originalAnswer = question?.answerContent || "";
+    const originalRejected = !!question?.answerIsRejected;
+
+    // 거절 상태가 체크 해제된 경우: 입력값이 비어있지 않으면 활성화
+    if (!currentRejected && originalRejected) {
+      return currentAnswer.trim() !== ""; // 입력값이 비어있지 않으면 버튼 활성화
+    }
+
+    return (
+      currentAnswer.trim() !== originalAnswer.trim() ||
+      currentRejected !== originalRejected
+    );
   };
 
   const submitAnswer = async (questionId) => {
