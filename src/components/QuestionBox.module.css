@@ -295,6 +295,7 @@
 }
 .button_submit_edit:disabled {
   background-color: var(--brown-scale-30);
+  cursor: inherit;
 }
 .button_move_list {
   display: flex;

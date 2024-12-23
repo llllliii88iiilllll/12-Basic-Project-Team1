@@ -5,6 +5,7 @@ import { updateAnswer } from "../apis/UpdateAnswer.js";
 import { postAnswer } from "../apis/PostAnswer";
 import { postReaction } from "../apis/PostReaction";
 import { deleteAnswer } from "../apis/DeleteAnswer.js";
+import { getRelativeTime } from "../utils/timeUtils.js";
 import Counter from "../components/Counter";
 import ReactionButtons from "../components/ReactionButton.js";
 import { ReactComponent as MessageImg } from "../assets/Icon/messages.svg";
@@ -14,27 +15,6 @@ import { ReactComponent as MoreIcon } from "../assets/Icon/more.svg";
 import { ReactComponent as EditIcon } from "../assets/Icon/edit.svg";
 import { ReactComponent as DeleteIcon } from "../assets/Icon/close.svg";
 import ButtonDelete from "./ButtonDelete.js";
-
-// 시간 계산 함수
-const getRelativeTime = (dateString) => {
-  const now = new Date();
-  const targetDate = new Date(dateString);
-  // UTC 시간 차이 보정
-  const diff = now.getTime() - targetDate.getTime(); // 밀리초 단위 차이 계산
-
-  const seconds = Math.floor(diff / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-  const weeks = Math.floor(days / 7);
-
-  if (seconds < 0) return `방금 전`; // 음수일 경우 처리
-  if (seconds < 60) return `${seconds}초 전`;
-  if (minutes < 60) return `${minutes}분 전`;
-  if (hours < 24) return `${hours}시간 전`;
-  if (days < 7) return `${days}일 전`;
-  return `${weeks}주 전`;
-};
 
 const QuestionBox = ({
   userData,
@@ -274,7 +254,7 @@ const QuestionBox = ({
 
   // 뒤로 가기 (이전 페이지로 이동)
   const handleGoBack = () => {
-    navigate(-1);
+    navigate("/list");
   };
 
   return (
