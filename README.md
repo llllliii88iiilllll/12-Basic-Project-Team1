@@ -88,7 +88,7 @@ Copyright 2024 코드잇 Inc. All rights reserved.
 
 
 ### 2. 질문 대상 목록 페이지
-![리스트](https://github.com/user-attachments/assets/ffb7e92e-2998-4868-a562-356d47c6db47)
+![리스트 (1)](https://github.com/user-attachments/assets/fdde23dd-91af-41ad-aae4-6b7d86ffc408)
 - 현재 만들어진 질문 대상들을 최신순, 이름순으로 볼 수 있습니다. (기본값은 최신순)
 - 페이지네이션의 이전/다음 버튼은 1~5페이지를 한 세트로 이전/다음 세트로 이동합니다.
 - 질문 대상의 받은 질문 개수를 확인 할 수 있고, 질문 대상을 클릭시 질문을 할 수 있는 페이지로 이동합니다.
@@ -97,7 +97,7 @@ Copyright 2024 코드잇 Inc. All rights reserved.
 
 
 ### 3. 질문 페이지
-![피드](https://github.com/user-attachments/assets/49ab81bc-81f4-40a4-86ad-54383078b280)
+
 - 현재 페이지를 링크 복사, 카카오톡/페이스북으로 공유할 수 있습니다.
 - 질문 생성 날짜와 답변 생성 날짜를 확인 할 수 있습니다.
 - 받은 질문의 개수를 확인할 수 있고, 답변 상태를 확인할 수 있습니다.
@@ -107,7 +107,7 @@ Copyright 2024 코드잇 Inc. All rights reserved.
 
 
 ### 4. 답변 페이지
-![답변](https://github.com/user-attachments/assets/10563207-289a-48f2-884d-866b748ebc7e)
+
 - 질문에 대한 답변을 생성, 수정, 삭제할 수 있습니다.
 - 질문에 대한 답변을 거절할 수 있습니다.
 <br><br>
