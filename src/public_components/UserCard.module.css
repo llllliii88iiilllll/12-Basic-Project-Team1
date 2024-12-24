@@ -10,6 +10,9 @@
     grid-template-columns: repeat(2, minmax(186px, 1fr));
     gap: 16px;
   }
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 .user_card {
   display: flex;
