@@ -30,19 +30,18 @@ function ButtonShare() {
         content: {
           title: "오픈마인드 개별피드",
           description: "이 질문에 답변해주세요!",
-          imageUrl:
-            "https://deploy-preview-26--12-basic-project-team1.netlify.app/src/assets/Images/og_image.jpg",
+          imageUrl: `${window.location.origin}/src/assets/Images/og_image.jpg`,
           link: {
-            mobileWebUrl: `https://deploy-preview-26--12-basic-project-team1.netlify.app/post/${id}`,
-            webUrl: `https://deploy-preview-26--12-basic-project-team1.netlify.app/post/${id}`,
+            mobileWebUrl: `${window.location.origin}/post/${id}`,
+            webUrl: `${window.location.origin}/post/${id}`,
           },
         },
         buttons: [
           {
             title: "자세히 보기",
             link: {
-              mobileWebUrl: `https://deploy-preview-26--12-basic-project-team1.netlify.app/post/${id}`,
-              webUrl: `https://deploy-preview-26--12-basic-project-team1.netlify.app/post/${id}`,
+              mobileWebUrl: `${window.location.origin}/post/${id}`,
+              webUrl: `${window.location.origin}/post/${id}`,
             },
           },
         ],

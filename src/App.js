@@ -15,6 +15,23 @@ function App() {
     }
   }, []);
 
+  // Facebook SDK 동적 로드
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://connect.facebook.net/en_US/sdk.js";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      window.FB.init({
+        appId: "YOUR_APP_ID", // Facebook 앱 ID
+        cookie: true,
+        xfbml: true,
+        version: "v15.0", // 최신 API 버전
+      });
+    };
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
